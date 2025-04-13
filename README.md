@@ -1,2 +1,2 @@
-# Fabulous Project (AMOS SS 20xx)
-Something something something
+# Fabulous Project (AMOS SS 2025)
+if you can read this you don't need glasses - Spaceballs 
