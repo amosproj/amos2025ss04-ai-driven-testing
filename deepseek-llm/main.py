@@ -149,6 +149,7 @@ def send_prompt(prompt, model,output_file , stream=False):
         "prompt": prompt,
         "stream": stream,
         "system": system_message,
+        "seed": 42,
     }
 
     if stream:
