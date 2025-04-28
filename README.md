@@ -46,6 +46,18 @@ ai-driven-testing/
    pip install -r requirements.txt
    ```
 
+## Code Quality and Formatting
+
+This project uses Black for code formatting. To ensure your code meets the project's formatting standards:
+
+```bash
+# Verify formatting
+black --check .
+
+# If issues are reported, fix them automatically with
+black .
+```
+
 ## Running Tests
 
 Execute the tests from the project root directory:
