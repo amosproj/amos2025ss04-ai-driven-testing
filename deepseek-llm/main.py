@@ -67,7 +67,7 @@ def start_ollama_container():
         detach=True,
         remove=True
     )
-    #clear_stdout()
+    clear_stdout()
 
     return container
 
@@ -128,7 +128,7 @@ def pull_model(model):
 
         if pbar:
             pbar.close()
-            #clear_stdout()
+            clear_stdout()
 
 
 def send_prompt(prompt, model,output_file , stream=False):
@@ -219,7 +219,7 @@ if __name__ == "__main__":
         wait_for_ollama_api()
 
         pull_model(MODEL_NAME)
-        #clear_stdout()
+        clear_stdout()
 
         print("Sending prompt...")
         prompt = read_prompt(args.prompt_file)
