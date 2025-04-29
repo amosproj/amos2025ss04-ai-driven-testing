@@ -12,6 +12,3 @@ qwen2.5-coder
 The site: https://github.com/QwenLM/Qwen2.5-Coder
 Created by Alibaba Cloud.
 This is an open-source LLM under the Apache License Version 2.0 (https://ollama.com/library/qwen2.5-coder/blobs/832dd9e00a68)
-
-
-Test
