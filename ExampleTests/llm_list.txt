@@ -1,0 +1,7 @@
+deepcoder:1.5b
+phi4-mini
+qwen2.5-coder:3b
+qwen2.5-coder:7b
+qwen2.5:7b
+gemma3:4b
+deepseek-r1:7b
