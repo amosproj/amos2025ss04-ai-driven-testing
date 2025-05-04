@@ -20,6 +20,7 @@ class Model(enum.Enum):
     DEEPSEEK = "deepseek-coder:6.7b-instruct-q3_K_M" # 3.30 GB
     QWEN = "qwen2.5-coder:3b-instruct-q8_0" # 3.29 GB
     GEMMA = "gemma3:4b-it-q4_K_M" # 3.34 GB
+    PHI4 = "phi4-mini:3.8b-q4_K_M" # 2.49 GB
 
     @classmethod
     def get_model(cls, number: int) -> str:
