@@ -34,3 +34,6 @@ bin/
 
 # MacOS
 .DS_Store
+
+#outputs
+qwen/response.txt
