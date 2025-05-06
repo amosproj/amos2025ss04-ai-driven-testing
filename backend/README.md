@@ -1,10 +1,4 @@
-# Fabulous Project (AMOS SS 2025)
-if you can read this you don't need glasses - Spaceballs   
-If you water an apple tree with apple juice, is that cannibalism?
-
-
-
-# DeepSeek-Coer V1
+# AI Driven Testing (AMOS SS 2025)
 
 This project allows you to easily run a local [Ollama](https://github.com/ollama/ollama) container, send prompts to a language model, and save the structured response as Markdown.
 
@@ -27,7 +21,7 @@ This project allows you to easily run a local [Ollama](https://github.com/ollama
 - `prompt.txt` — Your input prompt
 - `output.md` — The generated Markdown output
 
-All files are located inside the `deepseek-llm/` directory.
+All files are located inside the `backend/` directory.
 
 ---
 
@@ -36,23 +30,23 @@ All files are located inside the `deepseek-llm/` directory.
 1. **(Optional)** Create and activate a Conda environment:
    
    ```bash
-   conda env create -f deepseek-llm/environment.yml
-   conda activate deep_seek
+   conda env create -f backend/environment.yml
+   conda activate backend
 2. Make sure Docker is running on your machine.
 
 ## Usage
 Simply run the main.py script:
 
  ```bash
-python deepseek-llm/main.py
+python backend/main.py
 ```
 
-By default, it reads from deepseek-llm/prompt.txt and writes to deepseek-llm/output.md.
+By default, it reads from backend/prompt.txt and writes to backend/output.md.
 
 ## Optional Arguments:
 You can also specify a custom prompt file and output file:
  ```bash
-python deepseek-llm/main.py --prompt_file ./your_prompt.txt --output_file ./your_output.md
+python backend/main.py --model 0 --prompt_file ./your_prompt.txt --output_file ./your_output.md
 ```
 
 ## Note 

@@ -4,17 +4,30 @@ import time
 import os
 from tqdm import tqdm
 import json
-import sys
+import enum
 
 # Configuration
 OLLAMA_IMAGE = "ollama/ollama"
-MODEL_NAME = "deepseek-coder:1.3b"
 OLLAMA_PORT = 11434
 OLLAMA_API_URL = f"http://localhost:{OLLAMA_PORT}/api"
 OLLAMA_GEN_ENDPOINT = f"{OLLAMA_API_URL}/generate"
 OLLAMA_MODELS_VOLUME = os.path.abspath("./ollama-models")
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+
+class Model(enum.Enum):
+    MISTRAL = "mistral:7b-instruct-v0.3-q3_K_M" # 3.52 GB
+    DEEPSEEK = "deepseek-coder:6.7b-instruct-q3_K_M" # 3.30 GB
+    QWEN = "qwen2.5-coder:3b-instruct-q8_0" # 3.29 GB
+    GEMMA = "gemma3:4b-it-q4_K_M" # 3.34 GB
+    PHI4 = "phi4-mini:3.8b-q4_K_M" # 2.49 GB
+
+    @classmethod
+    def get_model(cls, number: int) -> str:
+        models = list(cls)
+        if 0 <= number < len(models):
+            return models[number].value
+        raise ValueError(f"Invalid model number. Choose between 0-{len(models)-1}")
 
 
 
@@ -188,6 +201,8 @@ def clear_stdout():
         os.system('cls')
     else:
         os.system('clear')
+
+
 def read_prompt(file):
     with open(file, "r") as f:
         return f.read()
@@ -198,6 +213,13 @@ import argparse
 if __name__ == "__main__":
     # Setup command line arguments
     parser = argparse.ArgumentParser(description="Run Ollama prompt sending script.")
+    parser.add_argument(
+        "--model",
+        type=int,
+        choices=range(len(Model)),
+        default=0,
+        help="Model selection (default: 0, here mistral AI)"
+    )
     parser.add_argument(
         "--prompt_file",
         type=str,
@@ -213,19 +235,26 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    try:
+        # Get the actual model name from the enum
+        model_name = Model.get_model(args.model)
+    except ValueError as e:
+        print(e)
+        exit(1)
+
     container = start_ollama_container()
     try:
         print("Waiting for Ollama API...")
         wait_for_ollama_api()
 
-        pull_model(MODEL_NAME)
+        pull_model(model_name)
         clear_stdout()
 
         print("Sending prompt...")
         prompt = read_prompt(args.prompt_file)
         print(f"Prompt: \n{prompt}")
         print("Answer:")
-        response = send_prompt(prompt=prompt, model=MODEL_NAME, stream=True, output_file=args.output_file)
+        response = send_prompt(prompt=prompt, model=model_name, stream=True, output_file=args.output_file)
 
     finally:
         print("Stopping container...")
