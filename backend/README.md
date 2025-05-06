@@ -46,7 +46,7 @@ By default, it reads from backend/prompt.txt and writes to backend/output.md.
 ## Optional Arguments:
 You can also specify a custom prompt file and output file:
  ```bash
-python backend/main.py --prompt_file ./your_prompt.txt --output_file ./your_output.md
+python backend/main.py --model 0 --prompt_file ./your_prompt.txt --output_file ./your_output.md
 ```
 
 ## Note 
