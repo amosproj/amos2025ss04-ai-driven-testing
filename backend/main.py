@@ -218,8 +218,7 @@ if __name__ == "__main__":
         type=int,
         choices=range(len(Model)),
         default=0,
-        help=f"""Model selection:
-    {'\n'.join(f'{i}. {m.name} ({m.value})' for i, m in enumerate(Model))}"""
+        help="Model selection (default: 0, here mistral AI)"
     )
     parser.add_argument(
         "--prompt_file",
