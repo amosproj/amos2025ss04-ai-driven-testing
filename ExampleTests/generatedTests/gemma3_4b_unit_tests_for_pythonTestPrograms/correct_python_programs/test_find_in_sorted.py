@@ -12,10 +12,11 @@ def find_in_sorted(arr, x):
 
     return binsearch(0, len(arr))
 
+
 import unittest
 
-class TestFindInSorted(unittest.TestCase):
 
+class TestFindInSorted(unittest.TestCase):
     def test_empty_array(self):
         self.assertEqual(find_in_sorted([], 5), -1)
 
@@ -41,5 +42,5 @@ class TestFindInSorted(unittest.TestCase):
         self.assertEqual(find_in_sorted([2, 5, 7, 8, 10], 1), -1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

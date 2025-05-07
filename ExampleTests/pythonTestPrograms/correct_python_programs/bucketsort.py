@@ -1,4 +1,3 @@
-
 def bucketsort(arr, k):
     counts = [0] * k
     for x in arr:
@@ -9,6 +8,7 @@ def bucketsort(arr, k):
         sorted_arr.extend([i] * count)
 
     return sorted_arr
+
 
 """
 def bucketsort(arr, k):

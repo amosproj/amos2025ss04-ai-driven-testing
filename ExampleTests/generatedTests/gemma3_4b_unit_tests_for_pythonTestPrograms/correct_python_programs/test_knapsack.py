@@ -1,7 +1,9 @@
 import unittest
 
+
 def knapsack(capacity, items):
     from collections import defaultdict
+
     memo = defaultdict(int)
 
     for i in range(1, len(items) + 1):
@@ -11,16 +13,12 @@ def knapsack(capacity, items):
             memo[i, j] = memo[i - 1, j]
 
             if weight <= j:
-                memo[i, j] = max(
-                    memo[i, j],
-                    value + memo[i - 1, j - weight]
-                )
+                memo[i, j] = max(memo[i, j], value + memo[i - 1, j - weight])
 
     return memo[len(items), capacity]
 
 
 class TestKnapsack(unittest.TestCase):
-
     def test_empty_items(self):
         self.assertEqual(knapsack(10, []), 0)
 
@@ -48,5 +46,6 @@ class TestKnapsack(unittest.TestCase):
         items = [(1, 1), (2, 3), (3, 4), (5, 6)]
         self.assertEqual(knapsack(10, items), 10)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

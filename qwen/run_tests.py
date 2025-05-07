@@ -1,5 +1,6 @@
 import subprocess
 
+
 # Run the generated test script and capture its output
 def run_test_script(test_script_path):
     try:
@@ -7,7 +8,7 @@ def run_test_script(test_script_path):
             ["python", str(test_script_path)],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=30,
         )
         success = result.returncode == 0
         output = result.stdout + "\n" + result.stderr

@@ -1,11 +1,5 @@
-
 def shunting_yard(tokens):
-    precedence = {
-        '+': 1,
-        '-': 1,
-        '*': 2,
-        '/': 2
-    }
+    precedence = {"+": 1, "-": 1, "*": 2, "/": 2}
 
     rpntokens = []
     opstack = []
@@ -21,4 +15,3 @@ def shunting_yard(tokens):
         rpntokens.append(opstack.pop())
 
     return rpntokens
-

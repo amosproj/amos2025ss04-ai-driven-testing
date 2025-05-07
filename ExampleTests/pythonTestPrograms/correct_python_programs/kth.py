@@ -1,4 +1,3 @@
-
 def kth(arr, k):
     pivot = arr[0]
     below = [x for x in arr if x < pivot]

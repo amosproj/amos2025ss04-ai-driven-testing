@@ -21,6 +21,7 @@ def mergesort(arr):
         right = mergesort(arr[middle:])
         return merge(left, right)
 
+
 def mergesort(arr):
     def merge(left, right):
         result = []
@@ -43,6 +44,7 @@ def mergesort(arr):
         left = mergesort(arr[:middle])
         right = mergesort(arr[middle:])
         return merge(left, right)
+
 
 def mergesort(arr):
     def merge(left, right):
@@ -67,15 +69,17 @@ def mergesort(arr):
         right = mergesort(arr[middle:])
         return merge(left, right)
 
+
 import unittest
 from unittest import TestCase
+
 
 class TestMergeSort(TestCase):
     def test_mergesort(self):
         # Test case 1: Empty array
         arr = []
         self.assertEqual([], mergesort(arr))
-        
+
         # Test case 2: Single-element array
         arr = [5]
         self.assertEqual([5], mergesort(arr))
@@ -88,6 +92,7 @@ class TestMergeSort(TestCase):
         arr = [5, 2, 7, 4, 3, 8, 6, 1]
         sorted_arr = [1, 2, 3, 4, 5, 6, 7, 8]
         self.assertEqual(sorted_arr, mergesort(arr))
+
 
 if __name__ == "__main__":
     unittest.main()

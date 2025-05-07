@@ -1,10 +1,12 @@
 import unittest
 
+
 def gcd(a, b):
     if b == 0:
         return a
     else:
         return gcd(b, a % b)
+
 
 class Testgcd(unittest.TestCase):
     def test_gcd(self):
@@ -15,5 +17,6 @@ class Testgcd(unittest.TestCase):
         # Test case 3: Negative numbers (gcd is always non-negative)
         self.assertEqual(gcd(-12, -18), 6)  # Since gcd is absolute value
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

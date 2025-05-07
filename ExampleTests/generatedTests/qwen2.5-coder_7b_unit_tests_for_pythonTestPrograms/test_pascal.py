@@ -1,5 +1,6 @@
 import unittest
 
+
 def pascal(n):
     rows = [[1]]
     for r in range(1, n):
@@ -11,6 +12,7 @@ def pascal(n):
         rows.append(row)
 
     return rows
+
 
 class TestPascalTriangle(unittest.TestCase):
     def test_pascal_0(self):
@@ -28,5 +30,6 @@ class TestPascalTriangle(unittest.TestCase):
     def test_pascal_4(self):
         self.assertEqual(pascal(4), [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1]])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

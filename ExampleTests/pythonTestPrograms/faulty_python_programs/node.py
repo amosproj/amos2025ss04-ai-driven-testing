@@ -1,5 +1,13 @@
 class Node:
-    def __init__(self, value=None, successor=None, successors=[], predecessors=[], incoming_nodes=[], outgoing_nodes=[]):
+    def __init__(
+        self,
+        value=None,
+        successor=None,
+        successors=[],
+        predecessors=[],
+        incoming_nodes=[],
+        outgoing_nodes=[],
+    ):
         self.value = value
         self.successor = successor
         self.successors = successors
@@ -15,4 +23,3 @@ class Node:
 
     def predecessors(self):
         return self.predecessors
-

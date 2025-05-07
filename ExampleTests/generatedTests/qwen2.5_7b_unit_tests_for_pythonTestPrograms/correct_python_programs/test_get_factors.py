@@ -2,7 +2,7 @@ def get_factors(n):
     if n == 1:
         return []
 
-    for i in range(2, int(n ** 0.5) + 1):
+    for i in range(2, int(n**0.5) + 1):
         if n % i == 0:
             return [i] + get_factors(n // i)
 
@@ -11,8 +11,8 @@ def get_factors(n):
 
 import unittest
 
-class TestGetFactors(unittest.TestCase):
 
+class TestGetFactors(unittest.TestCase):
     def test_get_factors(self):
         self.assertEqual(get_factors(1), [])
         self.assertEqual(get_factors(6), [2, 3])
@@ -24,5 +24,5 @@ class TestGetFactors(unittest.TestCase):
         self.assertEqual(get_factors(864), [2, 2, 2, 2, 2, 3, 3, 3])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,8 @@ from .reverse_linked_list import reverse_linked_list
 """
 Driver to test reverse linked list
 """
+
+
 def main():
     # Case 1: 5-node list input
     # Expected Output: 1 2 3 4 5
@@ -52,6 +54,6 @@ def main():
         result = result.successor
     print()
 
+
 if __name__ == "__main__":
     main()
-

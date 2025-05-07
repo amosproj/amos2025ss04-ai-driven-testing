@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestFindFirstInSorted(unittest.TestCase):
     def test_find_first_in_sorted(self):
         arr = [1, 2, 4, 4, 6]
@@ -17,5 +18,6 @@ class TestFindFirstInSorted(unittest.TestCase):
         arr = []
         self.assertEqual(find_first_in_sorted(arr, 1), -1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

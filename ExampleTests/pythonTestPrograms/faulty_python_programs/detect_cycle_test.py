@@ -5,6 +5,8 @@ from .detect_cycle import detect_cycle
 """
 Driver to test reverse linked list
 """
+
+
 def main():
     # Case 1: 5-node list input with no cycle
     # Expected Output: Cycle not detected!
@@ -71,4 +73,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -21,10 +21,11 @@ def mergesort(arr):
         right = mergesort(arr[middle:])
         return merge(left, right)
 
+
 import unittest
 
+
 class TestMergeSort(unittest.TestCase):
-    
     def test_merge_sort_empty_array(self):
         self.assertEqual(mergesort([]), [])
 
@@ -46,10 +47,12 @@ class TestMergeSort(unittest.TestCase):
 
     def test_merge_sort_large_random_array(self):
         import random
+
         arr = list(range(100))
         random.shuffle(arr)
         sorted_arr = mergesort(arr)
         self.assertEqual(sorted_arr, list(range(100)))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

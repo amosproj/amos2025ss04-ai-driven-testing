@@ -1,9 +1,11 @@
 import unittest
 
+
 class Node:
     def __init__(self, value):
         self.value = value
         self.successor = None
+
 
 def reverse_linked_list(node):
     prevnode = None
@@ -14,8 +16,8 @@ def reverse_linked_list(node):
         node = nextnode
     return prevnode
 
-class TestReverseLinkedList(unittest.TestCase):
 
+class TestReverseLinkedList(unittest.TestCase):
     def test_reverse_linked_list_empty(self):
         result = reverse_linked_list(None)
         self.assertIsNone(result)
@@ -50,5 +52,6 @@ class TestReverseLinkedList(unittest.TestCase):
         self.assertEqual(result.successor.successor.value, 1)
         self.assertIsNone(result.successor.successor.successor)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

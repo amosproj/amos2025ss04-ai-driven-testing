@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestMergesort(unittest.TestCase):
     def test_mergesort_empty(self):
         self.assertEqual(mergesort([]), [])
@@ -18,5 +19,6 @@ class TestMergesort(unittest.TestCase):
         sorted_arr = mergesort(arr)
         self.assertEqual(sorted_arr, list(range(1000)))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -55,10 +55,8 @@ class Graph:
         return all_paths
 
 
-if __name__ == '__main__':
-    edges = [
-        (1, 2), (2, 3), (3, 4), (4, 1), (2, 4), (1, 3)
-    ]
+if __name__ == "__main__":
+    edges = [(1, 2), (2, 3), (3, 4), (4, 1), (2, 4), (1, 3)]
     graph = Graph(edges)
     hamiltonian_path = graph.get_hamiltonian_path(start=1)
 

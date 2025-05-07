@@ -1,5 +1,6 @@
 import unittest
 
+
 def next_palindrome(digit_list):
     high_mid = len(digit_list) // 2
     low_mid = (len(digit_list) - 1) // 2
@@ -16,6 +17,7 @@ def next_palindrome(digit_list):
             return digit_list
     return [1] + (len(digit_list) - 1) * [0] + [1]
 
+
 class TestNextPalindrome(unittest.TestCase):
     def test_next_palindrome(self):
         self.assertEqual(next_palindrome([1, 2, 3]), [1, 3, 1])
@@ -23,5 +25,6 @@ class TestNextPalindrome(unittest.TestCase):
         self.assertEqual(next_palindrome([1, 2, 9]), [1, 4, 1])
         self.assertEqual(next_palindrome([9, 8, 7, 6]), [9, 9, 9, 9])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

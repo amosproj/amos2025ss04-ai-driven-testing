@@ -1,5 +1,6 @@
 import unittest
 
+
 def powerset(arr):
     if arr:
         first, *rest = arr
@@ -8,8 +9,8 @@ def powerset(arr):
     else:
         return [[]]
 
-class TestPowerset(unittest.TestCase):
 
+class TestPowerset(unittest.TestCase):
     def test_empty_array(self):
         self.assertEqual(powerset([]), [[]])
 
@@ -20,7 +21,11 @@ class TestPowerset(unittest.TestCase):
         self.assertEqual(powerset([1, 2]), [[], [2], [1], [1, 2]])
 
     def test_three_elements(self):
-        self.assertEqual(powerset([1, 2, 3]), [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]])
+        self.assertEqual(
+            powerset([1, 2, 3]),
+            [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]],
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

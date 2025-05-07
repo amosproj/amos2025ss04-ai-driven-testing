@@ -1,5 +1,6 @@
 import unittest
 
+
 def mergesort(arr):
     def merge(left, right):
         result = []
@@ -23,6 +24,7 @@ def mergesort(arr):
         right = mergesort(arr[middle:])
         return merge(left, right)
 
+
 class TestMergesort(unittest.TestCase):
     def test_empty_array(self):
         self.assertEqual(mergesort([]), [])
@@ -34,10 +36,14 @@ class TestMergesort(unittest.TestCase):
         self.assertEqual(mergesort([1, 2, 3, 4, 5]), [1, 2, 3, 4, 5])
 
     def test_unsorted_array(self):
-        self.assertEqual(mergesort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]), [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9])
+        self.assertEqual(
+            mergesort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]),
+            [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9],
+        )
 
     def test_repeated_elements(self):
         self.assertEqual(mergesort([3, 3, 2, 1, 3, 3]), [1, 2, 3, 3, 3, 3])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

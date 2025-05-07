@@ -3,6 +3,7 @@ class Node:
         self.data = data
         self.successor = None
 
+
 def detect_cycle(node):
     hare = tortoise = node
 
@@ -49,5 +50,6 @@ class TestDetectCycle:
         node4.successor = node1
         self.assertTrue(detect_cycle(node1))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

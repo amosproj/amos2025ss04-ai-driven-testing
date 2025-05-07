@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestBucketsort(unittest.TestCase):
     def test_bucketsort(self):
         # Test case 1: Simple sorting with distinct elements
@@ -26,5 +27,6 @@ class TestBucketsort(unittest.TestCase):
         expected = []
         self.assertEqual(bucketsort(arr, k), expected)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

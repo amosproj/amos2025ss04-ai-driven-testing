@@ -1,6 +1,7 @@
 from heapq import *
 import unittest
 
+
 def shortest_path_length(length_by_edge, startnode, goalnode):
     unvisited_nodes = []  # FibHeap containing (node, distance) pairs
     heappush(unvisited_nodes, (0, startnode))
@@ -17,15 +18,18 @@ def shortest_path_length(length_by_edge, startnode, goalnode):
             if nextnode in visited_nodes:
                 continue
 
-            insert_or_update(unvisited_nodes,
-                             (min(
-                                 get(unvisited_nodes, nextnode) or float('inf'),
-                                 distance + length_by_edge[node, nextnode]
-                             ),
-                              nextnode)
-                             )
+            insert_or_update(
+                unvisited_nodes,
+                (
+                    min(
+                        get(unvisited_nodes, nextnode) or float("inf"),
+                        distance + length_by_edge[node, nextnode],
+                    ),
+                    nextnode,
+                ),
+            )
 
-    return float('inf')
+    return float("inf")
 
 
 def get(node_heap, wanted_node):
@@ -57,18 +61,18 @@ class Node:
         if isinstance(length_by_edge, dict):
             length_by_edge[(self, successor)] = length
 
+
 # Test class
 
 
 class TestShortestPathLength(unittest.TestCase):
-
     def setUp(self):
         global length_by_edge
         length_by_edge = {}
-        node1 = Node('A')
-        node2 = Node('B')
-        node3 = Node('C')
-        node4 = Node('D')
+        node1 = Node("A")
+        node2 = Node("B")
+        node3 = Node("C")
+        node4 = Node("D")
 
         node1.add_successor(node2, 5)
         node1.add_successor(node3, 3)
@@ -85,5 +89,6 @@ class TestShortestPathLength(unittest.TestCase):
         self.assertEqual(shortest_path_length(length_by_edge, node2, node4), 7)
         self.assertEqual(shortest_path_length(length_by_edge, node3, node4), 1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

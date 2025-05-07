@@ -1,4 +1,3 @@
-
 def flatten(arr):
     for x in arr:
         if isinstance(x, list):
@@ -6,4 +5,3 @@ def flatten(arr):
                 yield y
         else:
             yield x
-

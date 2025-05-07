@@ -1,5 +1,6 @@
 import unittest
 
+
 def bucketsort(arr, k):
     counts = [0] * k
     for x in arr:
@@ -11,8 +12,8 @@ def bucketsort(arr, k):
 
     return sorted_arr
 
-class TestBucketSort(unittest.TestCase):
 
+class TestBucketSort(unittest.TestCase):
     def test_empty_array(self):
         self.assertEqual(bucketsort([], 0), [])
 
@@ -44,5 +45,5 @@ class TestBucketSort(unittest.TestCase):
         self.assertEqual(bucketsort(arr, k), expected)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

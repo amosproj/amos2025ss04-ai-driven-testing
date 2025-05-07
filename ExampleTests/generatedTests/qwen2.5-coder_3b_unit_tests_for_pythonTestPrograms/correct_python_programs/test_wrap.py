@@ -1,9 +1,10 @@
 import unittest
 
+
 def wrap(text, cols):
     lines = []
     while len(text) > cols:
-        end = text.rfind(' ', 0, cols + 1)
+        end = text.rfind(" ", 0, cols + 1)
         if end == -1:
             end = cols
         line, text = text[:end], text[end:]
@@ -12,9 +13,12 @@ def wrap(text, cols):
     lines.append(text)
     return lines
 
+
 class TestWrapFunction(unittest.TestCase):
     def test_wrap_short_text(self):
-        self.assertEqual(wrap("This is a short test", 5), ["This is", "a short", "test"])
+        self.assertEqual(
+            wrap("This is a short test", 5), ["This is", "a short", "test"]
+        )
 
     def test_wrap_long_text_with_spaces(self):
         text = "This is a very long text that should be wrapped into multiple lines. This is to test the wrap function."
@@ -25,7 +29,7 @@ class TestWrapFunction(unittest.TestCase):
             "into multiple",
             "lines. This is",
             "to test the",
-            "wrap function."
+            "wrap function.",
         ]
         self.assertEqual(wrap(text, 10), expected_output)
 
@@ -36,7 +40,7 @@ class TestWrapFunction(unittest.TestCase):
             "textthatshouldb",
             "ewrappedintomul",
             "tiplelines.Thisi",
-            "snotwrap"
+            "snotwrap",
         ]
         self.assertEqual(wrap(text, 10), expected_output)
 
@@ -50,5 +54,6 @@ class TestWrapFunction(unittest.TestCase):
         expected_output = ["SingleWord"]
         self.assertEqual(wrap(text, 5), expected_output)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

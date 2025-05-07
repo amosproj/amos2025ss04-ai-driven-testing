@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def breadth_first_search(startnode, goalnode):
     queue = deque([startnode])
 
@@ -19,16 +20,16 @@ def breadth_first_search(startnode, goalnode):
 
     return False
 
+
 import unittest
 
 
 class TestBreadthFirstSearch(unittest.TestCase):
-
     def test_success(self):
         class MockNode(object):
             def __init__(self, successors=None):
                 self._successors = successors if successors is not None else []
-            
+
             def successors(self):
                 return iter(self._successors)
 
@@ -61,7 +62,7 @@ class TestBreadthFirstSearch(unittest.TestCase):
 
         node_a.successors = [node_b]
         node_b.successors.append(node_c)
-        
+
         self.assertFalse(breadth_first_search(node_a, node_e))
 
     def test_no_successors(self):
@@ -71,9 +72,13 @@ class TestBreadthFirstSearch(unittest.TestCase):
         no_node = Node()
 
         # Test when the startnode has no successors
-        with unittest.TestCase().assertRaises(RuntimeError):  # Expect RuntimeError since we cannot get next elements from empty iterables.
-            breadth_first_search(no_node, node_b)  # Assuming `node_b` was defined somewhere above.
+        with unittest.TestCase().assertRaises(
+            RuntimeError
+        ):  # Expect RuntimeError since we cannot get next elements from empty iterables.
+            breadth_first_search(
+                no_node, node_b
+            )  # Assuming `node_b` was defined somewhere above.
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -1,12 +1,8 @@
 import unittest
 
+
 def shunting_yard(tokens):
-    precedence = {
-        '+': 1,
-        '-': 1,
-        '*': 2,
-        '/': 2
-    }
+    precedence = {"+": 1, "-": 1, "*": 2, "/": 2}
 
     rpntokens = []
     opstack = []
@@ -32,28 +28,33 @@ class TestShuntingYard(unittest.TestCase):
         self.assertEqual(shunting_yard([5]), [5])
 
     def test_addition(self):
-        self.assertEqual(shunting_yard([3, 2, '+']), [3, 2, '+'])
+        self.assertEqual(shunting_yard([3, 2, "+"]), [3, 2, "+"])
 
     def test_subtraction(self):
-        self.assertEqual(shunting_yard([4, 1, '-']), [4, 1, '-'])
+        self.assertEqual(shunting_yard([4, 1, "-"]), [4, 1, "-"])
 
     def test_multiplication(self):
-        self.assertEqual(shunting_yard([3, 4, '*']), [3, 4, '*'])
+        self.assertEqual(shunting_yard([3, 4, "*"]), [3, 4, "*"])
 
     def test_division(self):
-        self.assertEqual(shunting_yard([8, 2, '/']), [8, 2, '/'])
+        self.assertEqual(shunting_yard([8, 2, "/"]), [8, 2, "/"])
 
     def test_multiple_operations(self):
-        self.assertEqual(shunting_yard([5, 1, '+', 2, '*']), [5, 1, '+', 2, '*'])
+        self.assertEqual(
+            shunting_yard([5, 1, "+", 2, "*"]), [5, 1, "+", 2, "*"]
+        )
 
     def test_precedence(self):
-        self.assertEqual(shunting_yard([2, 3, '*', 4, '/']), [2, 3, '*', 4, '/'])
+        self.assertEqual(
+            shunting_yard([2, 3, "*", 4, "/"]), [2, 3, "*", 4, "/"]
+        )
 
     def test_complex_expression(self):
         self.assertEqual(
-            shunting_yard([10, 5, '+', 7, '*', 3, '-']),
-            [10, 5, '+', 7, '*', 3, '-']
+            shunting_yard([10, 5, "+", 7, "*", 3, "-"]),
+            [10, 5, "+", 7, "*", 3, "-"],
         )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

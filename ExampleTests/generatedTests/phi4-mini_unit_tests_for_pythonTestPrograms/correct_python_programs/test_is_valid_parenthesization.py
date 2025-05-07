@@ -4,7 +4,7 @@ import unittest
 def is_valid_parenthesization(parens):
     depth = 0
     for paren in parens:
-        if paren == '(':
+        if paren == "(":
             depth += 1
         else:
             depth -= 1
@@ -15,7 +15,6 @@ def is_valid_parenthesization(parens):
 
 
 class TestIsValidParenthesization(unittest.TestCase):
-
     def test_valid_parentheses(self):
         self.assertTrue(is_valid_parenthesization("()"))
 
@@ -26,5 +25,5 @@ class TestIsValidParenthesization(unittest.TestCase):
         self.assertFalse(is_valid_parenthesization("[)"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -1,4 +1,3 @@
-
 def depth_first_search(startnode, goalnode):
     nodesvisited = set()
 
@@ -9,8 +8,6 @@ def depth_first_search(startnode, goalnode):
             return True
         else:
             nodesvisited.add(node)
-            return any(
-                search_from(nextnode) for nextnode in node.successors
-            )
+            return any(search_from(nextnode) for nextnode in node.successors)
 
     return search_from(startnode)

@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestNextPalindrome(unittest.TestCase):
     def test_next_palindrome(self):
         # Test case 1: Single digit
@@ -26,5 +27,6 @@ class TestNextPalindrome(unittest.TestCase):
         # Test case 8: Five digits with a carry
         self.assertEqual(next_palindrome([9, 9, 9, 9, 9]), [1, 0, 0, 0, 0])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

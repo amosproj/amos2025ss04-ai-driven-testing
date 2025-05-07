@@ -1,6 +1,6 @@
 def bubble_sort(arr):
     for n in range(len(arr) - 1, 0, -1):
-        swapped = False  
+        swapped = False
         for i in range(n):
             if arr[i] > arr[i + 1]:
                 arr[i], arr[i + 1] = arr[i + 1], arr[i]
@@ -10,7 +10,7 @@ def bubble_sort(arr):
 
 
 # Sample list to be sorted
-arr = [6,6,2]
+arr = [6, 6, 2]
 print("Unsorted list is:")
 print(arr)
 

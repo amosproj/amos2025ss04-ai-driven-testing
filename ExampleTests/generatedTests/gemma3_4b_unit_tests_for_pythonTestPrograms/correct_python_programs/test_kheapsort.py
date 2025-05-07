@@ -1,6 +1,7 @@
 import heapq
 import unittest
 
+
 def kheapsort(arr, k):
     import heapq
 
@@ -13,8 +14,8 @@ def kheapsort(arr, k):
     while heap:
         yield heapq.heappop(heap)
 
-class TestKheapsort(unittest.TestCase):
 
+class TestKheapsort(unittest.TestCase):
     def test_empty_array(self):
         self.assertEqual(list(kheapsort([], 0)), [])
         self.assertEqual(list(kheapsort([], 5)), [])
@@ -49,14 +50,14 @@ class TestKheapsort(unittest.TestCase):
         expected = sorted(arr[:k] + arr[k:])
         actual = list(kheapsort(arr, k))
         self.assertEqual(actual, expected)
-    
+
     def test_already_sorted(self):
         arr = [1, 2, 3, 4, 5]
         k = 3
         expected = sorted(arr[:k] + arr[k:])
         actual = list(kheapsort(arr, k))
         self.assertEqual(actual, expected)
-    
+
     def test_reverse_sorted(self):
         arr = [5, 4, 3, 2, 1]
         k = 3
@@ -65,5 +66,5 @@ class TestKheapsort(unittest.TestCase):
         self.assertEqual(actual, expected)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

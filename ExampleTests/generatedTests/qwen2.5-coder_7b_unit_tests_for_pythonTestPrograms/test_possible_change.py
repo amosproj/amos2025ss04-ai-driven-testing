@@ -1,5 +1,6 @@
 import unittest
 
+
 def possible_change(coins, total):
     if total == 0:
         return 1
@@ -9,8 +10,8 @@ def possible_change(coins, total):
     first, *rest = coins
     return possible_change(coins, total - first) + possible_change(rest, total)
 
-class TestPossibleChange(unittest.TestCase):
 
+class TestPossibleChange(unittest.TestCase):
     def test_total_zero(self):
         self.assertEqual(possible_change([1, 2, 3], 0), 1)
 
@@ -26,5 +27,6 @@ class TestPossibleChange(unittest.TestCase):
     def test_total_exceeds_sum_of_coins(self):
         self.assertEqual(possible_change([1, 2, 3], 10), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

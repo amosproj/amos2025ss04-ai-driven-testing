@@ -21,4 +21,5 @@ def calculator():
 
     print("Result:", result)
 
+
 calculator()

@@ -1,4 +1,3 @@
-
 def find_in_sorted(arr, x):
     def binsearch(start, end):
         if start == end:

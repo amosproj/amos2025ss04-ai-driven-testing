@@ -10,6 +10,7 @@ def bucketsort(arr, k):
 
     return sorted_arr
 
+
 # Second version of the function (the buggy one)
 def bucketsort(arr, k):
     counts = [0] * k
@@ -23,7 +24,9 @@ def bucketsort(arr, k):
 
     return sorted_arr
 
+
 import unittest
+
 
 class TestBucketsort(unittest.TestCase):
     def test_bucketsort(self, arr, expected_result=None, k=None):
@@ -41,5 +44,6 @@ class TestBucketsort(unittest.TestCase):
         result = bucketsort([-1, -3, 0], k=4)
         self.assertEqual(result, [-3, -1, 0])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

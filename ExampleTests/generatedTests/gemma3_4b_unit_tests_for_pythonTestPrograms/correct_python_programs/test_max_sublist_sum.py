@@ -1,7 +1,7 @@
 import unittest
 
-class TestMaxSublistSum(unittest.TestCase):
 
+class TestMaxSublistSum(unittest.TestCase):
     def test_empty_array(self):
         self.assertEqual(max_sublist_sum([]), 0)
 
@@ -26,5 +26,6 @@ class TestMaxSublistSum(unittest.TestCase):
     def test_large_numbers(self):
         self.assertEqual(max_sublist_sum([1000, -500, 200, -300, 50]), 100)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

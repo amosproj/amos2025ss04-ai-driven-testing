@@ -4,10 +4,11 @@ def gcd(a, b):
     else:
         return gcd(b, a % b)
 
+
 import unittest
 
-class TestGCD(unittest.TestCase):
 
+class TestGCD(unittest.TestCase):
     def test_gcd_positive_numbers(self):
         self.assertEqual(gcd(12, 18), 6)
         self.assertEqual(gcd(48, 18), 6)
@@ -27,5 +28,5 @@ class TestGCD(unittest.TestCase):
         self.assertEqual(gcd(13, 17), 1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

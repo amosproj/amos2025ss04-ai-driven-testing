@@ -1,6 +1,7 @@
 import unittest
 from mergesort import mergesort
 
+
 class Testmergesort(unittest.TestCase):
     def test_empty_array(self):
         arr = []
@@ -15,13 +16,13 @@ class Testmergesort(unittest.TestCase):
     def test_merging_sorted_arrays(self):
         # Split the array into two halves
         mid = len([1, 2, 3, 4]) // 2
-        left = [1, 2][ :mid]
+        left = [1, 2][:mid]
         right = [1, 2][mid:]
-        
+
         # Sort each half (though they are already sorted)
         sorted_left = mergesort(left)
         sorted_right = mergesort(right)
-        
+
         # Merge the two sorted arrays
         merged = []
         i = j = 0
@@ -38,8 +39,9 @@ class Testmergesort(unittest.TestCase):
         while j < len(sorted_right):
             merged.append(sorted_right[j])
             j += 1
-        
+
         self.assertEqual(merged, sorted([left + right]))
+
 
 if __name__ == "__main__":
     unittest.main()

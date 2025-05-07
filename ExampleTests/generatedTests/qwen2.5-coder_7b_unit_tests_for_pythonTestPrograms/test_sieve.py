@@ -1,5 +1,6 @@
 import unittest
 
+
 def sieve(max):
     primes = []
     for n in range(2, max + 1):
@@ -7,8 +8,8 @@ def sieve(max):
             primes.append(n)
     return primes
 
-class TestSieve(unittest.TestCase):
 
+class TestSieve(unittest.TestCase):
     def test_sieve_with_max_10(self):
         result = sieve(10)
         expected = [2, 3, 5, 7]
@@ -29,5 +30,6 @@ class TestSieve(unittest.TestCase):
         expected = [2]
         self.assertEqual(result, expected)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

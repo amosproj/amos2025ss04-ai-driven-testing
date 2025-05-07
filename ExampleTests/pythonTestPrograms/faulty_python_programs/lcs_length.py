@@ -11,7 +11,6 @@ def lcs_length(s, t):
     return max(dp.values()) if dp else 0
 
 
-
 """
 Longest Common Substring
 longest-common-substring

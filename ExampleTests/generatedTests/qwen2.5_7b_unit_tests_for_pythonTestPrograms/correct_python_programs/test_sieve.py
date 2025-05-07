@@ -8,8 +8,8 @@ def sieve(max):
 
 import unittest
 
-class TestSieveFunction(unittest.TestCase):
 
+class TestSieveFunction(unittest.TestCase):
     def test_sieve(self):
         self.assertEqual(sieve(10), [2, 3, 5, 7])
         self.assertEqual(sieve(20), [2, 3, 5, 7, 11, 13, 17, 19])
@@ -17,5 +17,5 @@ class TestSieveFunction(unittest.TestCase):
         self.assertEqual(sieve(2), [2])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

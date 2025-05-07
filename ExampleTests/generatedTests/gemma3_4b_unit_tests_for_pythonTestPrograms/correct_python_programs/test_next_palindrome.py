@@ -14,10 +14,11 @@ def next_palindrome(digit_list):
             return digit_list
     return [1] + (len(digit_list) - 1) * [0] + [1]
 
+
 import unittest
 
-class TestNextPalindrome(unittest.TestCase):
 
+class TestNextPalindrome(unittest.TestCase):
     def test_empty_list(self):
         self.assertEqual(next_palindrome([]), [1])
 
@@ -46,7 +47,11 @@ class TestNextPalindrome(unittest.TestCase):
         self.assertEqual(next_palindrome([1, 2, 3, 4, 5, 6]), [1, 2, 3, 4, 5])
 
     def test_number_with_some_9s(self):
-        self.assertEqual(next_palindrome([1, 2, 9, 9, 8, 9, 8, 9, 8, 9]), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        self.assertEqual(
+            next_palindrome([1, 2, 9, 9, 8, 9, 8, 9, 8, 9]),
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

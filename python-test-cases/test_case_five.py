@@ -5,6 +5,7 @@ import requests
 import json
 from pathlib import Path
 
+
 class DataProcessor:
     def __init__(self, urls, output_file):
         self.urls = urls
@@ -52,8 +53,8 @@ if __name__ == "__main__":
     processor = DataProcessor(
         urls=[
             "https://jsonplaceholder.typicode.com/todos/1",
-            "https://jsonplaceholder.typicode.com/todos/2"
+            "https://jsonplaceholder.typicode.com/todos/2",
         ],
-        output_file="output.json"
+        output_file="output.json",
     )
     processor.run()

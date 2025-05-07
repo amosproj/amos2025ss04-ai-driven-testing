@@ -3,6 +3,7 @@ import subprocess
 import shutil
 import sys
 
+
 def main():
     # Read arguments from args_test_llm_all_tests.txt
     if len(sys.argv) == 1:
@@ -20,8 +21,16 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Update source_dir and output_dir to be relative to the parent directory of the script's directory
     parent_dir = os.path.dirname(script_dir)
-    source_dir = os.path.join(parent_dir, sys.argv[2]) if len(sys.argv) == 3 else os.path.join(parent_dir, "pythonTestPrograms/correct_python_programs")
-    output_dir = os.path.join(parent_dir, f"{llm_name}_unit_tests_for_{os.path.basename(source_dir)}")
+    source_dir = (
+        os.path.join(parent_dir, sys.argv[2])
+        if len(sys.argv) == 3
+        else os.path.join(
+            parent_dir, "pythonTestPrograms/correct_python_programs"
+        )
+    )
+    output_dir = os.path.join(
+        parent_dir, f"{llm_name}_unit_tests_for_{os.path.basename(source_dir)}"
+    )
 
     # Create the output directory if it doesn't exist
     if not os.path.exists(output_dir):
@@ -48,9 +57,18 @@ def main():
 
             try:
                 result = subprocess.run(
-                    ["python3.11", main_script, "--llm_name", llm_name, "--prompt_file", prompt_file, "--output_file", output_file],
+                    [
+                        "python3.11",
+                        main_script,
+                        "--llm_name",
+                        llm_name,
+                        "--prompt_file",
+                        prompt_file,
+                        "--output_file",
+                        output_file,
+                    ],
                     text=True,
-                    check=True
+                    check=True,
                 )
 
                 # Postprocess the output to make it runnable
@@ -63,25 +81,30 @@ def main():
                 print(f"Generated unit test for {file_name} -> {output_file}")
 
             except subprocess.CalledProcessError as e:
-                print(f"Error generating unit test for {file_name}: {e.stderr}")
+                print(
+                    f"Error generating unit test for {file_name}: {e.stderr}"
+                )
             finally:
                 if os.path.exists(temp_prompt_file):
                     os.remove(temp_prompt_file)
 
 
 def postprocess_output(output_file):
-    #read the output file
+    # read the output file
     with open(output_file, "r") as f:
         output = f.read()
-    #only capture the part after the first '```python' and before the last '```'
-    start_index = output.find('```python')
-    end_index = output.rfind('```')
+    # only capture the part after the first '```python' and before the last '```'
+    start_index = output.find("```python")
+    end_index = output.rfind("```")
     if start_index != -1 and end_index != -1:
-        output = output[start_index + len('```python'):end_index].strip()
+        output = output[start_index + len("```python") : end_index].strip()
     else:
-        print("Error: Could not find the code block in the output. {output} \n\n {llm_name} \n\n {source_dir}")
+        print(
+            "Error: Could not find the code block in the output. {output} \n\n {llm_name} \n\n {source_dir}"
+        )
         return ""
     return output
+
 
 if __name__ == "__main__":
     main()

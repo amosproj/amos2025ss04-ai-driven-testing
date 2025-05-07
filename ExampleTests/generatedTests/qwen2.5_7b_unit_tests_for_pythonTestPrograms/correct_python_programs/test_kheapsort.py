@@ -2,6 +2,7 @@ import heapq
 from typing import Iterator
 import unittest
 
+
 def kheapsort(arr, k) -> Iterator[int]:
     heap = arr[:k]
     heapq.heapify(heap)
@@ -18,28 +19,28 @@ class TestKHeapsort(unittest.TestCase):
         result: list[int] = []
         for value in kheapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0], 4):
             result.append(value)
-        
+
         self.assertEqual(result, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
     def test_empty_array(self) -> None:
         result: list[int] = []
         for value in kheapsort([], 3):
             result.append(value)
-        
+
         self.assertEqual(result, [])
 
     def test_k_greater_than_length(self) -> None:
         result: list[int] = []
         for value in kheapsort([5, 4, 3, 2, 1], 6):
             result.append(value)
-        
+
         self.assertEqual(result, [1, 2, 3, 4, 5])
 
     def test_single_element(self) -> None:
         result: list[int] = []
         for value in kheapsort([7], 1):
             result.append(value)
-        
+
         self.assertEqual(result, [7])
 
 

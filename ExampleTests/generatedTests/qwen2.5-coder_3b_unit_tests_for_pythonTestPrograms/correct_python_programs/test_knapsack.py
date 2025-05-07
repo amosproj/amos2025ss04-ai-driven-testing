@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestKnapsack(unittest.TestCase):
     def test_knapsack(self):
         # Test case 1: Simple test case with weights and values
@@ -32,5 +33,6 @@ class TestKnapsack(unittest.TestCase):
         expected_result = 0
         self.assertEqual(knapsack(capacity, items), expected_result)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -5,8 +5,9 @@ from .shortest_path_length import shortest_path_length
 """
 Test shortest path length
 """
-def main():
 
+
+def main():
     node1 = Node("1")
     node5 = Node("5")
     node4 = Node("4", None, [node5])
@@ -21,12 +22,12 @@ def main():
         (node2, node3): 2,
         (node2, node4): 4,
         (node3, node4): 1,
-        (node4, node5): 1
+        (node4, node5): 1,
     }
 
     # Case 1: One path
     # Output: 4
-    result =  shortest_path_length(length_by_edge, node0, node1)
+    result = shortest_path_length(length_by_edge, node0, node1)
     print(result)
 
     # Case 2: Multiple path
@@ -43,6 +44,7 @@ def main():
     # Output: INT_MAX
     result = shortest_path_length(length_by_edge, node1, node5)
     print(result)
+
 
 if __name__ == "__main__":
     main()
