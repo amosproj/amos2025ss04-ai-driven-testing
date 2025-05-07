@@ -1,3 +1,10 @@
+"""Installation and setup configuration for the AI-driven testing package.
+
+This module contains the necessary setup information to install the package,
+define its dependencies, and provide metadata about the project. It uses
+setuptools to configure the package for distribution and installation.
+"""
+
 from setuptools import setup, find_packages
 
 setup(

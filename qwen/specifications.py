@@ -1,3 +1,10 @@
+"""Configuration settings for Qwen test generation framework.
+
+This module defines paths, model names, and other configuration variables
+used throughout the Qwen test generation system. It automatically detects
+the project's directory structure and configures the appropriate paths.
+"""
+
 # Edit these specifications to make the model run on your computer
 # Give the amos2025ss04-ai-driven-testing file location
 from pathlib import Path

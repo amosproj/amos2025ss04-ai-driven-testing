@@ -1,6 +1,10 @@
-# Excecutes commands to generate the model, save the output of the model in a file and remove the model after use
+"""Command execution utility for Ollama model management.
 
-import os
+This module handles the execution of terminal commands for creating, running,
+and removing Ollama models. It executes a sequence of commands in a specified
+directory, captures their output, and provides status feedback during the process.
+"""
+
 from pathlib import Path
 import subprocess
 

@@ -1,4 +1,10 @@
-# === codeAnalysisBot.py ===
+"""Code analysis bot for automated unit test generation.
+
+This module uses the Qwen model via Ollama to analyze Python code and generate
+appropriate unit tests. It measures performance metrics like generation time
+and validates that the generated tests have valid syntax and can be executed.
+The results are saved to a metrics file for further analysis.
+"""
 
 import ollama
 from pathlib import Path

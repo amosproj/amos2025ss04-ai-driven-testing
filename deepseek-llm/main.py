@@ -1,10 +1,17 @@
+"""DeepSeek Coder LLM interaction script via Ollama.
+
+This module provides functionality to run and interact with DeepSeek Coder models
+through Ollama in a Docker container. It handles container management, model pulling,
+and prompt generation with structured Markdown output.
+"""
+
 import docker
 import requests
 import time
 import os
 from tqdm import tqdm
 import json
-import sys
+import argparse  # Moved from line 211
 
 # Configuration
 OLLAMA_IMAGE = "ollama/ollama"
@@ -17,6 +24,15 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def start_ollama_container():
+    """Start and configure the Ollama Docker container.
+
+    Removes any existing Ollama container, pulls the latest image with
+    progress tracking, and starts a new container with volume mapping
+    for model persistence.
+
+    Returns:
+        docker.Container: The running Ollama container instance
+    """
     client = docker.from_env()
 
     try:
@@ -76,6 +92,20 @@ def start_ollama_container():
 
 
 def wait_for_ollama_api(timeout=60):
+    """Wait for the Ollama API to become available.
+
+    Attempts to connect to the API endpoint and waits until it responds
+    successfully or times out.
+
+    Args:
+        timeout: Maximum time to wait in seconds (default: 60)
+
+    Returns:
+        bool: True if the API became available
+
+    Raises:
+        TimeoutError: If the API doesn't become available within the timeout period
+    """
     start_time = time.time()
     while time.time() - start_time < timeout:
         try:
@@ -89,6 +119,13 @@ def wait_for_ollama_api(timeout=60):
 
 
 def pull_model(model):
+    """Pull a model from Ollama's repository.
+
+    Downloads the specified model with progress tracking.
+
+    Args:
+        model: Name of the model to pull (e.g., "deepseek-coder:1.3b")
+    """
     print(f"Pulling model: {model}")
     with requests.post(
         f"{OLLAMA_API_URL}/pull", json={"name": model}, stream=True
@@ -143,6 +180,20 @@ def pull_model(model):
 
 
 def send_prompt(prompt, model, output_file, stream=False):
+    """Send a prompt to the Ollama API and save the response to a file.
+
+    Structures the prompt with a system message that enforces Markdown output format.
+    Can stream responses for real-time display.
+
+    Args:
+        prompt: The prompt text to send
+        model: The model to use for generation
+        output_file: Path where the response should be saved
+        stream: Whether to stream the response (default: False)
+
+    Returns:
+        str: The generated response text
+    """
     # Force a system instruction to make output structured as Markdown
     system_message = (
         "You must respond ONLY in valid Markdown format.\n"
@@ -197,6 +248,10 @@ def send_prompt(prompt, model, output_file, stream=False):
 
 
 def clear_stdout():
+    """Clear the terminal screen.
+
+    Uses the appropriate system command based on the operating system.
+    """
     if os.name == "nt":
         os.system("cls")
     else:
@@ -204,11 +259,17 @@ def clear_stdout():
 
 
 def read_prompt(file):
+    """Read prompt content from a file.
+
+    Args:
+        file: Path to the prompt file
+
+    Returns:
+        str: Content of the prompt file
+    """
     with open(file, "r") as f:
         return f.read()
 
-
-import argparse
 
 if __name__ == "__main__":
     # Setup command line arguments
