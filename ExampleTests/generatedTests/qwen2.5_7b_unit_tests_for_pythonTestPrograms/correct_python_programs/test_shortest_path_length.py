@@ -1,5 +1,5 @@
-from heapq import *
 import unittest
+from heapq import *
 
 
 def shortest_path_length(length_by_edge, startnode, goalnode):

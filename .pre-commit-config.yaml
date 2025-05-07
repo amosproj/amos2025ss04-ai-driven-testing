@@ -20,3 +20,12 @@ repos:
         exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/).*$ 
         # Only run on changed files
         stages: [commit]
+
+-   repo: local
+    hooks:
+    -   id: pytest-check
+        name: pytest-check
+        entry: pytest -q
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,5 +1,8 @@
 import unittest
-from collections import Counter
+
+from correct_python_programs.collectionsfromcorrect_python_programsfromcorrect_python_programs import \
+    Counter
+from correct_python_programs.lisfromcorrect_python_programs import lis
 
 
 def lis(arr):

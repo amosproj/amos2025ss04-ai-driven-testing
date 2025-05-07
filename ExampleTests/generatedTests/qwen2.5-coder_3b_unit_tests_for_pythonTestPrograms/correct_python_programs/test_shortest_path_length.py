@@ -1,5 +1,5 @@
-from heapq import *
 import unittest
+from heapq import *
 
 
 class TestShortestPathLength(unittest.TestCase):

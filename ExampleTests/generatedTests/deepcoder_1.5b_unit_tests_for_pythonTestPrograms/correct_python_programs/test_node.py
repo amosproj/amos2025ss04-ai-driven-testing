@@ -1,4 +1,4 @@
-class Node:
+class Node(unittest.TestCase):
     def __init__(self, value=None, successor=None, successors=None, predecessors=None, incoming_nodes=None, outgoing_nodes=None):
         self.value = value
         self.successor = successor if successor is not None else None
@@ -26,6 +26,10 @@ class Node:
         return f"Node(value={self.value}, successor={self.successor!r}, successors={self.successors!r}, predecessors={self.predecessors!r}, incoming_nodes={self.incoming_nodes!r}, outgoing_nodes={self.outgoing_nodes!r})"
 
 import unittest
+
+from correct_python_programs.node import Node
+from correct_python_programs.nodefromcorrect_python_programs import Node
+
 
 class TestNode(unittest.TestCase):
     def test_node_value_none(self):

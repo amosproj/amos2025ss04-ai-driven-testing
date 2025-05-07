@@ -1,5 +1,8 @@
 import unittest
 
+from correct_python_programs.get_factorsfromcorrect_python_programs import \
+    get_factors
+
 
 def get_factors(n):
     if n == 1:

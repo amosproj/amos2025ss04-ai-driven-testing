@@ -1,7 +1,6 @@
 from .node import Node
 from .topological_ordering import topological_ordering
 
-
 """
 Driver to test topological ordering
 """

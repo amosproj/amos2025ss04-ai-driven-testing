@@ -27,6 +27,9 @@ def bucketsort(arr, k):
 
 import unittest
 
+from correct_python_programs.bucketsortfromcorrect_python_programs import \
+    bucketsort
+
 
 class TestBucketsort(unittest.TestCase):
     def test_bucketsort(self, arr, expected_result=None, k=None):

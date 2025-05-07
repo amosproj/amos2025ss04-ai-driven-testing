@@ -1,6 +1,5 @@
 from .shortest_path_lengths import shortest_path_lengths
 
-
 """
 Test shortest path lengths
 """

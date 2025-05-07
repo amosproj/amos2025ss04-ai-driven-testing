@@ -1,5 +1,8 @@
 import unittest
-from levenshtein import levenshtein
+
+from correct_python_programs.levenshteinfromcorrect_python_programsfromcorrect_python_programs import \
+    levenshtein
+
 
 class TestLevenshtein(unittest.TestCase):
     def test_levenshtein(self):

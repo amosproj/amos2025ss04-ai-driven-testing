@@ -6,8 +6,8 @@ validate syntax, clean response text, and save metrics to a file for further
 analysis.
 """
 
-import time
 import json
+import time
 
 
 def measure_generation_time(client, model_name, prompt):

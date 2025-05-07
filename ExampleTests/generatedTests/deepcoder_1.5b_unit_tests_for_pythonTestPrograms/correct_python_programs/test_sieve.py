@@ -8,9 +8,14 @@ def sieve(max):
 
 # Testclass implementation
 import unittest
-from unittest import TestCase
 
-class SieveTestCase(TestCase):
+from correct_python_programs.sievefromcorrect_python_programsfromcorrect_python_programs import \
+    sieve
+from unittestfromcorrect_python_programsfromcorrect_python_programs import \
+    TestCase
+
+
+class SieveTestCase(unittest.TestCase)(TestCase):
     def test_sieve(self):
         # Test sieve function with different max values
         self.assertEqual(sieve(2), [2])
@@ -26,8 +31,9 @@ if __name__ == '__main__':
 ```python
 """
 import unittest
+from correct_python_programs.sieve from correct_python_programs from correct_python_programs import sieve
 
-class SieveTestCase(TestCase):
+class SieveTestCase(unittest.TestCase)(TestCase):
     def test_sieve(self):
         # Test sieve function with different max values
         self.assertEqual(Sieve(2), [2])

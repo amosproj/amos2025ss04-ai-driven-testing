@@ -1,7 +1,7 @@
 """Implementation of Dijkstra's algorithm for shortest path calculation."""
 
 # Replace star import with explicit imports
-from heapq import heappush, heappop
+from heapq import heappop, heappush
 
 
 def shortest_path_length(length_by_edge, startnode, goalnode):

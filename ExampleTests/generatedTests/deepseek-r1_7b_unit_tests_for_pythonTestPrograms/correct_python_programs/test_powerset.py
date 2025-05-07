@@ -1,6 +1,6 @@
 import sys
-from unittest import TestCase
 from itertools import combinations
+from unittest import TestCase
 
 
 def powerset(arr):

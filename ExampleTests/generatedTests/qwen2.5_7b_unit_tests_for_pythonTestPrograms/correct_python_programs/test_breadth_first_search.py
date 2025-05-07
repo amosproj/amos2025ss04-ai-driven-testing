@@ -22,8 +22,8 @@ def breadth_first_search(startnode, goalnode):
     return False
 
 
-from collections import deque as Queue
 import unittest
+from collections import deque as Queue
 
 
 class Node:

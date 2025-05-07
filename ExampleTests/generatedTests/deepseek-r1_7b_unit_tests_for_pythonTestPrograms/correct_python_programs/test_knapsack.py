@@ -1,5 +1,8 @@
 import unittest
-from knapsack import knapsack
+
+from correct_python_programs.knapsackfromcorrect_python_programsfromcorrect_python_programs import \
+    knapsack
+
 
 class KnapsackTest(unittest.TestCase):
     def test_knapsack_empty_items(self):

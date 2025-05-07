@@ -1,5 +1,5 @@
-import unittest
 import string
+import unittest
 
 
 def to_base(num, b):

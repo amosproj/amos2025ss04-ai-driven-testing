@@ -5,10 +5,10 @@ and removing Ollama models. It executes a sequence of commands in a specified
 directory, captures their output, and provides status feedback during the process.
 """
 
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
-from specifications import script_directory, model_name
+from specifications import model_name, script_directory
 
 
 def execute_commands_in_directory(directory, commands):

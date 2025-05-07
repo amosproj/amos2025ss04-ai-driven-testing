@@ -5,7 +5,7 @@ define its dependencies, and provide metadata about the project. It uses
 setuptools to configure the package for distribution and installation.
 """
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="ai-driven-testing",

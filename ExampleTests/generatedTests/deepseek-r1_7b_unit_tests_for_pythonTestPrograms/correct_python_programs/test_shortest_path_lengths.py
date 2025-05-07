@@ -1,11 +1,18 @@
-from collections import defaultdict
-from unittest import TestCase
+import unittest
+
 import min  # Using math module or another appropriate one
+from correct_python_programs.collectionsfromcorrect_python_programsfromcorrect_python_programs import \
+    defaultdict
+from correct_python_programs.shortest_path_lengthsfromcorrect_python_programs import \
+    shortest_path_lengths
+from unittestfromcorrect_python_programsfromcorrect_python_programs import \
+    TestCase
+
 
 def shortest_path_lengths(n, length_by_edge):
     # ... existing code ...
 
-class TestShortestPath(TestCase):
+class TestShortestPath(unittest.TestCase)(TestCase):
     def test_shortest_path_lengths(self):
         expected = {(0, 1): 2, (0, 2): 3, (1, 2): 1}
         result = shortest_path_lengths(3, {(0, 1): 2, (1, 2): 1, (0, 2): 5})

@@ -1,6 +1,5 @@
 from .shortest_paths import shortest_paths
 
-
 """
 Test shortest paths
 """

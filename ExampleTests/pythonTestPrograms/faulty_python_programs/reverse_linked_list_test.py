@@ -1,7 +1,6 @@
 from .node import Node
 from .reverse_linked_list import reverse_linked_list
 
-
 """
 Driver to test reverse linked list
 """

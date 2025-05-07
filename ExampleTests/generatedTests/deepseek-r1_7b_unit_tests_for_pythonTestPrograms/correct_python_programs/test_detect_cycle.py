@@ -1,6 +1,10 @@
 import unittest
 
-class TestNode:
+from correct_python_programs.detect_cyclefromcorrect_python_programs import \
+    detect_cycle
+
+
+class TestNode(unittest.TestCase):
     def __init__(self, value):
         self.value = value
         self.successor = None

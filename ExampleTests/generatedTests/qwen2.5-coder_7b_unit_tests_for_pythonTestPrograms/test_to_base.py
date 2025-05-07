@@ -1,5 +1,5 @@
 import unittest
-from string import digits, ascii_uppercase
+from string import ascii_uppercase, digits
 
 
 def to_base(num, b):

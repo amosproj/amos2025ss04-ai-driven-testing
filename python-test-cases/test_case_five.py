@@ -6,12 +6,13 @@ a file. It demonstrates concurrent programming concepts using Python's threading
 module.
 """
 
-import threading
-import random
-import time
-import requests
 import json
+import random
+import threading
+import time
 from pathlib import Path
+
+import requests
 
 
 class DataProcessor:

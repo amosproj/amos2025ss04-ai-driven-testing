@@ -6,16 +6,17 @@ and validates that the generated tests have valid syntax and can be executed.
 The results are saved to a metrics file for further analysis.
 """
 
-import ollama
 from pathlib import Path
-from specifications import model_name, code_path
+
+import ollama
 from metrics import (
-    measure_generation_time,
     check_syntax_validity,
-    save_metrics,
     clean_response_text,
+    measure_generation_time,
+    save_metrics,
 )
 from run_tests import run_test_script
+from specifications import code_path, model_name
 
 # Initialize Ollama client
 client = ollama.Client()

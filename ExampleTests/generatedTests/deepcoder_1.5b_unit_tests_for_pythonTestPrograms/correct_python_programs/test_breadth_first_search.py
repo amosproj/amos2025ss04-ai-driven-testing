@@ -1,5 +1,5 @@
-from collections import deque as Queue
 import unittest
+from collections import deque as Queue
 
 
 class Testclass:

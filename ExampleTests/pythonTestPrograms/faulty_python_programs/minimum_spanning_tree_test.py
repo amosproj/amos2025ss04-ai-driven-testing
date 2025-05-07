@@ -1,6 +1,5 @@
 from .minimum_spanning_tree import minimum_spanning_tree
 
-
 """
 Driver to test minimum spanning tree
 """

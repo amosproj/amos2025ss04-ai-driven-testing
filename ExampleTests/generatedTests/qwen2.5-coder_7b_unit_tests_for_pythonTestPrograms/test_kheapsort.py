@@ -1,5 +1,5 @@
 import unittest
-from heapq import heapify, heappushpop, heappop
+from heapq import heapify, heappop, heappushpop
 
 
 def kheapsort(arr, k):

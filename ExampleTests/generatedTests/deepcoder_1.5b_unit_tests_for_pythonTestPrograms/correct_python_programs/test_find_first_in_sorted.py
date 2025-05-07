@@ -1,4 +1,5 @@
 import unittest
+
 from . import find_first_in_sorted
 
 
@@ -54,6 +55,6 @@ def test_case(func, arr, x):
 
 # Create Testclass instance
 test_testclass = Testclass()
-all_results = test_testcase.run_tests()
+all_results = test_testclass.all_tests
 
 print("All tests passed:", all_results)

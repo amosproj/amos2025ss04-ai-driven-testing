@@ -1,5 +1,7 @@
-import random
 import unittest
+
+from correct_python_programs.kthfromcorrect_python_programs import kth
+from correct_python_programsfromcorrect_python_programs import random
 
 
 def kth(arr, k):

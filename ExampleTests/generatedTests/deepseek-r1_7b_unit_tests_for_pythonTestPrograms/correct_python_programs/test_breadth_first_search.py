@@ -1,5 +1,9 @@
-from collections import deque as Queue
 import unittest
+
+from correct_python_programs.breadth_first_searchfromcorrect_python_programs import \
+    breadth_first_search
+from correct_python_programs.collections import deque as Queue
+
 
 def breadth_first_search(startnode, goalnode):
     queue = Queue()

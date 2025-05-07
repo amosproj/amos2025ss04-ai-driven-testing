@@ -10,6 +10,9 @@ def subsequences(a, b, k):
 
 import unittest
 
+from correct_python_programs.subsequencesfromcorrect_python_programs import \
+    subsequences
+
 
 class TestSubsequences(unittest.TestCase):
     def test_subsequences_k_zero(self):

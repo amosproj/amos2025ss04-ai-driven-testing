@@ -1,6 +1,6 @@
 import heapq
-from typing import Iterator
 import unittest
+from typing import Iterator
 
 
 def kheapsort(arr, k) -> Iterator[int]:

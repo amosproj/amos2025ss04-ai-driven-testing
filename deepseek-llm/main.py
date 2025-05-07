@@ -5,13 +5,14 @@ through Ollama in a Docker container. It handles container management, model pul
 and prompt generation with structured Markdown output.
 """
 
+import argparse  # Moved from line 211
+import json
+import os
+import time
+
 import docker
 import requests
-import time
-import os
 from tqdm import tqdm
-import json
-import argparse  # Moved from line 211
 
 # Configuration
 OLLAMA_IMAGE = "ollama/ollama"

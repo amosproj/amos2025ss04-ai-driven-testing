@@ -1,7 +1,11 @@
-import heapq
+import unittest
 from unittest import TestCase, main
 
-class KHeapSortTestCase(TestCase):
+from correct_python_programs.kheapsort import kheapsort
+from correct_python_programsfromcorrect_python_programs import heapq
+
+
+class KHeapSortTestCase(unittest.TestCase)(TestCase):
     def test_kheapsort(self):
         # Test with k=0 (should return empty list)
         sorted = list(kheapsort([], 0))

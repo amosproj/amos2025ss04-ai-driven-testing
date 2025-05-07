@@ -5,8 +5,8 @@ This module provides a Graph class that can find all possible Hamiltonian paths
 undirected graph represented as a collection of edges.
 """
 
-from typing import Dict, Set, List
 from collections import defaultdict
+from typing import Dict, List, Set
 
 
 class Graph:

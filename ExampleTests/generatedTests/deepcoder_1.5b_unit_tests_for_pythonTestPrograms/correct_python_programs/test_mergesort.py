@@ -1,5 +1,6 @@
 import unittest
-from mergesort import mergesort
+
+from correct_python_programs.mergesort import mergesort
 
 
 class Testmergesort(unittest.TestCase):

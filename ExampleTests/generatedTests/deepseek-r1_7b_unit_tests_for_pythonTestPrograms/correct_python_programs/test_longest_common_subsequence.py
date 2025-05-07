@@ -15,7 +15,7 @@ def longest_common_subsequence(a, b):
 
 # Test cases using pytest
 
-import pytest
+from correct_python_programsfromcorrect_python_programs import pytest
 
 
 def test_longest_common_subsequence():

@@ -1,7 +1,9 @@
 import unittest
-from graph import (
-    shortest_paths,
-)  # Assuming the function is in a module named graph
+
+from correct_python_programs.shortest_pathsfromcorrect_python_programs import \
+    shortest_paths
+from graph import \
+    shortest_paths  # Assuming the function is in a module named graph
 
 
 class TestShortestPaths(unittest.TestCase):

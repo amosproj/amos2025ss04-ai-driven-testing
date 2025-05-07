@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestShuntingYard(unittest.TestCase):
     def test_shunting_yard(self):
         # Test case 1: Simple addition and subtraction

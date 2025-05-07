@@ -1,5 +1,7 @@
 import unittest
-from .subsequences import subsequences
+
+from .subsequencesfromcorrect_python_programsfromcorrect_python_programs import \
+    subsequences
 
 
 class Testsubsequences(unittest.TestCase):

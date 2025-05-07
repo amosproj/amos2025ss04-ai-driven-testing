@@ -1,5 +1,5 @@
-from typing import *
 from collections import *
+from typing import *
 
 
 class Node:

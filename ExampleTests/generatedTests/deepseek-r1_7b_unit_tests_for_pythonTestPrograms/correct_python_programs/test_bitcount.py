@@ -8,6 +8,9 @@ def bitcount(n):
 
 import unittest
 
+from correct_python_programs.bitcountfromcorrect_python_programs import \
+    bitcount
+
 
 class TestBitCount(unittest.TestCase):
     def test_bitcount(self):

@@ -1,5 +1,11 @@
-import math
-from unittest import TestCase
+import unittest
+
+from correct_python_programs.shortest_path_lengthsfromcorrect_python_programs import \
+    shortest_path_lengths
+from correct_python_programsfromcorrect_python_programs import math
+from unittestfromcorrect_python_programsfromcorrect_python_programs import \
+    TestCase
+
 
 def shortest_path_lengths(n, length_by_edge):
     # Initialize default distances with infinity

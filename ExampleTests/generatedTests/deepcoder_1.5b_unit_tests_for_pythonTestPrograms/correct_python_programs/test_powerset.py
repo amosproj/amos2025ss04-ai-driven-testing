@@ -1,5 +1,8 @@
 import unittest
-from .powerset import powerset
+
+from .powersetfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    powerset
+
 
 def test_powerset_empty():
     assert powerset([]) == [[]]
@@ -20,7 +23,7 @@ Here's the complete code including both the function and its test class:
 
 ```python
 import unittest
-from .powerset import powerset
+from .powerset from correct_python_programs from correct_python_programs from correct_python_programs from correct_python_programs import powerset
 
 def test_powerset_empty():
     assert powerset([]) == [[]]

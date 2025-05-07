@@ -1,7 +1,6 @@
 from .node import Node
 from .shortest_path_length import shortest_path_length
 
-
 """
 Test shortest path length
 """

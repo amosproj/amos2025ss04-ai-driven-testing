@@ -1,5 +1,9 @@
 import unittest
 
+from correct_python_programs.next_permutationfromcorrect_python_programs import \
+    next_permutation
+
+
 def next_permutation(perm):
     """
     Generates the next lexicographical permutation of a list of numbers.
@@ -27,7 +31,7 @@ def next_permutation(perm):
     # If no such permutation is found (all elements are in descending order)
     return list(perm)
 
-class Testclass:
+class Testclass(unittest.TestCase):
     def test_next_permutation(self):
         # Test case 1: Sample input and expected output
         original = [3, 2, 1]

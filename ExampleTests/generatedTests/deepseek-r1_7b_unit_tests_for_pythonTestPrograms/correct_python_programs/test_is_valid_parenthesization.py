@@ -1,5 +1,9 @@
 import unittest
 
+from correct_python_programs.is_valid_parenthesizationfromcorrect_python_programs import \
+    is_valid_parenthesization
+
+
 class TestIsValidParenthesization(unittest.TestCase):
     """
     Test class for is_valid_parenthesization function

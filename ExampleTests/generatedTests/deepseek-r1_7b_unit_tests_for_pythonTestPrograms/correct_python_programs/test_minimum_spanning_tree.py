@@ -1,5 +1,5 @@
 def main():
-    import sys
+    from correct_python_programsfromcorrect_python_programs import sys
 
     def find(u, parent):
         while parent[u] != u:

@@ -1,5 +1,6 @@
 import unittest
-from max_sublist_sum import max_sublist_sum
+
+from correct_python_programs.max_sublist_sum import max_sublist_sum
 
 
 class Testclass:

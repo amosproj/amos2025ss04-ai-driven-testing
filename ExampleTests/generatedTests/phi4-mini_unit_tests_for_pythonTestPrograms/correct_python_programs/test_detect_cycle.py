@@ -1,5 +1,6 @@
 import unittest
 
+
 def detect_cycle(node):
     hare = tortoise = node
 
