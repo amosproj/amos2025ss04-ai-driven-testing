@@ -62,6 +62,9 @@ coverage.xml
 
 # Operating system files
 .DS_Store
+
+#outputs
+qwen/response.txt
 .Spotlight-V100
 .Trashes
 Thumbs.db
