@@ -1,5 +1,6 @@
 import unittest
 
+
 def mergesort(arr):
     def merge(left, right):
         result = []
@@ -23,8 +24,8 @@ def mergesort(arr):
         right = mergesort(arr[middle:])
         return merge(left, right)
 
-class TestMergesort(unittest.TestCase):
 
+class TestMergesort(unittest.TestCase):
     def test_empty_list(self):
         self.assertEqual(mergesort([]), [])
 
@@ -34,21 +35,27 @@ class TestMergesort(unittest.TestCase):
     def test_multiple_elements_sorted_list(self):
         arr = [1, 2, 3, 4, 5]
         result = mergesort(arr)
-        expected_result = sorted(arr) # This is the actual merge sort for reference
+        expected_result = sorted(
+            arr
+        )  # This is the actual merge sort for reference
         self.assertEqual(result, expected_result)
 
     def test_unsorted_list(self):
         unsorted_arr = [5, 3, 1, 2, 4]
         arr_to_sort = unsorted_arr.copy()
         mergesort(arr_to_sort)
-        expected_sorted = sorted(unsorted_arr) # This is the actual merge sort for reference
+        expected_sorted = sorted(
+            unsorted_arr
+        )  # This is the actual merge sort for reference
         self.assertEqual(sorted(arr_to_sort), expected_sorted)
 
     def test_list_with_duplicates(self):
         with_dups_arr = [3, 1, 2, 3]
         arr_to_sort = with_dups_arr.copy()
         mergesort(arr_to_sort)
-        expected_sorted = sorted(with_dups_arr) # This is the actual merge sort for reference
+        expected_sorted = sorted(
+            with_dups_arr
+        )  # This is the actual merge sort for reference
         self.assertEqual(sorted(arr_to_sort), expected_sorted)
 
     def test_large_unsorted_list(self):
@@ -57,5 +64,6 @@ class TestMergesort(unittest.TestCase):
         mergesort(arr_to_sort)
         self.assertEqual(sorted(arr_to_sort), sorted(large_unsorted_array))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

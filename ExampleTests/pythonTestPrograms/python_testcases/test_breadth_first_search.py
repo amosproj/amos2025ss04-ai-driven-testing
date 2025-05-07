@@ -2,7 +2,9 @@ import pytest
 from node import Node
 
 if pytest.use_correct:
-    from correct_python_programs.breadth_first_search import breadth_first_search
+    from correct_python_programs.breadth_first_search import (
+        breadth_first_search,
+    )
 else:
     from python_programs.breadth_first_search import breadth_first_search
 

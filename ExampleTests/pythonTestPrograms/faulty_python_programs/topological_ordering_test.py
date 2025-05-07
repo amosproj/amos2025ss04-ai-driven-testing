@@ -1,14 +1,15 @@
 from .node import Node
 from .topological_ordering import topological_ordering
 
-
 """
 Driver to test topological ordering
 """
+
+
 def main():
     # Case 1: Wikipedia graph
     # Output: 5 7 3 11 8 10 2 9
-    
+
     five = Node(5)
     seven = Node(7)
     three = Node(3)
@@ -30,11 +31,15 @@ def main():
     ten.incoming_nodes = [eleven, three]
 
     try:
-        [print(x.value, end=" ") for x in topological_ordering([five, seven, three, eleven, eight, two, nine, ten])]
+        [
+            print(x.value, end=" ")
+            for x in topological_ordering(
+                [five, seven, three, eleven, eight, two, nine, ten]
+            )
+        ]
     except Exception as e:
         print(e)
     print()
-
 
     # Case 2: GeekforGeeks example
     # Output: 4 5 0 2 3 1
@@ -56,11 +61,13 @@ def main():
     three.outgoing_nodes = [one]
 
     try:
-        [print(x.value, end=" ") for x in topological_ordering([zero, one, two, three, four, five])]
+        [
+            print(x.value, end=" ")
+            for x in topological_ordering([zero, one, two, three, four, five])
+        ]
     except Exception as e:
         print(e)
     print()
-    
 
     # Case 3: Cooking with InteractivePython
     # Output:
@@ -90,7 +97,12 @@ def main():
     eat.incoming_nodes = [syrup, turn]
 
     try:
-        [print(x.value, end=" ") for x in topological_ordering([milk, egg, oil, mix, syrup, griddle, pour, turn, eat])]
+        [
+            print(x.value, end=" ")
+            for x in topological_ordering(
+                [milk, egg, oil, mix, syrup, griddle, pour, turn, eat]
+            )
+        ]
     except Exception as e:
         print(e)
     print()

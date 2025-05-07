@@ -1,4 +1,3 @@
-
 def pascal(n):
     rows = [[1]]
     for r in range(1, n):
@@ -10,4 +9,3 @@ def pascal(n):
         rows.append(row)
 
     return rows
-

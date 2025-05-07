@@ -8,21 +8,28 @@ def hanoi(height, start=1, end=3):
 
     return steps
 
+
 import unittest
+
 
 class TestHanoi(unittest.TestCase):
     def test_hanoi_moves(self, height):
-        expected_moves = (2 ** height) - 1
+        expected_moves = (2**height) - 1
         actual_moves = len(hanoi(height))
-        self.assertEqual(expected_moves, actual_moves,
-                         f"Number of moves for height {height} should be {expected_moves}")
+        self.assertEqual(
+            expected_moves,
+            actual_moves,
+            f"Number of moves for height {height} should be {expected_moves}",
+        )
 
     def test_hanoi_moves_between(self, height):
         steps = hanoi(height)
         valid_pegs = {1, 2, 3}
         for move in steps:
             if not (move[0] in valid_pegs and move[1] in valid_pegs):
-                self.fail(f"Invalid peg move found: moving from {move[0]} to {move[1]}")
+                self.fail(
+                    f"Invalid peg move found: moving from {move[0]} to {move[1]}"
+                )
 
     def test_hanoi_move_consistency(self, height):
         steps = hanoi(height)
@@ -32,5 +39,6 @@ class TestHanoi(unittest.TestCase):
                 self.fail(f"Duplicate or invalid move detected: {move}")
             seen_moves.add(move)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

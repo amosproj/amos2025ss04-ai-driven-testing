@@ -1,7 +1,16 @@
 import unittest
 
+
 class Node:
-    def __init__(self, value=None, successor=None, successors=[], predecessors=[], incoming_nodes=[], outgoing_nodes=[]):
+    def __init__(
+        self,
+        value=None,
+        successor=None,
+        successors=[],
+        predecessors=[],
+        incoming_nodes=[],
+        outgoing_nodes=[],
+    ):
         self.value = value
         self.successor = successor
         self.successors = successors
@@ -20,7 +29,6 @@ class Node:
 
 
 class TestNode(unittest.TestCase):
-
     def test_successor(self):
         node = Node("A")
         self.assertEqual(node.successor(), "A")
@@ -58,5 +66,6 @@ class TestNode(unittest.TestCase):
         self.assertEqual(len(node.incoming_nodes), 0)
         self.assertEqual(len(node.outgoing_nodes), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

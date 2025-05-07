@@ -5,6 +5,7 @@ def sieve(max):
             primes.append(n)
     return primes
 
+
 """
 Sieve of Eratosthenes
 prime-sieve

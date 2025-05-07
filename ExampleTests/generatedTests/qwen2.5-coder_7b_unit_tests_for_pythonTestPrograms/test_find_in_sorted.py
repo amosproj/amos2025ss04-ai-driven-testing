@@ -1,5 +1,6 @@
 import unittest
 
+
 def find_in_sorted(arr, x):
     def binsearch(start, end):
         if start == end:
@@ -13,6 +14,7 @@ def find_in_sorted(arr, x):
             return mid
 
     return binsearch(0, len(arr))
+
 
 class TestFindInSorted(unittest.TestCase):
     def test_empty_array(self):
@@ -36,5 +38,6 @@ class TestFindInSorted(unittest.TestCase):
     def test_multiple_elements_found_at_end(self):
         self.assertEqual(find_in_sorted([1, 2, 4, 5, 6], 6), 4)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

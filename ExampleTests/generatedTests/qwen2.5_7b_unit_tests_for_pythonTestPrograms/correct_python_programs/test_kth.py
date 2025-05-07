@@ -16,11 +16,13 @@ def kth(arr, k):
 
 import unittest
 
+
 class TestKthElement(unittest.TestCase):
     def test_kth_element(self):
         self.assertEqual(kth([3, 2, 1, 5, 6, 4], 2), 3)
         self.assertEqual(kth([3, 2, 1, 5, 6, 4], 0), 1)
         self.assertEqual(kth([3, 2, 1, 5, 6, 4], 5), 6)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

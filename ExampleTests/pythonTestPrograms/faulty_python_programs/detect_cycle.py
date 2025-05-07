@@ -12,7 +12,6 @@ def detect_cycle(node):
             return True
 
 
-
 """
 Linked List Cycle Detection
 tortoise-hare

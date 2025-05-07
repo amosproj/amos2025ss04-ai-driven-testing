@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestGetFactors(unittest.TestCase):
     def test_get_factors_1(self):
         self.assertEqual(get_factors(1), [])
@@ -43,6 +44,7 @@ class TestGetFactors(unittest.TestCase):
     def test_get_factors_24(self):
         self.assertEqual(get_factors(24), [2, 2, 2, 3])
 
+
 # Run the tests
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

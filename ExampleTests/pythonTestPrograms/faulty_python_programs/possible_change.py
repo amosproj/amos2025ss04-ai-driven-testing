@@ -9,7 +9,6 @@ def possible_change(coins, total):
     return possible_change(coins, total - first) + possible_change(rest, total)
 
 
-
 """
 Making Change
 change

@@ -16,6 +16,10 @@ def next_palindrome(digit_list):
 
 import unittest
 
+from correct_python_programs.next_palindromefromcorrect_python_programs import \
+    next_palindrome
+
+
 class TestNextPalindrome(unittest.TestCase):
     def test_palindrome_123(self):
         input = [1, 2, 3]

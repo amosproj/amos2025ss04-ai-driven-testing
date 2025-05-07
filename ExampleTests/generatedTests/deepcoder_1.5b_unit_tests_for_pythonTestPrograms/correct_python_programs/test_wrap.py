@@ -1,6 +1,10 @@
 import unittest
 
-class Testwrap:
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -95,7 +99,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -141,7 +149,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -187,7 +199,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -232,7 +248,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -277,7 +297,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -322,7 +346,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."
         cols = 20
@@ -381,7 +409,11 @@ def wrap(text, cols):
 
 import unittest
 
-class Testwrap(unittest.TestCase):
+from correct_python_programs.wrapfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    wrap
+
+
+class Testwrap(unittest.TestCase)(unittest.TestCase):
     
     def test_wrap_with_long_text(self):
         original_text = "This is a very long text that needs to be wrapped with several lines."

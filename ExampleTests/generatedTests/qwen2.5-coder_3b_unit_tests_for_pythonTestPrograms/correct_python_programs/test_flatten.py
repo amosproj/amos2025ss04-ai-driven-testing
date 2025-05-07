@@ -1,5 +1,6 @@
 import unittest
 
+
 def flatten(arr):
     for x in arr:
         if isinstance(x, list):
@@ -8,8 +9,8 @@ def flatten(arr):
         else:
             yield x
 
-class TestFlatten(unittest.TestCase):
 
+class TestFlatten(unittest.TestCase):
     def test_flatten_empty_list(self):
         self.assertEqual(list(flatten([])), [])
 
@@ -20,7 +21,8 @@ class TestFlatten(unittest.TestCase):
         self.assertEqual(list(flatten([[1, 2], [3, 4]])), [1, 2, 3, 4])
 
     def test_flatten_mixed_types(self):
-        self.assertEqual(list(flatten(['a', [1, 'b'], [2]])), ['a', 1, 'b', 2])
+        self.assertEqual(list(flatten(["a", [1, "b"], [2]])), ["a", 1, "b", 2])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

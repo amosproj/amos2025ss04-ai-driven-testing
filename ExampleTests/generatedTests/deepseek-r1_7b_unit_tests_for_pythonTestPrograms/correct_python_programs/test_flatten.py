@@ -1,8 +1,11 @@
 import unittest
-from typing import List, Any
-import numpy as np
 
-class FlattenManager:
+import numpy as np
+from correct_python_programs.flattenfromcorrect_python_programs import flatten
+from correct_python_programs.typing import Any, List
+
+
+class FlattenManager(unittest.TestCase):
     def __init__(self, arr: List[Any]) -> None:
         self._arr = arr
         self._flattened = list(flatten(arr))

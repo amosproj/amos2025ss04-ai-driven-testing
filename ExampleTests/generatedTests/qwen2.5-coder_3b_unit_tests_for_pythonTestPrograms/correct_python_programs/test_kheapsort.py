@@ -1,5 +1,7 @@
 import unittest
+
 from kheapsort import kheapsort
+
 
 class TestKheapSort(unittest.TestCase):
     def test_kheapsort(self):
@@ -33,5 +35,6 @@ class TestKheapSort(unittest.TestCase):
         result = list(kheapsort(arr, k=3))
         self.assertEqual(result, expected)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

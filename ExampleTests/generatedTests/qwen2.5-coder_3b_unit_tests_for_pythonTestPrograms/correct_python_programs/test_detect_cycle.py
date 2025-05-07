@@ -1,10 +1,12 @@
-from typing import *
 from collections import *
+from typing import *
+
 
 class Node:
     def __init__(self, value):
         self.value = value
         self.successor = None
+
 
 def detect_cycle(node):
     hare = tortoise = node
@@ -69,5 +71,6 @@ class TestDetectCycle(unittest.TestCase):
         node1 = Node(1)
         self.assertFalse(detect_cycle(node1))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

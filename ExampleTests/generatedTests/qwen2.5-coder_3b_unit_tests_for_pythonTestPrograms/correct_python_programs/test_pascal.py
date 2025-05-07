@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestPascal(unittest.TestCase):
     def test_pascal(self):
         self.assertEqual(pascal(0), [[1]])
@@ -19,5 +20,6 @@ class TestPascal(unittest.TestCase):
     def test_pascal_three(self):
         self.assertEqual(pascal(3), [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1]])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

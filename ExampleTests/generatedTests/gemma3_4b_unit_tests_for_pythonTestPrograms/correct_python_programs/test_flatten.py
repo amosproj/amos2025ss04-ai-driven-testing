@@ -6,10 +6,11 @@ def flatten(arr):
         else:
             yield x
 
+
 import unittest
 
-class TestFlatten(unittest.TestCase):
 
+class TestFlatten(unittest.TestCase):
     def test_empty_list(self):
         self.assertEqual(list(flatten([])), [])
 
@@ -23,11 +24,16 @@ class TestFlatten(unittest.TestCase):
         self.assertEqual(list(flatten([[1, 2], [3, [4, 5]]])), [1, 2, 3, 4, 5])
 
     def test_mixed_types(self):
-        self.assertEqual(list(flatten([1, [2, 'a'], [3, [4, 'b']]]),), [1, 2, 'a', 3, 4, 'b'])
+        self.assertEqual(
+            list(
+                flatten([1, [2, "a"], [3, [4, "b"]]]),
+            ),
+            [1, 2, "a", 3, 4, "b"],
+        )
 
     def test_deeply_nested_list(self):
         self.assertEqual(list(flatten([[1, [2, [3]]]])), [1, 2, 3])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

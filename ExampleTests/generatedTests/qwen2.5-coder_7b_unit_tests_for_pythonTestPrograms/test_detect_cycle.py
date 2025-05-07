@@ -1,9 +1,11 @@
 import unittest
 
+
 class Node:
     def __init__(self, value):
         self.value = value
         self.successor = None
+
 
 def detect_cycle(node):
     hare = tortoise = node
@@ -18,8 +20,8 @@ def detect_cycle(node):
         if hare is tortoise:
             return True
 
-class TestDetectCycle(unittest.TestCase):
 
+class TestDetectCycle(unittest.TestCase):
     def test_no_cycle(self):
         node1 = Node(1)
         node2 = Node(2)
@@ -57,5 +59,6 @@ class TestDetectCycle(unittest.TestCase):
     def test_empty_list(self):
         self.assertFalse(detect_cycle(None))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -14,6 +14,7 @@ def next_palindrome(digit_list):
             return digit_list
     return [1] + (len(digit_list)) * [0] + [1]
 
+
 """
 Finds the next palindromic integer when given the current integer
 Integers are stored as arrays of base 10 digits from most significant to least significant

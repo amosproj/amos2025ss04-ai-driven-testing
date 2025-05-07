@@ -20,17 +20,15 @@ def depth_first_search(startnode, goalnode):
             return True
         else:
             nodesvisited.add(node)
-            return any(
-                search_from(nextnode) for nextnode in node.successors
-            )
+            return any(search_from(nextnode) for nextnode in node.successors)
 
     return search_from(startnode)
 
 
 import unittest
 
-class TestDepthFirstSearch(unittest.TestCase):
 
+class TestDepthFirstSearch(unittest.TestCase):
     def setUp(self):
         self.node_a = Node("A")
         self.node_b = Node("B")
@@ -78,5 +76,6 @@ class TestDepthFirstSearch(unittest.TestCase):
         self.assertTrue(depth_first_search(node1, node6))
         self.assertFalse(depth_first_search(node1, node7))  # Non-existent node
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

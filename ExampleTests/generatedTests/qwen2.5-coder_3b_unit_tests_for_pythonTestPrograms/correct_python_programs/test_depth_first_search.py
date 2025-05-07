@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestDepthFirstSearch(unittest.TestCase):
     def setUp(self):
         # Define a simple graph for testing purposes
@@ -12,10 +13,10 @@ class TestDepthFirstSearch(unittest.TestCase):
                 self.successors.append(successor)
 
         # Create some nodes and establish relationships between them
-        node_a = Node('A')
-        node_b = Node('B')
-        node_c = Node('C')
-        node_d = Node('D')
+        node_a = Node("A")
+        node_b = Node("B")
+        node_c = Node("C")
+        node_d = Node("D")
 
         node_a.add_successor(node_b)
         node_a.add_successor(node_c)
@@ -29,5 +30,6 @@ class TestDepthFirstSearch(unittest.TestCase):
         result = depth_first_search(self.start_node, self.goal_node)
         self.assertTrue(result)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

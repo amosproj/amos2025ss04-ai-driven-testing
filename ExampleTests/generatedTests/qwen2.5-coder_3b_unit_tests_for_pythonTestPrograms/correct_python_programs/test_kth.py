@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestKth(unittest.TestCase):
     def test_kth(self):
         # Test case 1: Basic scenario with a middle element
@@ -33,5 +34,6 @@ class TestKth(unittest.TestCase):
         # with self.assertRaises(IndexError):
         #     kth(arr, k)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

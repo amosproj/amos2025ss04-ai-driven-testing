@@ -1,7 +1,10 @@
 <<<<<<< SEARCH
 =======
 import unittest
-from shortest_paths import shortest_paths
+
+from correct_python_programs.shortest_pathsfromcorrect_python_programsfromcorrect_python_programs import \
+    shortest_paths
+
 
 class TestShortestPaths(unittest.TestCase):
     def test_shortest_paths(self):

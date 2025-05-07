@@ -1,5 +1,8 @@
 import unittest
-from shunting_yard import shunting_yard
+
+from correct_python_programs.shunting_yardfromcorrect_python_programsfromcorrect_python_programs import \
+    shunting_yard
+
 
 class TestshuntingYard(unittest.TestCase):
     def test_shunting_yard_empty_list(self):

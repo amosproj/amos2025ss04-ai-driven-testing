@@ -1,6 +1,7 @@
 import unittest
 from collections import deque as Queue
 
+
 def breadth_first_search(startnode, goalnode):
     queue = Queue()
     queue.append(startnode)
@@ -14,14 +15,15 @@ def breadth_first_search(startnode, goalnode):
         if node is goalnode:
             return True
         else:
-            queue.extend(node for node in node.successors if node not in nodesseen)
+            queue.extend(
+                node for node in node.successors if node not in nodesseen
+            )
             nodesseen.update(node.successors)
 
     return False
 
 
 class TestBreadthFirstSearch(unittest.TestCase):
-
     def test_bfs_simple(self):
         class Node:
             def __init__(self, data):
@@ -85,5 +87,6 @@ class TestBreadthFirstSearch(unittest.TestCase):
 
         self.assertTrue(breadth_first_search(node1, goal))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

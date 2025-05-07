@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestPossibleChange(unittest.TestCase):
     def test_possible_change(self):
         self.assertEqual(possible_change([1, 2, 5], 5), 4)
@@ -12,5 +13,6 @@ class TestPossibleChange(unittest.TestCase):
         self.assertEqual(possible_change([2], 3), 1)
         self.assertEqual(possible_change([3], 6), 2)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

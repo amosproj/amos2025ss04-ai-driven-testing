@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def shortest_path_lengths(n, length_by_edge):
     length_by_path = defaultdict(lambda: float('inf'))
     length_by_path.update({(i, i): 0 for i in range(n)})
@@ -18,6 +19,7 @@ def shortest_path_lengths(n, length_by_edge):
 
 import unittest
 from collections import defaultdict
+
 
 class TestShortestPathLengths(unittest.TestCase):
 

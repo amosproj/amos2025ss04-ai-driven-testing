@@ -1,9 +1,11 @@
-import math
-import random
+import unittest
 
-from rpn_eval import rpn_eval
+from correct_python_programs.rpn_evalfromcorrect_python_programsfromcorrect_python_programs import \
+    rpn_eval
+from correct_python_programsfromcorrect_python_programs import math, random
 
-class Testclass:
+
+class Testclass(unittest.TestCase):
     def __init__(self, input_class):
         self.input_class = input_class
 

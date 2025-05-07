@@ -1,5 +1,6 @@
 import unittest
 
+
 def powerset(arr):
     if arr:
         first, *rest = arr
@@ -7,6 +8,7 @@ def powerset(arr):
         return [[first] + subset for subset in rest_subsets] + rest_subsets
     else:
         return [[]]
+
 
 class TestPowerset(unittest.TestCase):
     def test_powerset_empty(self):
@@ -21,5 +23,6 @@ class TestPowerset(unittest.TestCase):
     def test_powerset_duplicated_elements(self):
         self.assertEqual(powerset([1, 1]), [[], [1], [1, 1]])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

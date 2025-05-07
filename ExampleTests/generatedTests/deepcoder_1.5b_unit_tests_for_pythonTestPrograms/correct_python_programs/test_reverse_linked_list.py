@@ -1,6 +1,10 @@
 import unittest
 
-class reverse_linked_list:
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(node):
         prevnode = None
         while node:
@@ -73,7 +77,12 @@ if __name__ == "__main__":
 
 ```python
 import unittest
-class reverse_linked_list:
+
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(node):
         prevnode = None
         while node:
@@ -145,7 +154,12 @@ if __name__ == "__main__":
 
 ```python
 import unittest
-class reverse_linked_list:
+
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(node):
         prevnode = None
         while node:
@@ -217,7 +231,12 @@ if __name__ == "__main__":
 
 ```python
 import unittest
-class reverse_linked_list:
+
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(node):
         prevnode = None
         while node:
@@ -289,7 +308,12 @@ if __name__ == "__main__":
 
 ```python
 import unittest
-class reverse_linked_list:
+
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(node):
         prevnode = None
         while node:
@@ -361,7 +385,12 @@ if __name__ == "__main__":
 
 ```python
 import unittest
-class reverse_linked_list:
+
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(node):
         prevnode = None
         while node:
@@ -427,7 +456,12 @@ if __name__ == "__main__":
 
 ```python
 import unittest
-class reverse_linked_list:
+
+from correct_python_programs.reverse_linked_listfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    reverse_linked_list
+
+
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(self, node):
         prevnode = None
         while node is not None:  # Changed condition to avoid infinite loop when initial node has no successor.
@@ -504,7 +538,7 @@ After running the tests, I realized that my test case is not working correctly. 
 The given code in my original problem:
 
 ```python
-class reverse_linked_list:
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(self, node):
         prevnode = None
         while node is not None:  # Changed condition to avoid infinite loop when initial node has no successor.
@@ -581,7 +615,7 @@ After running the tests, I realized that my test case is not working correctly. 
 The given code in my original problem:
 
 ```python
-class reverse_linked_list:
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(self, node):
         prevnode = None
         while node is not None:  # Changed condition to avoid infinite loop when initial node has no successor.
@@ -658,7 +692,7 @@ After running the tests, I realized that my test case is not working correctly. 
 The given code in my original problem:
 
 ```python
-class reverse_linked_list:
+class reverse_linked_list(unittest.TestCase):
     def reverse_linked_list(self, node):
         prevnode = None
         while node is not None:  # Changed condition to avoid infinite loop when initial node has no successor.

@@ -1,5 +1,6 @@
 import unittest
 
+
 def max_sublist_sum(arr):
     max_ending_here = 0
     max_so_far = 0
@@ -34,5 +35,5 @@ class TestMaxSublistSum(unittest.TestCase):
         self.assertEqual(max_sublist_sum([0, -2, 5, -1]), 5)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

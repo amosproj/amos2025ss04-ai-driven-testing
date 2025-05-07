@@ -1,3 +1,10 @@
+"""Script for batch execution of test creation across multiple LLM models.
+
+This module reads a list of language models from a configuration file and
+sequentially runs the test generation process for each model, providing
+a convenient way to evaluate and compare different models' test outputs.
+"""
+
 import os
 import subprocess
 

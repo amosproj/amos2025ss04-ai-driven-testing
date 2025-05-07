@@ -1,5 +1,13 @@
 class Node:
-    def __init__(self, value=None, successor=None, successors=[], predecessors=[], incoming_nodes=[], outgoing_nodes=[]):
+    def __init__(
+        self,
+        value=None,
+        successor=None,
+        successors=[],
+        predecessors=[],
+        incoming_nodes=[],
+        outgoing_nodes=[],
+    ):
         self.value = value
         self.successor = successor
         self.successors = successors
@@ -19,10 +27,17 @@ class Node:
 
 import unittest
 
-class TestNodeMethods(unittest.TestCase):
 
+class TestNodeMethods(unittest.TestCase):
     def setUp(self):
-        self.node = Node(value=1, successor=2, successors=[3], predecessors=[4], incoming_nodes=[5], outgoing_nodes=[6])
+        self.node = Node(
+            value=1,
+            successor=2,
+            successors=[3],
+            predecessors=[4],
+            incoming_nodes=[5],
+            outgoing_nodes=[6],
+        )
 
     def test_successor(self):
         self.assertEqual(self.node.successor(), 2)
@@ -33,5 +48,6 @@ class TestNodeMethods(unittest.TestCase):
     def test_predecessors(self):
         self.assertEqual(self.node.predecessors(), [4])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,6 @@
 import unittest
 
+
 def sieve(max):
     """Sieve of Eratosthenes algorithm."""
     primes = []

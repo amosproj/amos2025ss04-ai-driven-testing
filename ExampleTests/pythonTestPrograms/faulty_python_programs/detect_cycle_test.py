@@ -1,10 +1,11 @@
-from .node import Node
 from .detect_cycle import detect_cycle
-
+from .node import Node
 
 """
 Driver to test reverse linked list
 """
+
+
 def main():
     # Case 1: 5-node list input with no cycle
     # Expected Output: Cycle not detected!
@@ -71,4 +72,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

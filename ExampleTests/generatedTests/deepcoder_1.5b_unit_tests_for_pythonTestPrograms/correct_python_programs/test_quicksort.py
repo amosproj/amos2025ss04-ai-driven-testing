@@ -1,3 +1,8 @@
+import unittest
+
+from correct_python_programs.quicksort import quicksort
+
+
 def quicksort(arr):
     if not arr:
         return []
@@ -23,7 +28,7 @@ def test_quicksort_sorted_list():
     result = quicksort(input_list)
     assert result == input_list, "Test should pass for sorted list."
 
-class Testclass:
+class Testclass(unittest.TestCase):
     def __init__(self):
         self.setup()
 

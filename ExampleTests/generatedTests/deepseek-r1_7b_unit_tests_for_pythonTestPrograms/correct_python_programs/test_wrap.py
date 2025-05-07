@@ -12,6 +12,9 @@ def wrap(text, cols):
 
 import unittest
 
+from correct_python_programs.wrapfromcorrect_python_programs import wrap
+
+
 class TestWrap(unittest.TestCase):
     @classmethod
     def setup_class(cls):

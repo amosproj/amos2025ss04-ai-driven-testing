@@ -1,5 +1,6 @@
 import unittest
 
+
 def kth(arr, k):
     pivot = arr[0]
     below = [x for x in arr if x < pivot]
@@ -15,6 +16,7 @@ def kth(arr, k):
     else:
         return pivot
 
+
 class TestKth(unittest.TestCase):
     def test_kth(self):
         self.assertEqual(kth([3, 2, 1, 5, 6, 4], 0), 1)
@@ -23,5 +25,6 @@ class TestKth(unittest.TestCase):
         self.assertEqual(kth([3, 2, 1, 5, 6, 4], 3), 4)
         self.assertEqual(kth([3, 2, 1, 5, 6, 4], 4), 5)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

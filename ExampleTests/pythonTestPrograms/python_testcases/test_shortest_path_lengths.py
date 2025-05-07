@@ -1,7 +1,9 @@
 import pytest
 
 if pytest.use_correct:
-    from correct_python_programs.shortest_path_lengths import shortest_path_lengths
+    from correct_python_programs.shortest_path_lengths import (
+        shortest_path_lengths,
+    )
 else:
     from python_programs.shortest_path_lengths import shortest_path_lengths
 

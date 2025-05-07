@@ -1,12 +1,14 @@
 import unittest
 
+
 def lis(arr):
     ends = {}
     longest = 0
 
     for i, val in enumerate(arr):
-
-        prefix_lengths = [j for j in range(1, longest + 1) if arr[ends[j]] < val]
+        prefix_lengths = [
+            j for j in range(1, longest + 1) if arr[ends[j]] < val
+        ]
 
         length = max(prefix_lengths) if prefix_lengths else 0
 
@@ -15,6 +17,7 @@ def lis(arr):
             longest = max(longest, length + 1)
 
     return longest
+
 
 class TestLIS(unittest.TestCase):
     def test_lis_empty_array(self):
@@ -35,5 +38,6 @@ class TestLIS(unittest.TestCase):
     def test_lis_with_duplicates(self):
         self.assertEqual(lis([7, 7, 7, 7, 7]), 1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

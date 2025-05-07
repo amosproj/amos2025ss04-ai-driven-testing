@@ -18,25 +18,63 @@ pids
 # Java
 .classpath
 
-# Python
-*.pyc
-__pycache__/
-
 # vscode
-.vscode/
 web-build/
-dist/
 
 # IDEA / IntelliJ
-.idea/
 out/
 
 # Eclipse IDE
 .project
 bin/
 
-# MacOS
+# Python bytecode cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Operating system files
 .DS_Store
 
 #outputs
 qwen/response.txt
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Add this line to your .gitignore
+get-pip.py
+
+# Log files
+docker_runner.log
+formatting_errors.txt

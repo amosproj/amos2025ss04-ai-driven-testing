@@ -1,16 +1,28 @@
-# === codeAnalysisBot.py ===
+"""Code analysis bot for automated unit test generation.
+
+This module uses the Qwen model via Ollama to analyze Python code and generate
+appropriate unit tests. It measures performance metrics like generation time
+and validates that the generated tests have valid syntax and can be executed.
+The results are saved to a metrics file for further analysis.
+"""
+
+from pathlib import Path
 
 import ollama
-from pathlib import Path
-from specifications import model_name, code_path
-from metrics import measure_generation_time, check_syntax_validity, save_metrics, clean_response_text
+from metrics import (
+    check_syntax_validity,
+    clean_response_text,
+    measure_generation_time,
+    save_metrics,
+)
 from run_tests import run_test_script
+from specifications import code_path, model_name
 
 # Initialize Ollama client
 client = ollama.Client()
 
 # Read source code file
-with open(code_path, 'r') as file:
+with open(code_path, "r") as file:
     file_content = file.read()
 
 # Create a meaningful prompt
@@ -21,10 +33,12 @@ prompt = (
 )
 
 # Generate test code and measure time
-generated_response, generation_time = measure_generation_time(client, model_name, prompt)
+generated_response, generation_time = measure_generation_time(
+    client, model_name, prompt
+)
 
 # Save the raw response to a text file
-with open('response.txt', 'w', encoding='utf-8') as file:
+with open("response.txt", "w", encoding="utf-8") as file:
     file.write(generated_response)
 
 # Save generated response to a file
@@ -45,7 +59,7 @@ metrics = {
     "Generation Time (s)": round(generation_time, 2),
     "Syntax Valid": syntax_valid,
     "Test Executable": test_executed_successfully,
-    "Test Output": test_output
+    "Test Output": test_output,
 }
 save_metrics(metrics)
 

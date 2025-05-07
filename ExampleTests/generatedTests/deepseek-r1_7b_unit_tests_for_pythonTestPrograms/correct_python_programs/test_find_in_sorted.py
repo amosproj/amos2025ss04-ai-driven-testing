@@ -1,5 +1,9 @@
 import unittest
 
+from correct_python_programs.find_in_sortedfromcorrect_python_programs import \
+    find_in_sorted
+
+
 def find_in_sorted(arr, x):
     def binsearch(start, end):
         if start == end:

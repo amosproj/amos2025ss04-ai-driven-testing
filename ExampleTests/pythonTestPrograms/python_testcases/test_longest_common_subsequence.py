@@ -2,9 +2,13 @@ import pytest
 from load_testdata import load_json_testcases
 
 if pytest.use_correct:
-    from correct_python_programs.longest_common_subsequence import longest_common_subsequence
+    from correct_python_programs.longest_common_subsequence import (
+        longest_common_subsequence,
+    )
 else:
-    from python_programs.longest_common_subsequence import longest_common_subsequence
+    from python_programs.longest_common_subsequence import (
+        longest_common_subsequence,
+    )
 
 
 testdata = load_json_testcases(longest_common_subsequence.__name__)

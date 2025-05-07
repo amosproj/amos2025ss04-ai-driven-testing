@@ -1,10 +1,12 @@
 import unittest
 
+
 def sqrt(x, epsilon):
     approx = x / 2
-    while abs(x - approx ** 2) > epsilon:
+    while abs(x - approx**2) > epsilon:
         approx = 0.5 * (approx + x / approx)
     return approx
+
 
 class TestSqrt(unittest.TestCase):
     def test_sqrt_small_epsilon(self):
@@ -19,5 +21,6 @@ class TestSqrt(unittest.TestCase):
         result = sqrt(25, 0)
         self.assertEqual(result, 5)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

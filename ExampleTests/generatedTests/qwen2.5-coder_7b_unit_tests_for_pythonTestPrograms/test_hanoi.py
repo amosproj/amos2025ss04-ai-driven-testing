@@ -1,5 +1,6 @@
 import unittest
 
+
 def hanoi(height, start=1, end=3):
     steps = []
     if height > 0:
@@ -9,6 +10,7 @@ def hanoi(height, start=1, end=3):
         steps.extend(hanoi(height - 1, helper, end))
 
     return steps
+
 
 class TestHanoi(unittest.TestCase):
     def test_hanoi_0(self):
@@ -22,12 +24,9 @@ class TestHanoi(unittest.TestCase):
         self.assertEqual(hanoi(2), expected)
 
     def test_hanoi_3(self):
-        expected = [
-            (1, 3), (1, 2), (3, 2),
-            (1, 3), (2, 1), (2, 3),
-            (1, 3)
-        ]
+        expected = [(1, 3), (1, 2), (3, 2), (1, 3), (2, 1), (2, 3), (1, 3)]
         self.assertEqual(hanoi(3), expected)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

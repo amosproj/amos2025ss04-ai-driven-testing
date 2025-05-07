@@ -1,7 +1,9 @@
 import pytest
 
 if pytest.use_correct:
-    from correct_python_programs.minimum_spanning_tree import minimum_spanning_tree
+    from correct_python_programs.minimum_spanning_tree import (
+        minimum_spanning_tree,
+    )
 else:
     from python_programs.minimum_spanning_tree import minimum_spanning_tree
 

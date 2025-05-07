@@ -21,7 +21,6 @@ def find_first_in_sorted(arr, x):
 
 
 class TestFindFirstInSorted(unittest.TestCase):
-
     def test_find_first_in_sorted(self):
         self.assertEqual(find_first_in_sorted([10, 20, 30], 20), 1)
         self.assertEqual(find_first_in_sorted([5, 7, 9], 6), -1)
@@ -36,5 +35,6 @@ class TestFindFirstInSorted(unittest.TestCase):
         result = find_first_in_sorted(arr, x)
         self.assertEqual(result, 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

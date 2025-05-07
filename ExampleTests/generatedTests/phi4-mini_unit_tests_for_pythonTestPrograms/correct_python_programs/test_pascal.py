@@ -1,5 +1,6 @@
 import unittest
 
+
 def pascal(n):
     rows = [[1]]
     for r in range(1, n):
@@ -14,7 +15,6 @@ def pascal(n):
 
 
 class TestPascal(unittest.TestCase):
-
     def test_pascal(self):
         self.assertEqual(pascal(0), [[1]])
         self.assertEqual(pascal(1), [[1], [1, 1]])
@@ -25,5 +25,6 @@ class TestPascal(unittest.TestCase):
         with self.assertRaises(TypeError):
             pascal("a")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

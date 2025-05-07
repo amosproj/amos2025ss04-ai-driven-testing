@@ -14,8 +14,8 @@ class Pascal:
 
 import unittest
 
-class TestPascal(unittest.TestCase):
 
+class TestPascal(unittest.TestCase):
     def test_pascal_0(self):
         pascal_object = Pascal()
         expected = [[1]]
@@ -42,5 +42,5 @@ class TestPascal(unittest.TestCase):
         self.assertEqual(pascal_object.pascal(4), expected)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

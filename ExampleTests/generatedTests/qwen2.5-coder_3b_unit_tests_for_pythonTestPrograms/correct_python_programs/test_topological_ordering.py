@@ -1,5 +1,6 @@
 import unittest
 
+
 class Node:
     def __init__(self, name):
         self.name = name
@@ -12,14 +13,14 @@ class Node:
     def add_outgoing_node(self, node):
         self.outgoing_nodes.append(node)
 
-class TopologicalOrderingTest(unittest.TestCase):
 
+class TopologicalOrderingTest(unittest.TestCase):
     def test_topological_ordering_with_cycle(self):
         # Create nodes
-        a = Node('A')
-        b = Node('B')
-        c = Node('C')
-        d = Node('D')
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
+        d = Node("D")
 
         # Add edges
         a.add_outgoing_node(b)
@@ -34,9 +35,9 @@ class TopologicalOrderingTest(unittest.TestCase):
 
     def test_topological_ordering_without_cycle(self):
         # Create nodes
-        a = Node('A')
-        b = Node('B')
-        c = Node('C')
+        a = Node("A")
+        b = Node("B")
+        c = Node("C")
 
         # Add edges
         a.add_outgoing_node(b)
@@ -50,7 +51,7 @@ class TopologicalOrderingTest(unittest.TestCase):
 
     def test_topological_ordering_with_single_node(self):
         # Create a single node
-        a = Node('A')
+        a = Node("A")
 
         # Run the topological ordering function
         result = topological_ordering([a])
@@ -58,5 +59,6 @@ class TopologicalOrderingTest(unittest.TestCase):
         # Check if the result is as expected (should be [A])
         self.assertEqual(result, [a], "Test failed for single node")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

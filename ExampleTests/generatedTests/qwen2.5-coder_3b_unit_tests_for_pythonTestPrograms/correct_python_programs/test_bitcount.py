@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestBitcount(unittest.TestCase):
     def test_bitcount(self):
         self.assertEqual(bitcount(0), 0)
@@ -17,5 +18,6 @@ class TestBitcount(unittest.TestCase):
         self.assertEqual(bitcount(12), 2)
         self.assertEqual(bitcount(13), 3)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

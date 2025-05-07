@@ -7,10 +7,11 @@ def possible_change(coins, total):
     first, *rest = coins
     return possible_change(coins, total - first) + possible_change(rest, total)
 
+
 import unittest
 
-class TestPossibleChange(unittest.TestCase):
 
+class TestPossibleChange(unittest.TestCase):
     def test_possible_change(self):
         self.assertEqual(possible_change([1, 2, 5], 5), 4)
         self.assertEqual(possible_change([1, 2, 3], 4), 4)
@@ -18,5 +19,6 @@ class TestPossibleChange(unittest.TestCase):
         self.assertEqual(possible_change([], 1), 0)
         self.assertEqual(possible_change([1, 2, 5], -1), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

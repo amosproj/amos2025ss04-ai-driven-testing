@@ -1,5 +1,6 @@
-import random
+import unittest
 from unittest import Testclass
+
 
 def hanoi(height, start=1, end=3):
     steps = []
@@ -11,6 +12,7 @@ def hanoi(height, start=1, end=3):
 
     return steps
 
+
 class Testhanoi(unittest.TestCase):
     def test_hanoi(self, height=0):
         if height == 0:
@@ -18,21 +20,23 @@ class Testhanoi(unittest.TestCase):
         else:
             steps = hanoi(height)
             expected_steps = []
-            for i in range(1, len(steps)+1):
-                piece = (i-1)//2 + 1
-                start_pos = ((i-1) // 3) * 3 + 1
-                end_pos = ((i-1) % 3) * 3 + 3
-                expected_steps.append( (start_pos, end_pos) )
+            for i in range(1, len(steps) + 1):
+                piece = (i - 1) // 2 + 1
+                start_pos = ((i - 1) // 3) * 3 + 1
+                end_pos = ((i - 1) % 3) * 3 + 3
+                expected_steps.append((start_pos, end_pos))
             self.assertEqual(steps, expected_steps)
 
     def test_hanoi_single(self):
         steps = hanoi(1)
-        expected_step = [(1,3)]
+        expected_step = [(1, 3)]
         self.assertEqual(len(steps), 0)
         self.assertEqual(steps, expected_step)
+
 
 def main():
     unittest.main()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     Testclass().test_hanoi()

@@ -8,13 +8,13 @@ def eval_rpn(rpn):
         except ValueError:
             b = stack.pop()
             a = stack.pop()
-            if token == '+':
+            if token == "+":
                 res = a + b
-            elif token == '-':
+            elif token == "-":
                 res = a - b
-            elif token == '*':
+            elif token == "*":
                 res = a * b
-            elif token == '/':
+            elif token == "/":
                 res = a / b
             else:
                 raise ValueError("Unknown operator: {}".format(token))

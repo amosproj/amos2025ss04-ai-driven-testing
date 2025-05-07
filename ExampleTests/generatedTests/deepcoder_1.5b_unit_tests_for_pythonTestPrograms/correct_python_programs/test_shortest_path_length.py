@@ -1,11 +1,15 @@
 import unittest
-from heapq import heappush, heappop
+
+from correct_python_programs.heapq import heappop, heappush
+from correct_python_programs.shortest_path_lengthfromcorrect_python_programsfromcorrect_python_programs import \
+    shortest_path_length
+
 
 def insert_or_update(node_heap, dist_node):
     # Update node_heap with new distance and node
     # Maintain heap property while inserting or updating
 
-class DijkstraAlgorithm:
+class DijkstraAlgorithm(unittest.TestCase):
     def __init__(self, length_by_edge, startnode, goalnode):
         self.length_by_edge = length_by_edge
         self.startnode = startnode
@@ -47,13 +51,17 @@ The complete file would include both the class and test cases:
 
 ```python
 import unittest
-from heapq import heappush, heappop
+
+from correct_python_programs.heapq import heappop, heappush
+from correct_python_programs.shortest_path_lengthfromcorrect_python_programsfromcorrect_python_programs import \
+    shortest_path_length
+
 
 def insert_or_update(node_heap, dist_node):
     # Update node_heap with new distance and node
     pass
 
-class DijkstraAlgorithm:
+class DijkstraAlgorithm(unittest.TestCase):
     def __init__(self, length_by_edge, startnode, goalnode):
         self.length_by_edge = length_by_edge
         self.startnode = startnode

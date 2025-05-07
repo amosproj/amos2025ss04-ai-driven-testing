@@ -3,6 +3,7 @@ class ListNode:
         self.value = value
         self.successor = None
 
+
 def detect_cycle(node):
     hare = tortoise = node
 
@@ -20,6 +21,7 @@ def detect_cycle(node):
 import unittest
 from typing import Optional
 
+
 class TestDetectCycle(unittest.TestCase):
     def create_list_with_cycle(self, values: list) -> Optional[ListNode]:
         nodes = [ListNode(value) for value in values]
@@ -28,7 +30,7 @@ class TestDetectCycle(unittest.TestCase):
 
         # Create cycle
         nodes[-1].successor = nodes[0]
-        
+
         return nodes[0] if nodes else None
 
     def test_detect_cycle(self):
@@ -44,5 +46,6 @@ class TestDetectCycle(unittest.TestCase):
         node = self.create_list_with_cycle([1])
         self.assertFalse(detect_cycle(node))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,4 +1,10 @@
-class Node:
+import unittest
+
+from correct_python_programs.depth_first_searchfromcorrect_python_programs import \
+    depth_first_search
+
+
+class Node(unittest.TestCase):
     def __init__(self, name):
         self.name = name
         self.successors = []

@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestLcsLength(unittest.TestCase):
     def test_lcs_length(self):
         # Test cases for LCS length function
@@ -11,5 +12,6 @@ class TestLcsLength(unittest.TestCase):
         self.assertEqual(lcs_length("a", ""), 0)
         self.assertEqual(lcs_length("", "b"), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

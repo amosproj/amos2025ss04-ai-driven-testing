@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestLIS(unittest.TestCase):
     def test_lis(self):
         self.assertEqual(lis([10, 9, 2, 5, 3, 7, 101, 18]), 4)
@@ -8,5 +9,6 @@ class TestLIS(unittest.TestCase):
         self.assertEqual(lis([5, 8, 12, 1, 3, 4, 7, 9]), 4)
         self.assertEqual(lis([]), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

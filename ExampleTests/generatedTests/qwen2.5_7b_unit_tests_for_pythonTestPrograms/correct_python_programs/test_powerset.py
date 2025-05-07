@@ -8,6 +8,7 @@ def powerset(arr):
 
 import unittest
 
+
 class TestPowerset(unittest.TestCase):
 
     def test_powerset(self):
@@ -36,6 +37,7 @@ def powerset(arr):
         return [[]]
 
 import unittest
+
 
 class TestPowerset(unittest.TestCase):
 

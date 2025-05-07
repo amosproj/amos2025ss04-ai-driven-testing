@@ -1,5 +1,8 @@
 import unittest
-from topological_ordering import topological_ordering
+
+from correct_python_programs.topological_orderingfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    topological_ordering
+
 
 def test_topological_ordering():
     # Test case 1: Simple graph with one node
@@ -43,7 +46,10 @@ The unit test file is structured as follows:
 
 ```python
 import unittest
-from topological_ordering import topological_ordering
+
+from correct_python_programs.topological_orderingfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    topological_ordering
+
 
 def test_topological_ordering():
     # Test case 1: Simple graph with one node

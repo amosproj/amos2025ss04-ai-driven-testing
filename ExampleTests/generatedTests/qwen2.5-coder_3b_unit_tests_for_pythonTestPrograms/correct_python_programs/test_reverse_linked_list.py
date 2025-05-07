@@ -27,5 +27,6 @@ class TestReverseLinkedList(unittest.TestCase):
         head = reverse_linked_list(None)
         self.assertIsNone(head)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

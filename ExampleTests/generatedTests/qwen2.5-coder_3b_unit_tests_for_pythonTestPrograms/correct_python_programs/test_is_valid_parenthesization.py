@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestIsValidParenthesization(unittest.TestCase):
     def test_valid_parentheses(self):
         self.assertTrue(is_valid_parenthesization("()"))
@@ -19,5 +20,6 @@ class TestIsValidParenthesization(unittest.TestCase):
     def test_empty_string(self):
         self.assertTrue(is_valid_parenthesization(""))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

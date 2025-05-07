@@ -1,5 +1,8 @@
-import random
 import unittest
+
+from correct_python_programs.kthfromcorrect_python_programs import kth
+from correct_python_programsfromcorrect_python_programs import random
+
 
 def kth(arr, k):
     pivot = arr[0]
@@ -15,6 +18,7 @@ def kth(arr, k):
         return kth(above, k - num_lessoreq)
     else:
         return pivot
+
 
 class TestKth(unittest.TestCase):
     @classmethod
@@ -52,6 +56,7 @@ class TestKth(unittest.TestCase):
         except IndexError as e:
             print("Index error occurred:", str(e))
             unittest.fail()
+
 
 if __name__ == "__main__":
     unittest.main()

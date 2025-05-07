@@ -1,6 +1,10 @@
 import unittest
 from heapq import *
-import math
+
+from correct_python_programs.shortest_path_lengthfromcorrect_python_programs import \
+    shortest_path_length
+from correct_python_programsfromcorrect_python_programs import math
+
 
 class TestDijkstra(unittest.TestCase):
     def test_shortest_path_length(self):

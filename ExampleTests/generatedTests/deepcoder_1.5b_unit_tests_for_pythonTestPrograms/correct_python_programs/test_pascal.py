@@ -1,7 +1,10 @@
 import unittest
-from pascal import pascal
 
-class Testclass:
+from correct_python_programs.pascalfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    pascal
+
+
+class Testclass(unittest.TestCase):
     def __init__(self):
         self.test_cases = [
             (1, [[1]]),
@@ -20,9 +23,12 @@ if __name__ == '__main__':
 
 ```python
 import unittest
-from pascal import pascal
 
-class Testclass:
+from correct_python_programs.pascalfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    pascal
+
+
+class Testclass(unittest.TestCase):
     def __init__(self):
         self.test_cases = [
             (1, [[1]]),

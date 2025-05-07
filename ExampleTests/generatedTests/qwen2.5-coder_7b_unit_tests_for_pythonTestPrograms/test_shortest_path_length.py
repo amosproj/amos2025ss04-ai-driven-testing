@@ -1,8 +1,9 @@
 import unittest
 from heapq import *
 
+
 def shortest_path_length(length_by_edge, startnode, goalnode):
-    unvisited_nodes = [] # FibHeap containing (node, distance) pairs
+    unvisited_nodes = []  # FibHeap containing (node, distance) pairs
     heappush(unvisited_nodes, (0, startnode))
     visited_nodes = set()
 
@@ -17,15 +18,19 @@ def shortest_path_length(length_by_edge, startnode, goalnode):
             if nextnode in visited_nodes:
                 continue
 
-            insert_or_update(unvisited_nodes,
-                (min(
-                    get(unvisited_nodes, nextnode) or float('inf'),
-                    distance + length_by_edge[node, nextnode]
+            insert_or_update(
+                unvisited_nodes,
+                (
+                    min(
+                        get(unvisited_nodes, nextnode) or float("inf"),
+                        distance + length_by_edge[node, nextnode],
+                    ),
+                    nextnode,
                 ),
-                nextnode)
             )
 
-    return float('inf')
+    return float("inf")
+
 
 def get(node_heap, wanted_node):
     for dist, node in node_heap:
@@ -33,19 +38,20 @@ def get(node_heap, wanted_node):
             return dist
     return 0
 
+
 def insert_or_update(node_heap, dist_node):
     dist, node = dist_node
     for i, tpl in enumerate(node_heap):
         a, b = tpl
         if b == node:
-            node_heap[i] = dist_node #heapq retains sorted property
+            node_heap[i] = dist_node  # heapq retains sorted property
             return None
 
     heappush(node_heap, dist_node)
     return None
 
-class TestShortestPathLength(unittest.TestCase):
 
+class TestShortestPathLength(unittest.TestCase):
     def test_shortest_path_length(self):
         class Node:
             def __init__(self, value, successors=None):
@@ -61,7 +67,9 @@ class TestShortestPathLength(unittest.TestCase):
         length_by_edge[(2, 3)] = 1
         length_by_edge[(3, 4)] = 1
 
-        self.assertEqual(shortest_path_length(length_by_edge, startnode, goalnode), 3)
+        self.assertEqual(
+            shortest_path_length(length_by_edge, startnode, goalnode), 3
+        )
 
     def test_no_path(self):
         class Node:
@@ -73,7 +81,10 @@ class TestShortestPathLength(unittest.TestCase):
         startnode = Node(1)
         goalnode = Node(3)
 
-        self.assertEqual(shortest_path_length(length_by_edge, startnode, goalnode), float('inf'))
+        self.assertEqual(
+            shortest_path_length(length_by_edge, startnode, goalnode),
+            float("inf"),
+        )
 
     def test_single_node(self):
         class Node:
@@ -85,7 +96,10 @@ class TestShortestPathLength(unittest.TestCase):
         startnode = Node(1)
         goalnode = Node(1)
 
-        self.assertEqual(shortest_path_length(length_by_edge, startnode, goalnode), 0)
+        self.assertEqual(
+            shortest_path_length(length_by_edge, startnode, goalnode), 0
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

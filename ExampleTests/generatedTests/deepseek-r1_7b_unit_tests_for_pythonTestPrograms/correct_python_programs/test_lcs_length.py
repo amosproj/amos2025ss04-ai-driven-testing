@@ -1,8 +1,14 @@
-from collections import Counter
 import unittest
 
+from correct_python_programs.collectionsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+    Counter
+from correct_python_programs.lcs_lengthfromcorrect_python_programs import \
+    lcs_length
+
+
 def lcs_length(s, t):
-    from collections import Counter
+    from correct_python_programs.collectionsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programsfromcorrect_python_programs import \
+        Counter
 
     dp = Counter()
 

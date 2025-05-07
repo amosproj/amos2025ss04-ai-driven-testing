@@ -1,5 +1,10 @@
 import unittest
-from sys import stdin
+
+from correct_python_programs.possible_changefromcorrect_python_programs import \
+    possible_change
+from correct_python_programs.sysfromcorrect_python_programsfromcorrect_python_programs import \
+    stdin
+
 
 def possible_change(coins, total):
     if total == 0:

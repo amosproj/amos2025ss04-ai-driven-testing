@@ -1,5 +1,6 @@
 import unittest
-from heapq import heapify, heappushpop, heappop
+from heapq import heapify, heappop, heappushpop
+
 
 def kheapsort(arr, k):
     import heapq
@@ -15,12 +16,13 @@ def kheapsort(arr, k):
 
 
 class TestKHeapsort(unittest.TestCase):
-
     def test_kheapsort_small_array(self):
         self.assertEqual(list(kheapsort([1, 2, 3], 2)), [1, 2, 3])
 
     def test_kheapsort_with_duplicates(self):
-        self.assertEqual(list(kheapsort([5, 7, 4, 7, 9, 6, 5], 3)), [4, 5, 5, 6, 7, 7, 9])
+        self.assertEqual(
+            list(kheapsort([5, 7, 4, 7, 9, 6, 5], 3)), [4, 5, 5, 6, 7, 7, 9]
+        )
 
     def test_kheapsort_empty_array(self):
         self.assertEqual(list(kheapsort([], 0)), [])
@@ -33,5 +35,5 @@ class TestKHeapsort(unittest.TestCase):
         self.assertEqual(list(kheapsort(arr, 50)), sorted(arr))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

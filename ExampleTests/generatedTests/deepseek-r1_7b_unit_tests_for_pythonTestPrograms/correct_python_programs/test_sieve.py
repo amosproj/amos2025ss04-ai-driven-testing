@@ -7,6 +7,9 @@ def sieve(max):
 
 import unittest
 
+from correct_python_programs.sievefromcorrect_python_programs import sieve
+
+
 class TestSieve(unittest.TestCase):
     def test_sieve(self):
         for sieve_implementation in [sieve]:
