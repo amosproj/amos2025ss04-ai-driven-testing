@@ -26,7 +26,9 @@ class LLMManager:
     def __init__(self):
         self.client = docker.from_env()
         # Map: model_name -> (container, port)
-        self.active_models: Dict[str, (docker.models.containers.Container, int)] = {}
+        self.active_models: Dict[
+            str, (docker.models.containers.Container, int)
+        ] = {}
 
     def start_model_container(self, model_enum: Model) -> None:
         """
@@ -61,10 +63,10 @@ class LLMManager:
             name=container_name,
             ports={"11434/tcp": port},
             volumes={
-                OLLAMA_MODELS_VOLUME: {'bind': '/root/.ollama', 'mode': 'rw'}
+                OLLAMA_MODELS_VOLUME: {"bind": "/root/.ollama", "mode": "rw"}
             },
             detach=True,
-            remove=True
+            remove=True,
         )
 
         self._wait_for_api(port)
@@ -112,7 +114,7 @@ class LLMManager:
             "prompt": prompt,
             "system": system_message,
             "stream": True,
-            "seed": 42
+            "seed": 42,
         }
 
         collected_response = ""
@@ -120,7 +122,7 @@ class LLMManager:
             r.raise_for_status()
             for chunk in r.iter_lines():
                 if chunk:
-                    decoded_chunk = chunk.decode('utf-8')
+                    decoded_chunk = chunk.decode("utf-8")
                     try:
                         chunk_json = json.loads(decoded_chunk)
                         chunk_response = chunk_json.get("response", "")
@@ -143,7 +145,9 @@ class LLMManager:
         progress_bars = {}
         last_status_key = None
 
-        for line in self.client.api.pull(OLLAMA_IMAGE, stream=True, decode=True):
+        for line in self.client.api.pull(
+            OLLAMA_IMAGE, stream=True, decode=True
+        ):
             status = line.get("status")
             layer_id = line.get("id")
             progress = line.get("progressDetail", {})
@@ -156,13 +160,15 @@ class LLMManager:
                         desc=f"Layer {layer_id[:10]}",
                         unit="B",
                         unit_scale=True,
-                        leave=False
+                        leave=False,
                     )
                 progress_bars[layer_id].n = current
                 progress_bars[layer_id].refresh()
             status_key = f"{layer_id}:{status}" if layer_id else status
             if status and status_key != last_status_key:
-                tqdm.write(f"{layer_id[:10]}: {status}" if layer_id else status)
+                tqdm.write(
+                    f"{layer_id[:10]}: {status}" if layer_id else status
+                )
                 last_status_key = status_key
         for pbar in progress_bars.values():
             pbar.close()
@@ -182,7 +188,7 @@ class LLMManager:
                 if not line:
                     continue
                 try:
-                    data = json.loads(line.decode('utf-8'))
+                    data = json.loads(line.decode("utf-8"))
                     status = data.get("status", "")
                     total = data.get("total", total_size) or total_size
                     completed = data.get("completed", 0)
@@ -191,10 +197,10 @@ class LLMManager:
                     if pbar is None and total_size > 0:
                         pbar = tqdm(
                             total=total_size,
-                            unit='B',
+                            unit="B",
                             unit_scale=True,
                             desc="Model Download",
-                            leave=False
+                            leave=False,
                         )
                     if pbar and "completed" in data:
                         pbar.n = completed
@@ -230,6 +236,6 @@ class LLMManager:
         then closes the socket. The OS automatically picks a free port.
         """
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(('localhost', 0))
+            s.bind(("localhost", 0))
             port: int = s.getsockname()[1]
         return port

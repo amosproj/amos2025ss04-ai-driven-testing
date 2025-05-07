@@ -7,7 +7,7 @@ REQUESTED_MODELS = [
     Model.DEEPSEEK,
     Model.QWEN,
     Model.GEMMA,
-    Model.PHI4
+    Model.PHI4,
 ]
 PROMPT = "prompt.txt"
 
