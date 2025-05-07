@@ -71,3 +71,7 @@ Thumbs.db
 
 # Add this line to your .gitignore
 get-pip.py
+
+# Log files
+docker_runner.log
+formatting_errors.txt
