@@ -2,7 +2,9 @@ import pytest
 from node import Node
 
 if pytest.use_correct:
-    from correct_python_programs.shortest_path_length import shortest_path_length
+    from correct_python_programs.shortest_path_length import (
+        shortest_path_length,
+    )
 else:
     from python_programs.shortest_path_length import shortest_path_length
 

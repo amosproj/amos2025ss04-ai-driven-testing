@@ -2,7 +2,9 @@ import pytest
 from load_testdata import load_json_testcases
 
 if pytest.use_correct:
-    from correct_python_programs.find_first_in_sorted import find_first_in_sorted
+    from correct_python_programs.find_first_in_sorted import (
+        find_first_in_sorted,
+    )
 else:
     from python_programs.find_first_in_sorted import find_first_in_sorted
 

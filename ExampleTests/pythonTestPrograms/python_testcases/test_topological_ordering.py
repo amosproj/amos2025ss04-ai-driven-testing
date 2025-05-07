@@ -2,7 +2,9 @@ import pytest
 from node import Node
 
 if pytest.use_correct:
-    from correct_python_programs.topological_ordering import topological_ordering
+    from correct_python_programs.topological_ordering import (
+        topological_ordering,
+    )
 else:
     from python_programs.topological_ordering import topological_ordering
 
@@ -64,7 +66,8 @@ def test2():
     three.outgoing_nodes = [one]
 
     result = [
-        x.value for x in topological_ordering([zero, one, two, three, four, five])
+        x.value
+        for x in topological_ordering([zero, one, two, three, four, five])
     ]
 
     assert result == [4, 5, 0, 2, 3, 1]
