@@ -1,7 +1,7 @@
 import argparse
 import os
-from backend.llm_manager import LLMManager
-from backend.models_allowed import Model
+from llm_manager import LLMManager
+from models_allowed import Model
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
