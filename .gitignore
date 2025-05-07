@@ -34,3 +34,7 @@ bin/
 
 # MacOS
 .DS_Store
+# docker log
+docker-compose-*.log
+docker-runner.log
+.venv/
