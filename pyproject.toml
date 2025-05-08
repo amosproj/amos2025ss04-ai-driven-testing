@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 79  # Using 79 to match your pre-commit configuration
+target-version = ['py38']
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | ExampleTests/generatedTests
+  | docker_runner\.log
+  | formatting_errors\.txt
+)/
+'''

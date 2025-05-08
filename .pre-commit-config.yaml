@@ -1,0 +1,31 @@
+repos:
+-   repo: https://github.com/psf/black
+    rev: 23.3.0  # Use the specific version you want
+    hooks:
+    -   id: black
+        args: [--line-length=79]
+        exclude: ^ExampleTests/generatedTests/.*$
+        # Only run on changed files
+        stages: [commit]
+
+-   repo: https://github.com/pycqa/flake8
+    rev: 6.0.0  # Choose the appropriate version
+    hooks:
+    -   id: flake8
+        additional_dependencies: [
+            'flake8-docstrings',
+            'flake8-bugbear',
+            'flake8-comprehensions',
+        ]
+        exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/).*$ 
+        # Only run on changed files
+        stages: [commit]
+
+-   repo: local
+    hooks:
+    -   id: pytest-check
+        name: pytest-check
+        entry: pytest -q
+        language: system
+        pass_filenames: false
+        always_run: true

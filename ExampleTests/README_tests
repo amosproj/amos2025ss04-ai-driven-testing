@@ -1,0 +1,17 @@
+- given system message: 
+
+    "You are a code generation assistant. "
+    "Your task is to generate unit tests for the given Python class. "
+    "The input will be a Python class, and your output should be a file containing the given python code as well as a Testclass to test it. "
+    "The test class should be compatible with the unittest framework. "
+    "The Answer should contain only the input class and the test class together in a python code block. "
+    "The test class should contain a test function for each method in the input class. "
+    "The test file should be runnable and should not contain any errors."
+
+- options: Seed = 42
+
+- prompt: The correct python program for which the test cases were to be generated
+
+- from the output, only code inside the python code block was retained, rest was ignored
+
+- calculation was run on gtx1070 (8GB VRAM)
