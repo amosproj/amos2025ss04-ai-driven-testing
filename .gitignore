@@ -77,4 +77,9 @@ get-pip.py
 
 # Log files
 docker_runner.log
+formatting_errors.txt# docker log
+docker-compose-*.log
+docker-runner.log
 formatting_errors.txt
+
+.venv/
