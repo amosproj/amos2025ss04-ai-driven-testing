@@ -1,0 +1,24 @@
+{
+  "models": [
+    {
+      "name": "MISTRAL",
+      "id": "mistral:7b-instruct-v0.3-q3_K_M"
+    },
+    {
+      "name": "DEEPSEEK",
+      "id": "deepseek-coder:6.7b-instruct-q3_K_M"
+    },
+    {
+      "name": "QWEN",
+      "id": "qwen2.5-coder:3b-instruct-q8_0"
+    },
+    {
+      "name": "GEMMA",
+      "id": "gemma3:4b-it-q4_K_M"
+    },
+    {
+      "name": "PHI4",
+      "id": "phi4-mini:3.8b-q4_K_M"
+    }
+  ]
+}
