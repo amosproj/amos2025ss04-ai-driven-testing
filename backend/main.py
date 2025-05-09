@@ -15,6 +15,8 @@ import requests
 from tqdm import tqdm
 import enum
 
+from metrics import evaluate_and_save_metrics
+
 # Configuration
 OLLAMA_IMAGE = "ollama/ollama"
 OLLAMA_PORT = 11434
@@ -251,6 +253,7 @@ def send_prompt(prompt, model, output_file, stream=False):
 
     if stream:
         collected_response = ""
+        start_time = time.time()
         with requests.post(
             OLLAMA_GEN_ENDPOINT, json=payload, stream=True
         ) as r:
@@ -265,21 +268,28 @@ def send_prompt(prompt, model, output_file, stream=False):
                         collected_response += chunk_response
                     except json.JSONDecodeError:
                         continue
+        end_time_loading = time.time()
 
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(collected_response)
-
-        return collected_response
+        end_time_final = time.time()
+        loading_response_time = end_time_loading - start_time
+        final_response_time = end_time_final - start_time
+        return collected_response, loading_response_time, final_response_time
 
     else:
+        start_time = time.time()
         r = requests.post(OLLAMA_GEN_ENDPOINT, json=payload)
         r.raise_for_status()
         response_text = r.json().get("response", "")
-
+        end_time_loading = time.time()
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(response_text)
+        end_time_final = time.time()
+        loading_response_time = end_time_loading - start_time
+        final_response_time = end_time_final - start_time
 
-        return response_text
+        return response_text, loading_response_time, final_response_time
 
 
 def clear_stdout():
@@ -352,12 +362,13 @@ if __name__ == "__main__":
         prompt = read_prompt(args.prompt_file)
         print(f"Prompt: \n{prompt}")
         print("Answer:")
-        response = send_prompt(
+        response, loading_time, final_time = send_prompt(
             prompt=prompt,
             model=model_name,
             stream=True,
             output_file=args.output_file,
         )
+        evaluate_and_save_metrics(response, model_name, final_time, loading_time)
 
     finally:
         print("Stopping container...")
