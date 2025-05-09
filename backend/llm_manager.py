@@ -5,12 +5,12 @@ import os
 from tqdm import tqdm
 import json
 from typing import Dict
-from models_allowed import Model
 import socket
 
 OLLAMA_IMAGE = "ollama/ollama"
 OLLAMA_MODELS_VOLUME = os.path.abspath("./ollama-models")
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ALLOWED_MODELS = "allowed_models.json"
 
 
 class LLMManager:
@@ -30,19 +30,29 @@ class LLMManager:
             str, (docker.models.containers.Container, int)
         ] = {}
 
-    def start_model_container(self, model_enum: Model) -> None:
+    def _verify_model_id(self, model_id: str) -> None:
+        """
+        Checks whether the provided model_id is valid based on the loaded JSON config.
+        Raises ValueError if not found.
+        """
+        config_path = os.path.join(SCRIPT_DIR, ALLOWED_MODELS)
+        with open(config_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        loaded_models = data.get("models", [])
+
+        valid_ids = [model_info["id"] for model_info in loaded_models]
+        if model_id not in valid_ids:
+            raise ValueError(
+                f"Model '{model_id}' is not allowed. Allowed models: {valid_ids}"
+            )
+
+    def start_model_container(self, model_id: str) -> None:
         """
         Starts a docker container for a particular model on a unique port.
         """
-        model_name = model_enum.value
-        container_name = f"ollama_{model_name.replace(':', '_')}"
+        self._verify_model_id(model_id)
 
-        # Verify that model_name is in our Model enum
-        if not any(model_name == m.value for m in Model):
-            raise ValueError(
-                f"Model '{model_name}' is not allowed. "
-                f"Allowed models: {[m.value for m in Model]}"
-            )
+        container_name = f"ollama_{model_id.replace(':', '_')}"
 
         # Remove any left-over container with same name
         try:
@@ -51,7 +61,7 @@ class LLMManager:
         except docker.errors.NotFound:
             pass
 
-        print(f"Pulling docker image {OLLAMA_IMAGE} for model {model_name}...")
+        print(f"Pulling docker image {OLLAMA_IMAGE} ...")
         self._pull_ollama_image()
 
         # Grab a random free port
@@ -72,35 +82,35 @@ class LLMManager:
         self._wait_for_api(port)
 
         # Pull the model inside the container
-        self._pull_model(port, model_name)
+        self._pull_model(port, model_id)
 
         # Track it
-        self.active_models[model_name] = (container, port)
+        self.active_models[model_id] = (container, port)
 
-    def stop_model_container(self, model_enum: Model) -> None:
+    def stop_model_container(self, model_id: str) -> None:
         """
         Stops and removes the container for the given model.
         """
-        model_name = model_enum.value
-        if model_name not in self.active_models:
-            print(f"No active container found for '{model_name}'.")
+        if model_id not in self.active_models:
+            print(f"No active container found for '{model_id}'.")
             return
-        container, _ = self.active_models[model_name]
-        print(f"Stopping container for model {model_name}...")
+        container, _ = self.active_models[model_id]
+        print(f"Stopping container for model {model_id}...")
         container.stop()
-        del self.active_models[model_name]
+        del self.active_models[model_id]
 
-    def send_prompt(self, model_enum: Model, prompt: str) -> str:
+    def send_prompt(
+        self, model_id: str, prompt: str, output_file: str = None
+    ) -> str:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
         """
-        model_name = model_enum.value
-        if model_name not in self.active_models:
+        if model_id not in self.active_models:
             raise ValueError(
-                f"Model '{model_name}' is inactive. "
+                f"Model '{model_id}' is inactive. "
                 f"Start it first via start_model_container()."
             )
-        _, port = self.active_models[model_name]
+        _, port = self.active_models[model_id]
         url = f"http://localhost:{port}/api/generate"
 
         # Provide a minimal system instruction
@@ -110,7 +120,7 @@ class LLMManager:
         )
 
         payload = {
-            "model": model_name,
+            "model": model_id,
             "prompt": prompt,
             "system": system_message,
             "stream": True,
@@ -131,8 +141,12 @@ class LLMManager:
                     except json.JSONDecodeError:
                         continue
 
-        file_name = "output-" + model_enum.name + ".md"
-        output_path = os.path.join(SCRIPT_DIR, file_name)
+        if not output_file:
+            # Generate a default output filename from the model_id
+            safe_model_id = model_id.replace(":", "_")
+            output_file = "output-" + safe_model_id + ".md"
+
+        output_path = os.path.join(SCRIPT_DIR, output_file)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(collected_response)
 
@@ -237,5 +251,5 @@ class LLMManager:
         """
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(("localhost", 0))
-            port: int = s.getsockname()[1]
-        return port
+            port = s.getsockname()[1]
+            return port

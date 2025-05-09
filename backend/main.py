@@ -1,11 +1,18 @@
 import argparse
+import json
 import os
 from llm_manager import LLMManager
-from models_allowed import Model
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ALLOWED_MODELS = "allowed_models.json"
 
 if __name__ == "__main__":
+    # Load allowed models from JSON config
+    config_path = os.path.join(SCRIPT_DIR, ALLOWED_MODELS)
+    with open(config_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    loaded_models = data.get("models", [])
+
     # Setup command line arguments
     parser = argparse.ArgumentParser(
         description="Run Ollama prompt sending script."
@@ -13,7 +20,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=int,
-        choices=range(len(Model)),
+        choices=range(len(loaded_models)),
         default=0,
         help="Model selection (default: 0, here mistral AI)",
     )
@@ -32,21 +39,21 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    try:
-        # Get the actual model name from the enum
-        model = Model.get_model(args.model)
-    except ValueError as e:
-        print(e)
-        exit(1)
+    # Select the model based on the user-provided index
+    model = loaded_models[args.model]
+    model_id = model["id"]
+    model_name = model["name"]
 
     with open(args.prompt_file, "r", encoding="utf-8") as f:
         prompt_text = f.read()
 
     manager = LLMManager()
     try:
-        manager.start_model_container(model)
-        print(f"\n--- Response from {model.name} ---")
-        manager.send_prompt(model, prompt_text)
+        manager.start_model_container(model_id)
+        print(f"\n--- Response from {model_name} ---")
+        manager.send_prompt(
+            model_id, prompt_text, output_file=args.output_file
+        )
         print("")
     finally:
-        manager.stop_model_container(model)
+        manager.stop_model_container(model_id)

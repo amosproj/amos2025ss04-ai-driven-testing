@@ -20,9 +20,9 @@ This project allows you to easily run a local [Ollama](https://github.com/ollama
 - `main.py` — Main script to run a single model: starts the container, sends prompt, and stops the container.
 - `example_all_models.py` — Example script that sends the same prompt to all allowed models.
 - `llm_manager.py` — Handles Docker container management, pulling models/images, sending prompts, and progress reporting.
-- `models_allowed.py` — Enum that defines allowed language models and provides a helper to select one by index.
+- `allowed_models.json` — Config that defines allowed language models.
 - `prompt.txt` — Default input prompt file.
-- `output-<MODEL_NAME>.md` — Output file produced for each model.
+- `output-<MODEL_ID>.md` — Output file produced for each model.
 
 All files are located inside the `backend/` directory.
 
@@ -44,7 +44,7 @@ Simply run the main.py script:
 python backend/main.py
 ```
 
-By default, it reads from backend/prompt.txt, uses the Mistral LLM and writes to backend/output-MISTRAL.md.
+By default, it reads from backend/prompt.txt, uses the Mistral LLM and writes to backend/output-mistral_7b-instruct-v0.3-q3_K_M.md.
 
 ## Optional Arguments:
 You can also specify a custom prompt file and output file:
@@ -61,7 +61,7 @@ python backend/example_all_models.py
 This script does the following:
 - Starts each model's container
 - Sends the provided prompt (from `prompt.txt`)
-- Saves each response into its own `output-<MODEL_NAME>.md`
+- Saves each response into its own `output-<MODEL_ID>.md`
 - Stops all containers after completion
 
 ## How It Works
@@ -73,7 +73,7 @@ This script does the following:
    - Waits until the container’s API becomes available.
    - Pulls the selected model inside the container.
    - Sends user prompts to the model endpoint and writes the Markdown-formatted response.
-3. `models_allowed.py` provides a list of allowed models and a helper method to select a model by a numeric index.
+3. `allowed_models.json` provides a list of allowed models.
 
 ## Note 
 
