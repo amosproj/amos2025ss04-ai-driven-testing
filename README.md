@@ -1,10 +1,39 @@
-# Fabulous Project (AMOS SS 2025)
-if you can read this you don't need glasses - Spaceballs   
-If you water an apple tree with apple juice, is that cannibalism?
+
 
 # AI-Driven Testing Project
-
 This repository contains the code and tests for the AI-Driven Testing project (AMOS SS 2025).
+## 🧠 Project Goal
+
+The goal of this project is to develop or customize a **LLM-based (Large Language Model) AI** that can automatically **generate test code** for existing software. The AI is controlled through a **chat-based interface** and can be provided with information about the target software in various ways.
+
+## 🎯 Main Features (WIP)
+
+- 🔍 **Test Code Generation**  
+  The AI can generate test code for arbitrary software using methods such as Retrieval-Augmented Generation (RAG), fine-tuning, or prompting.
+
+- 🔄 **Incremental Test Extension**  
+  The AI can recognize and expand existing test code intelligently.
+
+- 🧪 **Understanding of Test Types**  
+  The AI can distinguish between different layers and types of tests:
+  - **Layers**: User interface, domain/business logic, persistence layer
+  - **Test Types**: Unit test, integration test, acceptance test
+
+- 🛠️ **On-Premise Operation**  
+  The solution can run fully offline, suitable for on-premise environments.
+
+- 🐳 **Docker Support**  
+  The backend can run inside a Docker container and be accessed via an API.
+
+- 🔌 **IDE Integration**  
+  The solution can be embedded into existing **open-source development environments**.
+
+## 🚀 Usage Workflow
+
+1. Provide the software (source code or API/documentation)
+2. Start the AI and interact through the chat interface
+3. Generate and review test code
+4. Integrate test code into your existing test suite
 
 ## Project Structure
 
