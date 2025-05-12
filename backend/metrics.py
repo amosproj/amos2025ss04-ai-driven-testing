@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+
 def clean_response_text(response_text):
     """Clean the AI-generated response text from markdown and explanations.
 
@@ -36,7 +37,6 @@ def clean_response_text(response_text):
     return response_text.strip()
 
 
-
 def check_syntax_validity(file_path):
     """Check if a Python file contains syntactically valid code.
 
@@ -59,6 +59,7 @@ def check_syntax_validity(file_path):
         print(f"Syntax Error: {e}")
         return False
 
+
 def save_metrics(metrics, file_name="metrics.json"):
     """Save performance metrics to a JSON file.
 
@@ -71,6 +72,7 @@ def save_metrics(metrics, file_name="metrics.json"):
     """
     with open(file_name, "w") as f:
         json.dump(metrics, f, indent=4)
+
 
 import subprocess
 
@@ -103,9 +105,9 @@ def run_test_script(test_script_path):
     return success, output
 
 
-
-
-def evaluate_and_save_metrics(response, model_name, generation_time, loading_time):
+def evaluate_and_save_metrics(
+    response, model_name, generation_time, loading_time
+):
     # Save generated response to a file
     output_path = Path("generated_test.py")
     cleaned_response = clean_response_text(response)
@@ -120,4 +122,3 @@ def evaluate_and_save_metrics(response, model_name, generation_time, loading_tim
         "Syntax Valid": syntax_valid,
     }
     save_metrics(metrics)
-

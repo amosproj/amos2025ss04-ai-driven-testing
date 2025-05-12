@@ -383,6 +383,8 @@ if __name__ == "__main__":
             stream=True,
             output_file=args.output_file,
         )
-        evaluate_and_save_metrics(response, model_name, final_time, loading_time)
+        evaluate_and_save_metrics(
+            response, model_name, final_time, loading_time
+        )
     finally:
         manager.stop_model_container(model_id)
