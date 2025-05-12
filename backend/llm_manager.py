@@ -123,7 +123,7 @@ class LLMManager:
             "model": model_id,
             "prompt": prompt,
             "system": system_message,
-            "stream": False,
+            "stream": True,
             "seed": 42,
         }
 
