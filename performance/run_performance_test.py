@@ -22,17 +22,26 @@ from pathlib import Path
 from datetime import datetime
 import importlib.util
 
+# Add the parent directory to the Python path so we can import from backend
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 # Check if module exists before importing
-from llm_manager import LLMManager
+try:
+    from backend.llm_manager import LLMManager
+except ImportError:
+    print("Error: llm_manager.py not found or could not be imported.")
+    print("Make sure backend/llm_manager.py exists and is importable.")
+    sys.exit(1)
+
 from performance_monitor import PerformanceMonitor
 from performance_visualization import PerformanceVisualizer
 
 # Constants
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_TEST_DURATION = 6000  # seconds
-RESULTS_DIR = os.path.join(SCRIPT_DIR, "performance_results")
-PROMPT_FILE = os.path.join(SCRIPT_DIR, "prompt.txt")
-CONFIG_FILE = os.path.join(SCRIPT_DIR, "allowed_models.json")
+BACKEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "backend"))
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+RESULTS_DIR = os.path.join(THIS_DIR, "performance_results")
+PROMPT_FILE = os.path.join(THIS_DIR, "prompt.txt")
+CONFIG_FILE = os.path.join(BACKEND_DIR, "allowed_models.json")
 
 
 def get_allowed_models():
@@ -108,36 +117,43 @@ class PerformanceTest:
 
     def __init__(self, output_dir=None):
         self.llm_manager = LLMManager()
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # Create a base directory for results
+        self.base_results_dir = Path(output_dir or RESULTS_DIR)
+        self.base_results_dir.mkdir(exist_ok=True, parents=True)
+        
+        # Create a timestamped directory for this specific run
+        self.results_dir = self.base_results_dir / f"run_{self.timestamp}"
+        self.results_dir.mkdir(exist_ok=True, parents=True)
+        
+        # Create raw_data subdirectory
+        self.raw_data_dir = self.results_dir / "raw_data"
+        self.raw_data_dir.mkdir(exist_ok=True, parents=True)
+        
+        # Initialize monitor and visualizer with the new directory structure
         self.monitor = PerformanceMonitor(
-            output_dir=output_dir or os.path.join(RESULTS_DIR, "raw_data")
+            output_dir=str(self.raw_data_dir)
         )
         self.visualizer = PerformanceVisualizer(
-            output_dir=output_dir or RESULTS_DIR
+            output_dir=str(self.results_dir)
         )
-        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.results_dir = Path(output_dir or RESULTS_DIR)
-        self.results_dir.mkdir(exist_ok=True, parents=True)
+        
+        print(f"\nResults for this test run will be saved to: {self.results_dir}")
 
-        # Ensure raw_data subdirectory exists
-        raw_data_dir = self.results_dir / "raw_data"
-        raw_data_dir.mkdir(exist_ok=True, parents=True)
-
-    def run_sequential_test(self, models, prompt, test_duration=60):
+    def run_sequential_test(self, models, prompt):
         """
         Run models sequentially and measure performance
 
         Args:
             models: List of model IDs to test
             prompt: Prompt to send to each model
-            test_duration: Duration to run each model in seconds
 
         Returns:
             Dictionary with test results
         """
         print(f"\nRunning sequential test with {len(models)} models")
-        print(
-            f"Each model will run for approximately {test_duration} seconds\n"
-        )
+        print(f"Running each model sequentially\n")
 
         all_model_data = []
 
@@ -167,15 +183,6 @@ class PerformanceTest:
                     model_id, prompt, output_file=output_file
                 )
 
-                # Wait for the desired duration if needed
-                elapsed = time.time() - start_time
-                if elapsed < test_duration:
-                    remaining = test_duration - elapsed
-                    print(
-                        f"Waiting {remaining:.1f} seconds to complete the test duration..."
-                    )
-                    time.sleep(remaining)
-
             finally:
                 # Stop monitoring
                 self._stop_monitoring(monitor_thread)
@@ -189,22 +196,23 @@ class PerformanceTest:
 
             # Save this model's performance data
             model_data_file = (
-                self.results_dir
-                / "raw_data"
+                self.raw_data_dir
                 / f"sequential_{model_id.replace(':', '_')}_{self.timestamp}.json"
             )
             with open(model_data_file, "w") as f:
                 json.dump(performance_data, f, indent=2)
 
             # Generate visualizations for this model
-            viz_paths = self.visualizer.create_visualizations(performance_data)
+            viz_paths = self.visualizer.create_visualizations(
+                performance_data,
+                prefix=f"sequential_{model_id.replace(':', '_')}",
+            )
 
             # Generate summary report
             report = self.visualizer.generate_summary_report(
                 performance_data,
                 output_file=str(
-                    self.results_dir
-                    / "raw_data"
+                    self.raw_data_dir
                     / f"sequential_{model_id.replace(':', '_')}_{self.timestamp}_report.txt"
                 ),
             )
@@ -232,7 +240,6 @@ class PerformanceTest:
                     "timestamp": self.timestamp,
                     "mode": "sequential",
                     "models_tested": models,
-                    "test_duration": test_duration,
                     "results": all_model_data,
                 },
                 f,
@@ -247,14 +254,13 @@ class PerformanceTest:
             "model_results": all_model_data,
         }
 
-    def run_parallel_test(self, models, prompt, test_duration=60000):
+    def run_parallel_test(self, models, prompt):
         """
         Run models in parallel and measure performance
 
         Args:
             models: List of model IDs to test in parallel
             prompt: Prompt to send to each model
-            test_duration: How long to run the test in seconds
 
         Returns:
             Dictionary with test results
@@ -262,7 +268,7 @@ class PerformanceTest:
         print(
             f"\nRunning parallel test with {len(models)} models simultaneously"
         )
-        print(f"Test will run for approximately {test_duration} seconds\n")
+        print(f"Test will run until all models complete processing\n")
 
         # Start collecting performance data
         performance_data = []
@@ -291,10 +297,9 @@ class PerformanceTest:
             for thread in prompt_threads:
                 thread.start()
 
-            # If any threads are still running after test_duration, we'll let them continue
-            # but we'll stop monitoring at the desired time
+            # Wait for all threads to complete
             start_time = time.time()
-            while time.time() - start_time < test_duration:
+            while True:
                 # Check if all threads have completed
                 if not any(thread.is_alive() for thread in prompt_threads):
                     print("All models have completed processing")
@@ -318,20 +323,21 @@ class PerformanceTest:
 
         # Save the performance data
         data_file = (
-            self.results_dir
-            / "raw_data"
+            self.raw_data_dir
             / f"parallel_test_{self.timestamp}.json"
         )
         with open(data_file, "w") as f:
             json.dump(performance_data, f, indent=2)
 
         # Generate visualizations
-        viz_paths = self.visualizer.create_visualizations(performance_data)
+        viz_paths = self.visualizer.create_visualizations(
+            performance_data,
+            prefix="parallel_test",
+        )
 
         # Generate summary report
         report_file = (
-            self.results_dir
-            / "raw_data"
+            self.raw_data_dir
             / f"parallel_test_{self.timestamp}_report.txt"
         )
         report = self.visualizer.generate_summary_report(
@@ -348,7 +354,6 @@ class PerformanceTest:
                     "timestamp": self.timestamp,
                     "mode": "parallel",
                     "models_tested": models,
-                    "test_duration": test_duration,
                     "data_file": str(data_file),
                     "report_file": str(report_file),
                     "visualizations": viz_paths,
@@ -368,14 +373,13 @@ class PerformanceTest:
             "visualizations": viz_paths,
         }
 
-    def run_benchmark_test(self, models, prompt, test_duration=60):
+    def run_benchmark_test(self, models, prompt):
         """
         Run comprehensive benchmarks including both sequential and parallel tests
 
         Args:
             models: List of model IDs to test
             prompt: Prompt to send to each model
-            test_duration: Duration for each test phase in seconds
 
         Returns:
             Dictionary with test results
@@ -384,20 +388,17 @@ class PerformanceTest:
         print(
             f"Testing {len(models)} models both sequentially and in parallel"
         )
-        print(
-            f"Each test phase will run for approximately {test_duration} seconds\n"
-        )
+        print("\n==== SEQUENTIAL BENCHMARK PHASE ====")
 
         # Run sequential test first to establish baseline
-        print("\n==== SEQUENTIAL BENCHMARK PHASE ====")
         sequential_results = self.run_sequential_test(
-            models, prompt, test_duration
+            models, prompt
         )
 
         # Run parallel test
         print("\n==== PARALLEL BENCHMARK PHASE ====")
         parallel_results = self.run_parallel_test(
-            models, prompt, test_duration
+            models, prompt
         )
 
         # Create benchmark summary
@@ -410,7 +411,6 @@ class PerformanceTest:
                     "timestamp": self.timestamp,
                     "mode": "benchmark",
                     "models_tested": models,
-                    "test_duration": test_duration,
                     "sequential_results": sequential_results,
                     "parallel_results": parallel_results,
                 },
@@ -498,7 +498,6 @@ class PerformanceTest:
             f"        <h1>LLM Container Performance Benchmark Report</h1>",
             f"        <p>Test performed on: {datetime.fromtimestamp(summary['timestamp']).strftime('%Y-%m-%d %H:%M:%S')}</p>",
             f"        <p>Models tested: {', '.join(summary['models_tested'])}</p>",
-            f"        <p>Test duration per phase: {summary['test_duration']} seconds</p>",
             "        <div class='section'>",
             "            <h2>Summary of Findings</h2>",
             "            <p>This benchmark test compares the performance of running LLM models sequentially vs. in parallel.</p>",
@@ -645,23 +644,25 @@ def main():
     )
 
     parser.add_argument(
-        "--models", nargs="+", help="Space-separated list of model IDs to test"
+        "--models", 
+        nargs="+", 
+        help="Space-separated list of model IDs to test", 
+        default=[
+            "mistral:7b-instruct-v0.3-q3_K_M",
+            "deepseek-coder:6.7b-instruct-q3_K_M",
+            "qwen2.5-coder:3b-instruct-q8_0",
+            "gemma3:4b-it-q4_K_M",
+            "phi4-mini:3.8b-q4_K_M"
+        ]
     )
 
     parser.add_argument(
         "--prompt-file",
         "-p",
+        default=PROMPT_FILE,
         help="Path to a file containing the prompt to send",
     )
-
-    parser.add_argument(
-        "--duration",
-        "-d",
-        type=int,
-        default=DEFAULT_TEST_DURATION,
-        help=f"Test duration in seconds (default: {DEFAULT_TEST_DURATION})",
-    )
-
+    
     parser.add_argument(
         "--output-dir", "-o", help="Directory to save test results"
     )
@@ -706,11 +707,11 @@ def main():
     tester = PerformanceTest(output_dir=output_dir)
 
     if args.mode == "sequential":
-        tester.run_sequential_test(models_to_test, prompt, args.duration)
+        tester.run_sequential_test(models_to_test, prompt)
     elif args.mode == "parallel":
-        tester.run_parallel_test(models_to_test, prompt, args.duration)
+        tester.run_parallel_test(models_to_test, prompt)
     else:  # benchmark
-        tester.run_benchmark_test(models_to_test, prompt, args.duration)
+        tester.run_benchmark_test(models_to_test, prompt)
 
 
 if __name__ == "__main__":

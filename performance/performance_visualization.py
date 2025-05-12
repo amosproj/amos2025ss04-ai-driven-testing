@@ -32,12 +32,13 @@ class PerformanceVisualizer:
         self.viz_dir = self.output_dir / "visualizations"
         self.viz_dir.mkdir(exist_ok=True, parents=True)
 
-    def create_visualizations(self, performance_data):
+    def create_visualizations(self, performance_data, prefix=None):
         """
         Create visualizations from performance test data
 
         Args:
             performance_data: List of performance snapshots or path to JSON file
+            prefix: Optional prefix for output filenames
 
         Returns:
             Dict of generated visualization paths
@@ -49,11 +50,11 @@ class PerformanceVisualizer:
 
         # Check if it's a list of snapshots or a single performance test result
         if isinstance(performance_data, list):
-            return self._create_time_series_visualizations(performance_data)
+            return self._create_time_series_visualizations(performance_data, prefix)
         else:
-            return self._create_before_after_visualizations(performance_data)
+            return self._create_before_after_visualizations(performance_data, prefix)
 
-    def _create_time_series_visualizations(self, snapshots):
+    def _create_time_series_visualizations(self, snapshots, prefix=None):
         """Generate visualizations for a time series of performance snapshots"""
         if not snapshots:
             print("No data to visualize")
@@ -71,6 +72,9 @@ class PerformanceVisualizer:
         # Generate visualizations
         viz_paths = {}
 
+        # Prepare filename prefix
+        file_prefix = f"{prefix}_" if prefix else ""
+
         # System resource usage (CPU + Memory)
         plt.figure(figsize=(12, 6))
         plt.plot(relative_times, cpu_values, "b-", label="CPU Usage (%)")
@@ -82,7 +86,7 @@ class PerformanceVisualizer:
         plt.legend()
         plt.tight_layout()
 
-        system_viz_path = self.viz_dir / f"system_usage_{self.timestamp}.png"
+        system_viz_path = self.viz_dir / f"{file_prefix}system_usage_{self.timestamp}.png"
         plt.savefig(system_viz_path)
         plt.close()
         viz_paths["system"] = str(system_viz_path)
@@ -136,7 +140,7 @@ class PerformanceVisualizer:
             plt.legend()
             plt.tight_layout()
 
-            gpu_viz_path = self.viz_dir / f"gpu_usage_{self.timestamp}.png"
+            gpu_viz_path = self.viz_dir / f"{file_prefix}gpu_usage_{self.timestamp}.png"
             plt.savefig(gpu_viz_path)
             plt.close()
             viz_paths["gpu"] = str(gpu_viz_path)
@@ -173,7 +177,7 @@ class PerformanceVisualizer:
             plt.legend()
             plt.tight_layout()
 
-            vram_viz_path = self.viz_dir / f"vram_usage_{self.timestamp}.png"
+            vram_viz_path = self.viz_dir / f"{file_prefix}vram_usage_{self.timestamp}.png"
             plt.savefig(vram_viz_path)
             plt.close()
             viz_paths["vram"] = str(vram_viz_path)
@@ -219,7 +223,7 @@ class PerformanceVisualizer:
             plt.tight_layout()
 
             container_cpu_path = (
-                self.viz_dir / f"container_cpu_{self.timestamp}.png"
+                self.viz_dir / f"{file_prefix}container_cpu_{self.timestamp}.png"
             )
             plt.savefig(container_cpu_path)
             plt.close()
@@ -244,7 +248,7 @@ class PerformanceVisualizer:
             plt.tight_layout()
 
             container_mem_path = (
-                self.viz_dir / f"container_memory_{self.timestamp}.png"
+                self.viz_dir / f"{file_prefix}container_memory_{self.timestamp}.png"
             )
             plt.savefig(container_mem_path)
             plt.close()
@@ -252,7 +256,7 @@ class PerformanceVisualizer:
 
         return viz_paths
 
-    def _create_before_after_visualizations(self, perf_data):
+    def _create_before_after_visualizations(self, perf_data, prefix=None):
         """Generate before-after comparison visualizations"""
         viz_paths = {}
 
@@ -264,6 +268,9 @@ class PerformanceVisualizer:
         ):
             print("Missing before/after system metrics data")
             return {}
+            
+        # Prepare filename prefix
+        file_prefix = f"{prefix}_" if prefix else ""
 
         # System metrics comparison
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
@@ -292,7 +299,7 @@ class PerformanceVisualizer:
 
         plt.tight_layout()
         system_comparison_path = (
-            self.viz_dir / f"system_comparison_{self.timestamp}.png"
+            self.viz_dir / f"{file_prefix}system_comparison_{self.timestamp}.png"
         )
         plt.savefig(system_comparison_path)
         plt.close()
@@ -359,7 +366,7 @@ class PerformanceVisualizer:
 
                 plt.tight_layout()
                 gpu_comparison_path = (
-                    self.viz_dir / f"gpu_comparison_{self.timestamp}.png"
+                    self.viz_dir / f"{file_prefix}gpu_comparison_{self.timestamp}.png"
                 )
                 plt.savefig(gpu_comparison_path)
                 plt.close()
