@@ -1,0 +1,31 @@
+PERFORMANCE TEST SUMMARY REPORT
+=============================
+
+Test Time: 2025-05-12 20:40:25
+Test Duration: 72.31 seconds
+Number of Samples: 16
+
+SYSTEM RESOURCE USAGE:
+  CPU Average: 10.22%
+  CPU Peak: 17.20%
+  Memory Average: 20.50%
+  Memory Peak: 21.80%
+
+GPU RESOURCE USAGE:
+  GPU 0:
+    Utilization Average: 27.00%
+    Utilization Peak: 95.00%
+    VRAM Usage Average: 76.14%
+    VRAM Usage Peak: 95.67%
+
+CONTAINER RESOURCE USAGE:
+  ollama_deepseek-coder_6.7b-instruct-q3_K_M:
+    CPU Average: 96.87%
+    CPU Peak: 100.33%
+    Memory Average: 283.19 MB
+    Memory Peak: 301.45 MB
+  ollama_mistral_7b-instruct-v0.3-q3_K_M:
+    CPU Average: 86.14%
+    CPU Peak: 102.83%
+    Memory Average: 237.07 MB
+    Memory Peak: 299.91 MB

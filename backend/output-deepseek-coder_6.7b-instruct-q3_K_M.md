@@ -1,29 +1,40 @@
-Here is the unit test for the above Python function:
-
 ```python
 import unittest
-from your_module import add_numbers  # replace 'your_module' with the name of the module where this function resides.
+from yourfile import Graph  # replace with the actual module name
 
-class TestAddNumbers(unittest.TestCase):
+class TestGraph(unittest.TestCase):
     def setUp(self):
-        pass  # if any setup is needed, define it here
-
-    def test_add_positive_integers(self):
-        self.assertEqual(add_numbers(2, 3), 5)
-
-    def test_add_negative_and_positive_integer(self):
-        self.assertEqual(add_numbers(-1, 1), 0)
-
-    def test_add_floats(self):
-        self.assertEqual(add_numbers(0.5, 0.5), 1.0)
+        self.graph = Graph([(1,2), (2,3), (3,4), (4,1), (2,4), (1,3)])
         
-if __name__ == '__main__':
+    def test_init(self):
+        self.assertEqual(len(self.graph.edges), 6)
+        self.assertEqual(len(self.graph.graph.keys()), 4)
+    
+    def test_visit(self):
+        self.assertFalse(self.graph.visited[1])
+        self.graph.visit(1)
+        self.assertTrue(self.graph.visited[1])
+        
+    def test_un_visit(self):
+        self.graph.visit(2)
+        self.assertEqual(self.graph.visited_nodes, 1)
+        self.graph.un_visit(2)
+        self.assertFalse(self.graph.visited[2])
+        
+    def test_all_nodes_are_visited(self):
+        # initially all nodes should be unvisited
+        self.assertFalse(self.graph.all_nodes_are_visited())
+        for node in self.graph.graph.keys():
+            self.graph.visit(node)
+        self.assertTrue(self.graph.all_nodes_are_visited())
+        
+    def test_get_hamiltonian_path(self):
+        paths = self.graph.get_hamiltonian_path(1)
+        # for the given graph, there should be 2 possible Hamiltonian paths starting from node 1
+        self.assertEqual(len(paths), 2)
+        
+if __name__ == "__main__":
     unittest.main()
 ```
-
-In this unit test:
-- We're using Python's built-in `unittest` module for creating tests and running them.
-- The function `setUp(self)` in the TestCase class is a special method that runs before every test case, it can be used to set up any necessary conditions or data which will be common to all methods within this class (if you don't have an setup method then just delete/ignore it).
-- The `test_add_positive_integers`, `test_add_negative_and_positive_integer` and `test_add_floats` are the test cases. Each of these methods tests a specific scenario using `assertEqual()` to check that the result is as expected. 
-
-To run this unit test you can either copy it into your own script and run it directly or add it to an existing unittest suite. If you add it to an existing suite, remember to import all needed modules in the setUp method of TestCase class (like `your_module` in the example).
+This unit test file contains tests to check the functionality of `Graph` class methods like `visit`, `un_visit`, `all_nodes_are_visited` and `get_hamiltonian_path`. 
+The `setUp` method is used to create a graph for testing with some predefined edges. The test cases are created to check if the methods return expected values or not. The tests are run by calling unittest's main function at the end of this file, which will discover and run all tests automatically.
