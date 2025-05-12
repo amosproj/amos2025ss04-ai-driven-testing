@@ -78,9 +78,14 @@ metrics = {
         "system_after": post_execution["system"],
         "containers_before": baseline["containers"],
         "containers_after": post_execution["containers"],
-        "cpu_delta": post_execution["system"]["cpu_percent"] - baseline["system"]["cpu_percent"],
-        "memory_delta_gb": round(post_execution["system"]["memory_used_gb"] - baseline["system"]["memory_used_gb"], 2),
-    }
+        "cpu_delta": post_execution["system"]["cpu_percent"]
+        - baseline["system"]["cpu_percent"],
+        "memory_delta_gb": round(
+            post_execution["system"]["memory_used_gb"]
+            - baseline["system"]["memory_used_gb"],
+            2,
+        ),
+    },
 }
 save_metrics(metrics)
 
@@ -95,7 +100,7 @@ performance_data = {
     "container_metrics": {
         "before": baseline["containers"],
         "after": post_execution["containers"],
-    }
+    },
 }
 monitor.save_performance_metrics(performance_data, "docker_performance.json")
 

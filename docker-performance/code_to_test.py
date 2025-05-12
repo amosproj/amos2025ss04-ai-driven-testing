@@ -9,6 +9,7 @@ def hello_world():
     """Prints 'Hello World!'"""
     print("Hello World!")
 
+
 def add(a, b):
     """Returns the sum of a and b"""
     return a + b

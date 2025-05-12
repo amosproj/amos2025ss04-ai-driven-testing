@@ -210,9 +210,7 @@ def send_prompt(prompt, model, output_file, stream=False):
         "prompt": prompt,
         "stream": stream,
         "system": system_message,
-        "options": {
-            "seed": 42,
-        },
+        "options": {"seed": 42},
     }
 
     if stream:
