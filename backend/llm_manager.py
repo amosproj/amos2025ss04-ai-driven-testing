@@ -46,7 +46,7 @@ class LLMManager:
                 f"Model '{model_id}' is not allowed. Allowed models: {valid_ids}"
             )
 
-    def start_model_container(self, model_id: str) -> None:
+    def start_model_container_jonas(self, model_id: str) -> None:
         """
         Starts a docker container for a particular model on a unique port.
         """
@@ -123,11 +123,12 @@ class LLMManager:
             "model": model_id,
             "prompt": prompt,
             "system": system_message,
-            "stream": True,
+            "stream": False,
             "seed": 42,
         }
 
         collected_response = ""
+        start_time = time.time()
         with requests.post(url, json=payload, stream=True) as r:
             r.raise_for_status()
             for chunk in r.iter_lines():
@@ -141,6 +142,7 @@ class LLMManager:
                     except json.JSONDecodeError:
                         continue
 
+        end_time_loading = time.time()
         if not output_file:
             # Generate a default output filename from the model_id
             safe_model_id = model_id.replace(":", "_")
@@ -149,8 +151,10 @@ class LLMManager:
         output_path = os.path.join(SCRIPT_DIR, output_file)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(collected_response)
-
-        return collected_response
+        end_time_final = time.time()
+        loading_response_time = end_time_loading - start_time
+        final_response_time = end_time_final - start_time
+        return collected_response, loading_response_time, final_response_time
 
     def _pull_ollama_image(self):
         """
