@@ -73,6 +73,7 @@ def save_metrics(metrics, file_name="metrics.json"):
     with open(file_name, "w") as f:
         json.dump(metrics, f, indent=4)
 
+
 def evaluate_and_save_metrics(
     response, model_name, generation_time, loading_time
 ):
