@@ -1,0 +1,49 @@
+{
+  "timestamp": "20250512_235254",
+  "mode": "sequential_all_containers",
+  "models_tested": [
+    "mistral:7b-instruct-v0.3-q3_K_M",
+    "deepseek-coder:6.7b-instruct-q3_K_M",
+    "qwen2.5-coder:3b-instruct-q8_0",
+    "gemma3:4b-it-q4_K_M",
+    "phi4-mini:3.8b-q4_K_M"
+  ],
+  "active_models": [
+    "mistral:7b-instruct-v0.3-q3_K_M",
+    "deepseek-coder:6.7b-instruct-q3_K_M",
+    "qwen2.5-coder:3b-instruct-q8_0",
+    "gemma3:4b-it-q4_K_M",
+    "phi4-mini:3.8b-q4_K_M"
+  ],
+  "model_results": [
+    {
+      "model_id": "mistral:7b-instruct-v0.3-q3_K_M",
+      "output_file": "sequential_all_mistral_7b-instruct-v0.3-q3_K_M_20250512_235254.md"
+    },
+    {
+      "model_id": "deepseek-coder:6.7b-instruct-q3_K_M",
+      "output_file": "sequential_all_deepseek-coder_6.7b-instruct-q3_K_M_20250512_235254.md"
+    },
+    {
+      "model_id": "qwen2.5-coder:3b-instruct-q8_0",
+      "output_file": "sequential_all_qwen2.5-coder_3b-instruct-q8_0_20250512_235254.md"
+    },
+    {
+      "model_id": "gemma3:4b-it-q4_K_M",
+      "output_file": "sequential_all_gemma3_4b-it-q4_K_M_20250512_235254.md"
+    },
+    {
+      "model_id": "phi4-mini:3.8b-q4_K_M",
+      "output_file": "sequential_all_phi4-mini_3.8b-q4_K_M_20250512_235254.md"
+    }
+  ],
+  "data_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/raw_data/sequential_all_containers_20250512_235254.json",
+  "report_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/raw_data/sequential_all_containers_20250512_235254_report.txt",
+  "visualizations": {
+    "system": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/visualizations/sequential_all_containers_system_usage_20250512_235254.png",
+    "gpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/visualizations/sequential_all_containers_gpu_usage_20250512_235254.png",
+    "vram": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/visualizations/sequential_all_containers_vram_usage_20250512_235254.png",
+    "container_cpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/visualizations/sequential_all_containers_container_cpu_20250512_235254.png",
+    "container_memory": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250512_235254/visualizations/sequential_all_containers_container_memory_20250512_235254.png"
+  }
+}

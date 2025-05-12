@@ -1,0 +1,26 @@
+PERFORMANCE TEST SUMMARY REPORT
+=============================
+
+Test Time: 2025-05-13 00:11:04
+Test Duration: 53.88 seconds
+Number of Samples: 26
+
+SYSTEM RESOURCE USAGE:
+  CPU Average: 6.40%
+  CPU Peak: 13.90%
+  Memory Average: 18.42%
+  Memory Peak: 19.00%
+
+GPU RESOURCE USAGE:
+  GPU 0:
+    Utilization Average: 47.85%
+    Utilization Peak: 99.00%
+    VRAM Usage Average: 62.35%
+    VRAM Usage Peak: 77.80%
+
+CONTAINER RESOURCE USAGE:
+  ollama_phi4-mini_3.8b-q4_K_M:
+    CPU Average: 94.04%
+    CPU Peak: 105.22%
+    Memory Average: 991.25 MB
+    Memory Peak: 1118.07 MB

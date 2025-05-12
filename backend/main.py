@@ -43,7 +43,6 @@ if __name__ == "__main__":
         help="Print the output to the console (default: False)",
     )
 
-
     args = parser.parse_args()
 
     # Select the model based on the user-provided index
@@ -59,7 +58,10 @@ if __name__ == "__main__":
         manager.start_model_container(model_id)
         print(f"\n--- Response from {model_name} ---")
         manager.send_prompt(
-            model_id, prompt_text, output_file=args.output_file, print_output=args.print_output
+            model_id,
+            prompt_text,
+            output_file=args.output_file,
+            print_output=args.print_output,
         )
         print("")
     finally:

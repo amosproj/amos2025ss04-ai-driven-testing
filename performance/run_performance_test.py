@@ -23,7 +23,9 @@ from datetime import datetime
 import importlib.util
 
 # Add the parent directory to the Python path so we can import from backend
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+)
 
 # Check if module exists before importing
 try:
@@ -37,7 +39,9 @@ from performance_monitor import PerformanceMonitor
 from performance_visualization import PerformanceVisualizer
 
 # Constants
-BACKEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "backend"))
+BACKEND_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "backend")
+)
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR = os.path.join(THIS_DIR, "performance_results")
 PROMPT_FILE = os.path.join(THIS_DIR, "prompt.txt")
@@ -58,42 +62,8 @@ def get_allowed_models():
 def create_or_load_allowed_models_file():
     """Create the allowed models file if it doesn't exist"""
     if not os.path.exists(CONFIG_FILE):
-        default_models = [
-            {
-                "id": "mistral:7b-instruct-v0.3-q3_K_M",
-                "name": "Mistral 7B Instruct",
-                "description": "Good general purpose language model",
-            },
-            {
-                "id": "deepseek-coder:6.7b-instruct-q3_K_M",
-                "name": "DeepSeek Coder 6.7B",
-                "description": "Specialized for code generation",
-            },
-            {
-                "id": "qwen2.5-coder:3b-instruct-q8_0",
-                "name": "Qwen2 Coder 3B",
-                "description": "Smaller code generation model",
-            },
-            {
-                "id": "gemma3:4b-it-q4_K_M",
-                "name": "Gemma3 4B",
-                "description": "Google's general purpose model",
-            },
-            {
-                "id": "phi4-mini:3.8b-q4_K_M",
-                "name": "Phi-4 Mini",
-                "description": "Microsoft's small but capable model",
-            },
-        ]
-
-        config = {"models": default_models}
-
-        os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
-        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-            json.dump(config, f, indent=2)
-
-        print(f"Created default allowed_models.json at {CONFIG_FILE}")
-        return default_models
+        print(f"Error loading allowed_models.json: File not found.")
+        return []
     else:
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as f:
@@ -118,28 +88,28 @@ class PerformanceTest:
     def __init__(self, output_dir=None):
         self.llm_manager = LLMManager()
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
+
         # Create a base directory for results
         self.base_results_dir = Path(output_dir or RESULTS_DIR)
         self.base_results_dir.mkdir(exist_ok=True, parents=True)
-        
+
         # Create a timestamped directory for this specific run
         self.results_dir = self.base_results_dir / f"run_{self.timestamp}"
         self.results_dir.mkdir(exist_ok=True, parents=True)
-        
+
         # Create raw_data subdirectory
         self.raw_data_dir = self.results_dir / "raw_data"
         self.raw_data_dir.mkdir(exist_ok=True, parents=True)
-        
+
         # Initialize monitor and visualizer with the new directory structure
-        self.monitor = PerformanceMonitor(
-            output_dir=str(self.raw_data_dir)
-        )
+        self.monitor = PerformanceMonitor(output_dir=str(self.raw_data_dir))
         self.visualizer = PerformanceVisualizer(
             output_dir=str(self.results_dir)
         )
-        
-        print(f"\nResults for this test run will be saved to: {self.results_dir}")
+
+        print(
+            f"\nResults for this test run will be saved to: {self.results_dir}"
+        )
 
     def run_sequential_test(self, models, prompt):
         """
@@ -254,59 +224,76 @@ class PerformanceTest:
             "model_results": all_model_data,
         }
 
-    def run_parallel_test(self, models, prompt):
+    def run_sequential_all_containers_test(self, models, prompt):
         """
-        Run models in parallel and measure performance
+        Run models sequentially, but with all containers started first and stopped at the end.
+        This allows measuring the performance impact of idle but running containers.
 
         Args:
-            models: List of model IDs to test in parallel
+            models: List of model IDs to test
             prompt: Prompt to send to each model
 
         Returns:
             Dictionary with test results
         """
+        print(f"\nRunning sequential test with all containers started upfront")
         print(
-            f"\nRunning parallel test with {len(models)} models simultaneously"
+            f"This mode starts {len(models)} containers, then prompts each sequentially"
         )
-        print(f"Test will run until all models complete processing\n")
+        print(
+            f"Performance is tracked for the entire duration, including idle time"
+        )
 
         # Start collecting performance data
         performance_data = []
         monitor_thread = self._start_monitoring(performance_data, interval=1.0)
 
+        active_models = []
+        all_model_data = []
+
         try:
-            # Start all containers
+            # Start all containers first
+            print("\nStarting all containers...")
             for model_id in models:
                 try:
                     self.llm_manager.start_model_container(model_id)
                     print(f"Started container for {model_id}")
+                    active_models.append(model_id)
                 except Exception as e:
                     print(f"Error starting container for {model_id}: {e}")
 
-            # Create threads for sending prompts to each model
-            prompt_threads = []
-            for model_id in models:
-                output_file = f"parallel_test_{model_id.replace(':', '_')}_{self.timestamp}.md"
-                thread = threading.Thread(
-                    target=self._send_prompt_thread,
-                    args=(model_id, prompt, output_file),
+            # Allow time for containers to stabilize
+            print("\nWaiting for containers to stabilize...")
+            time.sleep(10)
+
+            # Now prompt each model sequentially
+            for model_id in active_models:
+                print(f"\n{'='*50}")
+                print(f"Sending prompt to model: {model_id}")
+                print(f"{'='*50}")
+
+                # Send the prompt
+                start_time = time.time()
+                print(f"Sending prompt...")
+
+                # Use a custom output file for this test
+                output_file = f"sequential_all_{model_id.replace(':', '_')}_{self.timestamp}.md"
+
+                try:
+                    self.llm_manager.send_prompt(
+                        model_id, prompt, output_file=output_file
+                    )
+                    print(f"Completed prompt processing for {model_id}")
+                except Exception as e:
+                    print(f"Error sending prompt to {model_id}: {e}")
+
+                # Store data for this model
+                all_model_data.append(
+                    {"model_id": model_id, "output_file": output_file}
                 )
-                prompt_threads.append(thread)
 
-            # Start all prompt threads
-            for thread in prompt_threads:
-                thread.start()
-
-            # Wait for all threads to complete
-            start_time = time.time()
-            while True:
-                # Check if all threads have completed
-                if not any(thread.is_alive() for thread in prompt_threads):
-                    print("All models have completed processing")
-                    break
-                time.sleep(1)
-
-            # Wait for a short additional time to capture post-processing metrics
+            # Allow time to capture post-processing metrics
+            print("\nCapturing final metrics...")
             time.sleep(5)
 
         finally:
@@ -314,7 +301,8 @@ class PerformanceTest:
             self._stop_monitoring(monitor_thread)
 
             # Stop all containers
-            for model_id in models:
+            print("\nStopping all containers...")
+            for model_id in active_models:
                 try:
                     self.llm_manager.stop_model_container(model_id)
                     print(f"Stopped container for {model_id}")
@@ -324,7 +312,7 @@ class PerformanceTest:
         # Save the performance data
         data_file = (
             self.raw_data_dir
-            / f"parallel_test_{self.timestamp}.json"
+            / f"sequential_all_containers_{self.timestamp}.json"
         )
         with open(data_file, "w") as f:
             json.dump(performance_data, f, indent=2)
@@ -332,28 +320,31 @@ class PerformanceTest:
         # Generate visualizations
         viz_paths = self.visualizer.create_visualizations(
             performance_data,
-            prefix="parallel_test",
+            prefix="sequential_all_containers",
         )
 
         # Generate summary report
         report_file = (
             self.raw_data_dir
-            / f"parallel_test_{self.timestamp}_report.txt"
+            / f"sequential_all_containers_{self.timestamp}_report.txt"
         )
         report = self.visualizer.generate_summary_report(
             performance_data, output_file=str(report_file)
         )
 
-        # Create a summary file
+        # Create a summary file with links to all individual test results
         summary_file = (
-            self.results_dir / f"parallel_test_summary_{self.timestamp}.json"
+            self.results_dir
+            / f"sequential_all_containers_summary_{self.timestamp}.json"
         )
         with open(summary_file, "w") as f:
             json.dump(
                 {
                     "timestamp": self.timestamp,
-                    "mode": "parallel",
+                    "mode": "sequential_all_containers",
                     "models_tested": models,
+                    "active_models": active_models,
+                    "model_results": all_model_data,
                     "data_file": str(data_file),
                     "report_file": str(report_file),
                     "visualizations": viz_paths,
@@ -362,7 +353,7 @@ class PerformanceTest:
                 indent=2,
             )
 
-        print(f"\nParallel testing completed!")
+        print(f"\nSequential all containers testing completed!")
         print(f"Performance data saved to {data_file}")
         print(f"Summary saved to {summary_file}")
 
@@ -371,74 +362,8 @@ class PerformanceTest:
             "data_file": str(data_file),
             "report": report,
             "visualizations": viz_paths,
+            "model_results": all_model_data,
         }
-
-    def run_benchmark_test(self, models, prompt):
-        """
-        Run comprehensive benchmarks including both sequential and parallel tests
-
-        Args:
-            models: List of model IDs to test
-            prompt: Prompt to send to each model
-
-        Returns:
-            Dictionary with test results
-        """
-        print(f"\nRunning comprehensive benchmark tests")
-        print(
-            f"Testing {len(models)} models both sequentially and in parallel"
-        )
-        print("\n==== SEQUENTIAL BENCHMARK PHASE ====")
-
-        # Run sequential test first to establish baseline
-        sequential_results = self.run_sequential_test(
-            models, prompt
-        )
-
-        # Run parallel test
-        print("\n==== PARALLEL BENCHMARK PHASE ====")
-        parallel_results = self.run_parallel_test(
-            models, prompt
-        )
-
-        # Create benchmark summary
-        summary_file = (
-            self.results_dir / f"benchmark_summary_{self.timestamp}.json"
-        )
-        with open(summary_file, "w") as f:
-            json.dump(
-                {
-                    "timestamp": self.timestamp,
-                    "mode": "benchmark",
-                    "models_tested": models,
-                    "sequential_results": sequential_results,
-                    "parallel_results": parallel_results,
-                },
-                f,
-                indent=2,
-            )
-
-        # Create an HTML report with comparisons and analysis
-        self._generate_html_report(summary_file)
-
-        print(f"\nBenchmark testing completed!")
-        print(f"Results saved to {summary_file}")
-
-        return {
-            "summary_file": str(summary_file),
-            "sequential_results": sequential_results,
-            "parallel_results": parallel_results,
-        }
-
-    def _send_prompt_thread(self, model_id, prompt, output_file):
-        """Thread function to send a prompt to a model"""
-        try:
-            print(f"Sending prompt to {model_id}...")
-            self.llm_manager.send_prompt(
-                model_id, prompt, output_file=output_file
-            )
-        except Exception as e:
-            print(f"Error sending prompt to {model_id}: {e}")
 
     def _start_monitoring(self, data_list, interval=1.0):
         """Start the performance monitoring thread"""
@@ -462,172 +387,6 @@ class PerformanceTest:
         stop_event.set()
         monitor_thread.join(timeout=2.0)
 
-    def _generate_html_report(self, summary_file):
-        """Generate a comprehensive HTML report with visualizations and analysis"""
-        # Load the summary data
-        with open(summary_file, "r") as f:
-            summary = json.load(f)
-
-        # Create HTML file
-        html_file = (
-            self.results_dir / f"benchmark_report_{self.timestamp}.html"
-        )
-
-        # Basic HTML structure for the report
-        html_content = [
-            "<!DOCTYPE html>",
-            "<html>",
-            "<head>",
-            "    <title>LLM Container Performance Benchmark Report</title>",
-            "    <style>",
-            "        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }",
-            "        h1, h2, h3 { color: #333; }",
-            "        .container { max-width: 1200px; margin: 0 auto; }",
-            "        .section { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }",
-            "        .viz-container { display: flex; flex-wrap: wrap; gap: 20px; }",
-            "        .viz-item { flex: 1; min-width: 300px; margin-bottom: 20px; }",
-            "        img { max-width: 100%; height: auto; border: 1px solid #ddd; }",
-            "        table { border-collapse: collapse; width: 100%; }",
-            "        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }",
-            "        th { background-color: #f2f2f2; }",
-            "        .conclusion { background-color: #f9f9f9; padding: 15px; border-radius: 5px; }",
-            "    </style>",
-            "</head>",
-            "<body>",
-            "    <div class='container'>",
-            f"        <h1>LLM Container Performance Benchmark Report</h1>",
-            f"        <p>Test performed on: {datetime.fromtimestamp(summary['timestamp']).strftime('%Y-%m-%d %H:%M:%S')}</p>",
-            f"        <p>Models tested: {', '.join(summary['models_tested'])}</p>",
-            "        <div class='section'>",
-            "            <h2>Summary of Findings</h2>",
-            "            <p>This benchmark test compares the performance of running LLM models sequentially vs. in parallel.</p>",
-            "            <div class='conclusion'>",
-            "                <h3>Conclusion</h3>",
-            "                <p>Based on the performance metrics collected during this benchmark:</p>",
-            "                <ul>",
-        ]
-
-        # Add analysis of results - parse the reports to get meaningful insights
-        sequential_report_path = None
-        if (
-            "sequential_results" in summary
-            and "model_results" in summary["sequential_results"]
-        ):
-            for model_result in summary["sequential_results"]["model_results"]:
-                if "report" in model_result:
-                    sequential_report_path = os.path.join(
-                        self.results_dir,
-                        "raw_data",
-                        f"sequential_{model_result['model_id'].replace(':', '_')}_{self.timestamp}_report.txt",
-                    )
-
-        parallel_report_path = None
-        if (
-            "parallel_results" in summary
-            and "report_file" in summary["parallel_results"]
-        ):
-            parallel_report_path = summary["parallel_results"]["report_file"]
-
-        # Add basic conclusion based on whether we have reports
-        if sequential_report_path and parallel_report_path:
-            html_content.append(
-                f"                    <li>The test results provide information on whether running models in parallel or sequentially is more efficient.</li>"
-            )
-            html_content.append(
-                f"                    <li>See the detailed metrics and visualizations below to determine which configuration best suits your needs.</li>"
-            )
-            html_content.append(
-                f"                    <li>To determine if containers need to be stopped after use, compare the resource usage patterns between sequential and parallel runs.</li>"
-            )
-        else:
-            html_content.append(
-                f"                    <li>Limited data available to draw definitive conclusions.</li>"
-            )
-            html_content.append(
-                f"                    <li>Please analyze the raw data and visualizations to determine optimal container management strategy.</li>"
-            )
-
-        # Complete the HTML structure
-        html_content.extend(
-            [
-                "                </ul>",
-                "            </div>",
-                "        </div>",
-                "        <div class='section'>",
-                "            <h2>Sequential Test Results</h2>",
-            ]
-        )
-
-        # Add sequential test visualizations
-        if (
-            "sequential_results" in summary
-            and "model_results" in summary["sequential_results"]
-        ):
-            for model_result in summary["sequential_results"]["model_results"]:
-                html_content.append(
-                    f"            <h3>Model: {model_result['model_id']}</h3>"
-                )
-                html_content.append("            <div class='viz-container'>")
-
-                if "visualizations" in model_result:
-                    for viz_type, viz_path in model_result[
-                        "visualizations"
-                    ].items():
-                        rel_path = os.path.relpath(
-                            viz_path, os.path.dirname(html_file)
-                        )
-                        html_content.append(
-                            f"                <div class='viz-item'>"
-                        )
-                        html_content.append(
-                            f"                    <h4>{viz_type.replace('_', ' ').title()}</h4>"
-                        )
-                        html_content.append(
-                            f"                    <img src='{rel_path}' alt='{viz_type} visualization'>"
-                        )
-                        html_content.append(f"                </div>")
-
-                html_content.append("            </div>")
-
-        # Add parallel test visualizations
-        html_content.append("        </div>")
-        html_content.append("        <div class='section'>")
-        html_content.append("            <h2>Parallel Test Results</h2>")
-
-        if (
-            "parallel_results" in summary
-            and "visualizations" in summary["parallel_results"]
-        ):
-            html_content.append("            <div class='viz-container'>")
-
-            for viz_type, viz_path in summary["parallel_results"][
-                "visualizations"
-            ].items():
-                rel_path = os.path.relpath(
-                    viz_path, os.path.dirname(html_file)
-                )
-                html_content.append(f"                <div class='viz-item'>")
-                html_content.append(
-                    f"                    <h4>{viz_type.replace('_', ' ').title()}</h4>"
-                )
-                html_content.append(
-                    f"                    <img src='{rel_path}' alt='{viz_type} visualization'>"
-                )
-                html_content.append(f"                </div>")
-
-            html_content.append("            </div>")
-
-        # Finish HTML
-        html_content.extend(
-            ["        </div>", "    </div>", "</body>", "</html>"]
-        )
-
-        # Write the HTML file
-        with open(html_file, "w") as f:
-            f.write("\n".join(html_content))
-
-        print(f"Generated HTML report: {html_file}")
-
 
 def main():
     """Main entry point for the script"""
@@ -638,22 +397,22 @@ def main():
     parser.add_argument(
         "--mode",
         "-m",
-        choices=["sequential", "parallel", "benchmark"],
-        default="benchmark",
-        help="Test mode: sequential, parallel, or benchmark (both)",
+        choices=["sequential", "sequential_all_containers"],
+        default="sequential_all_containers",
+        help="Test mode: sequential (one container at a time) or sequential_all_containers (start all, prompt sequentially, stop all)",
     )
 
     parser.add_argument(
-        "--models", 
-        nargs="+", 
-        help="Space-separated list of model IDs to test", 
+        "--models",
+        nargs="+",
+        help="Space-separated list of model IDs to test",
         default=[
             "mistral:7b-instruct-v0.3-q3_K_M",
             "deepseek-coder:6.7b-instruct-q3_K_M",
             "qwen2.5-coder:3b-instruct-q8_0",
             "gemma3:4b-it-q4_K_M",
-            "phi4-mini:3.8b-q4_K_M"
-        ]
+            "phi4-mini:3.8b-q4_K_M",
+        ],
     )
 
     parser.add_argument(
@@ -662,7 +421,7 @@ def main():
         default=PROMPT_FILE,
         help="Path to a file containing the prompt to send",
     )
-    
+
     parser.add_argument(
         "--output-dir", "-o", help="Directory to save test results"
     )
@@ -708,10 +467,8 @@ def main():
 
     if args.mode == "sequential":
         tester.run_sequential_test(models_to_test, prompt)
-    elif args.mode == "parallel":
-        tester.run_parallel_test(models_to_test, prompt)
-    else:  # benchmark
-        tester.run_benchmark_test(models_to_test, prompt)
+    else:  # sequential_all_containers
+        tester.run_sequential_all_containers_test(models_to_test, prompt)
 
 
 if __name__ == "__main__":

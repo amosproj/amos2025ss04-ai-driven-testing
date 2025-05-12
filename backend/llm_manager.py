@@ -100,7 +100,11 @@ class LLMManager:
         del self.active_models[model_id]
 
     def send_prompt(
-        self, model_id: str, prompt: str, output_file: str = None, print_response: bool = False
+        self,
+        model_id: str,
+        prompt: str,
+        output_file: str = None,
+        print_response: bool = False,
     ) -> str:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.

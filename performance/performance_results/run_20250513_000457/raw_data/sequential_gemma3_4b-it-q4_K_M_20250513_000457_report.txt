@@ -1,0 +1,26 @@
+PERFORMANCE TEST SUMMARY REPORT
+=============================
+
+Test Time: 2025-05-13 00:10:07
+Test Duration: 68.23 seconds
+Number of Samples: 32
+
+SYSTEM RESOURCE USAGE:
+  CPU Average: 8.77%
+  CPU Peak: 56.20%
+  Memory Average: 20.68%
+  Memory Peak: 21.80%
+
+GPU RESOURCE USAGE:
+  GPU 0:
+    Utilization Average: 59.34%
+    Utilization Peak: 89.00%
+    VRAM Usage Average: 71.75%
+    VRAM Usage Peak: 79.69%
+
+CONTAINER RESOURCE USAGE:
+  ollama_gemma3_4b-it-q4_K_M:
+    CPU Average: 122.21%
+    CPU Peak: 384.28%
+    Memory Average: 2307.53 MB
+    Memory Peak: 2598.43 MB

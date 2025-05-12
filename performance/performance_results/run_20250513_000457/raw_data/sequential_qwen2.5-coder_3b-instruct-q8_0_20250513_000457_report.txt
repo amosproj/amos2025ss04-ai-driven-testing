@@ -1,0 +1,26 @@
+PERFORMANCE TEST SUMMARY REPORT
+=============================
+
+Test Time: 2025-05-13 00:08:56
+Test Duration: 80.39 seconds
+Number of Samples: 38
+
+SYSTEM RESOURCE USAGE:
+  CPU Average: 5.78%
+  CPU Peak: 10.80%
+  Memory Average: 18.54%
+  Memory Peak: 19.00%
+
+GPU RESOURCE USAGE:
+  GPU 0:
+    Utilization Average: 39.55%
+    Utilization Peak: 89.00%
+    VRAM Usage Average: 65.01%
+    VRAM Usage Peak: 78.56%
+
+CONTAINER RESOURCE USAGE:
+  ollama_qwen2.5-coder_3b-instruct-q8_0:
+    CPU Average: 89.06%
+    CPU Peak: 104.99%
+    Memory Average: 1293.67 MB
+    Memory Peak: 1449.84 MB
