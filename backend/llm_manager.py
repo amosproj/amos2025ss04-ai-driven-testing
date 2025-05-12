@@ -46,7 +46,7 @@ class LLMManager:
                 f"Model '{model_id}' is not allowed. Allowed models: {valid_ids}"
             )
 
-    def start_model_container_jonas(self, model_id: str) -> None:
+    def start_model_container(self, model_id: str) -> None:
         """
         Starts a docker container for a particular model on a unique port.
         """
