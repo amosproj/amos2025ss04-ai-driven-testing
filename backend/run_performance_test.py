@@ -125,12 +125,12 @@ class PerformanceTest:
     def run_sequential_test(self, models, prompt, test_duration=60):
         """
         Run models sequentially and measure performance
-        
+
         Args:
             models: List of model IDs to test
             prompt: Prompt to send to each model
             test_duration: Duration to run each model in seconds
-            
+
         Returns:
             Dictionary with test results
         """
@@ -250,12 +250,12 @@ class PerformanceTest:
     def run_parallel_test(self, models, prompt, test_duration=60000):
         """
         Run models in parallel and measure performance
-        
+
         Args:
             models: List of model IDs to test in parallel
             prompt: Prompt to send to each model
             test_duration: How long to run the test in seconds
-            
+
         Returns:
             Dictionary with test results
         """
@@ -371,12 +371,12 @@ class PerformanceTest:
     def run_benchmark_test(self, models, prompt, test_duration=60):
         """
         Run comprehensive benchmarks including both sequential and parallel tests
-        
+
         Args:
             models: List of model IDs to test
             prompt: Prompt to send to each model
             test_duration: Duration for each test phase in seconds
-            
+
         Returns:
             Dictionary with test results
         """

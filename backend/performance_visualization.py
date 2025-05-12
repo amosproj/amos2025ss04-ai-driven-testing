@@ -35,10 +35,10 @@ class PerformanceVisualizer:
     def create_visualizations(self, performance_data):
         """
         Create visualizations from performance test data
-        
+
         Args:
             performance_data: List of performance snapshots or path to JSON file
-        
+
         Returns:
             Dict of generated visualization paths
         """
@@ -370,11 +370,11 @@ class PerformanceVisualizer:
     def generate_summary_report(self, performance_data, output_file=None):
         """
         Generate a text summary report of performance metrics
-        
+
         Args:
             performance_data: Performance data dict or path to JSON file
             output_file: Optional file path to save the report
-            
+
         Returns:
             String containing the summary report
         """

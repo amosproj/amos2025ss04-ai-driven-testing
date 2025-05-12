@@ -356,7 +356,7 @@ def run_container(model_name, prompt, container_name=None):
 def run_parallel_test(models=None, duration=60):
     """
     Run multiple containers in parallel and measure performance
-    
+
     Args:
         models: List of model names to test in parallel
         duration: How long to run the test in seconds

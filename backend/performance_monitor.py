@@ -68,9 +68,11 @@ class PerformanceMonitor:
                             "mem_total_mb": mem_total,
                             "mem_used_mb": mem_used,
                             "mem_free_mb": mem_free,
-                            "mem_used_percent": (mem_used / mem_total) * 100
-                            if mem_total > 0
-                            else 0,
+                            "mem_used_percent": (
+                                (mem_used / mem_total) * 100
+                                if mem_total > 0
+                                else 0
+                            ),
                         }
                     )
 
@@ -85,13 +87,13 @@ class PerformanceMonitor:
             "cpu_percent": psutil.cpu_percent(interval=0.1),
             "memory_percent": psutil.virtual_memory().percent,
             "memory_used_gb": round(
-                psutil.virtual_memory().used / (1024 ** 3), 2
+                psutil.virtual_memory().used / (1024**3), 2
             ),
             "memory_total_gb": round(
-                psutil.virtual_memory().total / (1024 ** 3), 2
+                psutil.virtual_memory().total / (1024**3), 2
             ),
             "swap_percent": psutil.swap_memory().percent,
-            "swap_used_gb": round(psutil.swap_memory().used / (1024 ** 3), 2),
+            "swap_used_gb": round(psutil.swap_memory().used / (1024**3), 2),
             "timestamp": time.time(),
         }
         return metrics
@@ -130,10 +132,10 @@ class PerformanceMonitor:
                     "name": container.name,
                     "cpu_percent": self.calculate_cpu_percent(stats),
                     "memory_usage_mb": round(
-                        stats["memory_stats"].get("usage", 0) / (1024 ** 2), 2
+                        stats["memory_stats"].get("usage", 0) / (1024**2), 2
                     ),
                     "memory_limit_mb": round(
-                        stats["memory_stats"].get("limit", 0) / (1024 ** 2), 2
+                        stats["memory_stats"].get("limit", 0) / (1024**2), 2
                     ),
                     "memory_percent": round(
                         (
@@ -143,9 +145,11 @@ class PerformanceMonitor:
                         * 100,
                         2,
                     ),
-                    "image": container.image.tags[0]
-                    if container.image.tags
-                    else "unknown",
+                    "image": (
+                        container.image.tags[0]
+                        if container.image.tags
+                        else "unknown"
+                    ),
                 }
 
                 # Add GPU metrics for containers if using nvidia-docker
@@ -200,13 +204,13 @@ class PerformanceMonitor:
 def capture_performance_before_after(func, *args, output_file=None, **kwargs):
     """
     Decorator-like function that captures performance before and after executing a function
-    
+
     Args:
         func: The function to execute and measure
         *args: Arguments to pass to the function
         output_file: Optional file to save performance metrics
         **kwargs: Keyword arguments to pass to the function
-        
+
     Returns:
         Tuple of (function result, performance metrics dict)
     """
