@@ -73,38 +73,6 @@ def save_metrics(metrics, file_name="metrics.json"):
     with open(file_name, "w") as f:
         json.dump(metrics, f, indent=4)
 
-
-import subprocess
-
-
-def run_test_script(test_script_path):
-    """Execute a Python test script and capture its output.
-
-    Runs the specified test script as a subprocess with a timeout limit
-    to prevent hanging. Captures both stdout and stderr for reporting.
-
-    Args:
-        test_script_path: Path to the Python test script to execute
-
-    Returns:
-        tuple: (success, output) where success is a boolean indicating if
-               the test passed, and output contains the combined stdout and stderr
-    """
-    try:
-        result = subprocess.run(
-            ["python", str(test_script_path)],
-            capture_output=True,
-            text=True,
-            timeout=30,
-        )
-        success = result.returncode == 0
-        output = result.stdout + "\n" + result.stderr
-    except subprocess.TimeoutExpired:
-        success = False
-        output = "Test execution timed out."
-    return success, output
-
-
 def evaluate_and_save_metrics(
     response, model_name, generation_time, loading_time
 ):
