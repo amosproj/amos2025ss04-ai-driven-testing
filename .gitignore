@@ -79,4 +79,5 @@ get-pip.py
 docker_runner.log
 formatting_errors.txt
 
+# flake8 config file
 .flake8
