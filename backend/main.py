@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 from llm_manager import LLMManager
+from metrics import evaluate_and_save_metrics
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
@@ -57,11 +58,14 @@ if __name__ == "__main__":
     try:
         manager.start_model_container(model_id)
         print(f"\n--- Response from {model_name} ---")
-        manager.send_prompt(
+        response, loading_time, final_time = manager.send_prompt(
             model_id,
             prompt_text,
             output_file=args.output_file,
             print_output=args.print_output,
+        )
+        evaluate_and_save_metrics(
+            response, model_name, final_time, loading_time
         )
         print("")
     finally:
