@@ -12,7 +12,6 @@ import psutil
 import docker
 import subprocess
 import shutil
-import os
 from pathlib import Path
 
 
@@ -164,7 +163,10 @@ class PerformanceMonitor:
                             inspect
                         ):
                             container_stats[container.name]["uses_gpu"] = True
-                    except:
+                    except Exception as e:
+                        print(
+                            f"Error checking GPU usage for container {container.name}: {e}"
+                        )
                         pass
 
             return container_stats

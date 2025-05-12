@@ -20,7 +20,8 @@ import threading
 import argparse
 from pathlib import Path
 from datetime import datetime
-import importlib.util
+from performance_monitor import PerformanceMonitor
+from performance_visualization import PerformanceVisualizer
 
 # Add the parent directory to the Python path so we can import from backend
 sys.path.insert(
@@ -34,9 +35,6 @@ except ImportError:
     print("Error: llm_manager.py not found or could not be imported.")
     print("Make sure backend/llm_manager.py exists and is importable.")
     sys.exit(1)
-
-from performance_monitor import PerformanceMonitor
-from performance_visualization import PerformanceVisualizer
 
 # Constants
 BACKEND_DIR = os.path.abspath(
@@ -62,7 +60,7 @@ def get_allowed_models():
 def create_or_load_allowed_models_file():
     """Create the allowed models file if it doesn't exist"""
     if not os.path.exists(CONFIG_FILE):
-        print(f"Error loading allowed_models.json: File not found.")
+        print("Error loading allowed_models.json: File not found.")
         return []
     else:
         try:
@@ -123,7 +121,7 @@ class PerformanceTest:
             Dictionary with test results
         """
         print(f"\nRunning sequential test with {len(models)} models")
-        print(f"Running each model sequentially\n")
+        print("Running each model sequentially\n")
 
         all_model_data = []
 
@@ -144,8 +142,7 @@ class PerformanceTest:
                 print(f"Started container for {model_id}")
 
                 # Send the prompt
-                start_time = time.time()
-                print(f"Sending prompt to {model_id}...")
+                print("Sending prompt...")
 
                 # Use a custom output file for this test
                 output_file = f"sequential_test_{model_id.replace(':', '_')}_{self.timestamp}.md"
@@ -216,7 +213,7 @@ class PerformanceTest:
                 indent=2,
             )
 
-        print(f"\nSequential testing completed!")
+        print("\nSequential testing completed!")
         print(f"Summary saved to {summary_file}")
 
         return {
@@ -236,12 +233,12 @@ class PerformanceTest:
         Returns:
             Dictionary with test results
         """
-        print(f"\nRunning sequential test with all containers started upfront")
+        print("\nRunning sequential test with all containers started upfront")
         print(
             f"This mode starts {len(models)} containers, then prompts each sequentially"
         )
         print(
-            f"Performance is tracked for the entire duration, including idle time"
+            "Performance is tracked for the entire duration, including idle time"
         )
 
         # Start collecting performance data
@@ -273,8 +270,7 @@ class PerformanceTest:
                 print(f"{'='*50}")
 
                 # Send the prompt
-                start_time = time.time()
-                print(f"Sending prompt...")
+                print("Sending prompt...")
 
                 # Use a custom output file for this test
                 output_file = f"sequential_all_{model_id.replace(':', '_')}_{self.timestamp}.md"
@@ -353,7 +349,7 @@ class PerformanceTest:
                 indent=2,
             )
 
-        print(f"\nSequential all containers testing completed!")
+        print("\nSequential all containers testing completed!")
         print(f"Performance data saved to {data_file}")
         print(f"Summary saved to {summary_file}")
 
