@@ -104,7 +104,7 @@ class LLMManager:
         model_id: str,
         prompt: str,
         output_file: str = None,
-        print_response: bool = False,
+        print_output: bool = False,
     ) -> str:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
@@ -141,7 +141,7 @@ class LLMManager:
                     try:
                         chunk_json = json.loads(decoded_chunk)
                         chunk_response = chunk_json.get("response", "")
-                        if print_response:
+                        if print_output:
                             print(chunk_response, end="", flush=True)
                         collected_response += chunk_response
                     except json.JSONDecodeError:
