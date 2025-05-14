@@ -16,7 +16,7 @@ This project allows you to easily run a local [Ollama](https://github.com/ollama
 
 ## Files Overview
 
-- `environment.yml` — Conda environment definition
+- `api.py` — Fast API wrapper
 - `main.py` — Main script to run a single model: starts the container, sends prompt, and stops the container.
 - `example_all_models.py` — Example script that sends the same prompt to all allowed models.
 - `llm_manager.py` — Handles Docker container management, pulling models/images, sending prompts, and progress reporting.
@@ -33,7 +33,7 @@ All files are located inside the `backend/` directory.
 1. **(Optional)** Create and activate a Conda environment:
    
    ```bash
-   conda env create -f backend/environment.yml
+   conda env create -f environment.yml
    conda activate backend
 2. Make sure Docker is running on your machine.
 
@@ -50,6 +50,37 @@ By default, it reads from backend/prompt.txt, uses the Mistral LLM and writes to
 You can also specify a custom prompt file and output file:
  ```bash
 python backend/main.py --model 0 --prompt_file ./your_prompt.txt --output_file ./your_output.md
+```
+
+## Running the Local API
+
+This project ships with a very small FastAPI wrapper (`backend/api.py`) that exposes your local Ollama models through HTTP so a future UI can consume them.  
+Follow the steps below to get it up and running.
+
+### 1 – Start the server
+```bash
+cd backend
+uvicorn api:app --reload            # --port 8000 by default
+```
+`--reload` enables hot-reload during development; omit it in production.
+
+You should see something like:
+```
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+```
+
+### 2 – Available endpoints
+
+| Method | Path        | Purpose                                   | Body / Query                                   |
+| ------ |-------------| ----------------------------------------- | ---------------------------------------------- |
+| GET    | `/models`   | List all allowed models + whether running | –                                              |
+| POST   | `/prompt`   | Ensure container is running, send prompt  | `{ "model_id": "<id>", "prompt": "<text>" }`   |
+| POST   | `/shutdown` | Stop & remove a model container           | `{ "model_id": "<id>" }`                       |
+
+Open the automatically generated Swagger UI at:
+
+```
+http://127.0.0.1:8000/docs
 ```
 
 ## Running All Models

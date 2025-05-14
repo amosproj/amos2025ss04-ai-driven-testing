@@ -32,10 +32,10 @@ def execute_commands_in_directory(directory, commands):
 
         # Execute each command in sequence
         for cmd in commands:
-            print(f"\n{'='*50}")
+            print(f"\n{'=' * 50}")
             print(f"Executing command: {cmd}")
             print(f"In directory: {target_dir}")
-            print(f"{'='*50}\n")
+            print(f"{'=' * 50}\n")
 
             result = subprocess.run(
                 cmd,
