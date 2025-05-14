@@ -1,57 +1,53 @@
 ```markdown
-# Unit Tests for `add_numbers` Function
-
-## Test Cases and Expected Results:
-
-### Basic Addition:
-- **Input:** `(2, 3)`
-- **Expected Output:** `5`
-  
-### Adding Negative Numbers (Result is Zero):
-- **Input:** `(-1, 1)`
-- **Expected Output:** `0`
-
-### Floating Point Number Addition:
-- **Input:** `(0.5, 0.5)`
-- **Expected Output:** `1.0`
-
-## Unit Test Code:
-
-```python
 import unittest
 
-def add_numbers(a, b):
-    """
-    Adds two numbers together and returns the result.
-    
-    Args:
-        a (int or float): The first number.
-        b (int or float): The second number.
-    
-    Returns:
-        int or float: The sum of a and b.
-    
-    Examples:
-        >>> add_numbers(2, 3)
-        5
-        >>> add_numbers(-1, 1)
-        0
-        >>> add_numbers(0.5, 0.5)
-        1.0
-    """
-    return a + b
+from typing import List
 
-class TestAddNumbers(unittest.TestCase):
 
-    def test_addition(self):
-        self.assertEqual(add_numbers(2, 3), 5)
+class TestGraph(unittest.TestCase):
 
-    def test_negative_sum_zero(self):
-        self.assertEqual(add_numbers(-1, 1), 0)
+    def setUp(self):
+        edges = [(1, 2), (2, 3), (3, 4), (4, 1), (2, 4), (1, 3)]
+        self.graph = Graph(edges)
 
-    def test_floating_point_number_adding(self):
-        self.assertAlmostEqual(add_numbers(0.5, 0.5), 1.0)
-    
-if __name__ == '__main__':
+    def test_make_graph(self):
+        expected_edges = [
+            (1, 2),
+            (2, 1),
+            (2, 3),
+            (3, 2),
+            (3, 4),
+            (4, 3),
+            (4, 1),
+            (1, 4),
+            (1, 3),
+            (3, 1)
+        ]
+        
+        expected_edges_set = set(expected_edges)
+
+        actual_edges = list(self.graph.edges)[:10]
+        self.assertEqual(sorted(actual_edges), sorted(expected_edges))
+
+    def test_all_nodes_are_visited(self):
+        visited_count_before_starting_path = len(set(node for node in self.graph.visited))
+        hamiltonian_paths_from_node1 = self.graph.get_hamiltonian_path(start=1)
+        
+        # Count total nodes and verify if all are visited
+        expected_total_nodes = 4
+
+        actual_visited_counts_after_all_paths = [len(path) - 1 for path in hamiltonian_paths_from_node1]
+        unique_visited_numbers = set(visited_count_before_starting_path | {node: False} for node, visited in self.graph.visited.items() if visited)
+        
+        # Check that all nodes are indeed marked as visited
+        expected_unique_nodes_set = {i + 1 for i in range(expected_total_nodes)}
+        actual_visited_counts_after_all_paths.add(0)  # Start vertex is not counted
+        
+        unique_actual_count = len(unique_visited_numbers | set(actual_visited_counts_after_all_paths))
+        
+        self.assertEqual(len(set(range(1, expected_total_nodes + 1)))) == expected_unique_nodes_set
+        self.assertTrue(all(v in actual_visited_counts_after_all_paths for v in range(expected_total_nodes)))
+
+if __name__ == "__main__":
     unittest.main()
 ```

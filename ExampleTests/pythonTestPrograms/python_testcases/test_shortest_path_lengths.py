@@ -67,12 +67,7 @@ def test1():
 def test2():
     """Case 2: Linear graph input."""
 
-    graph = {
-        (0, 1): 3,
-        (1, 2): 5,
-        (2, 3): -2,
-        (3, 4): 7,
-    }
+    graph = {(0, 1): 3, (1, 2): 5, (2, 3): -2, (3, 4): 7}
     result = shortest_path_lengths(5, graph)
 
     expected = {
@@ -109,10 +104,7 @@ def test2():
 def test3():
     """Case 3: Disconnected graphs input."""
 
-    graph = {
-        (0, 1): 3,
-        (2, 3): 5,
-    }
+    graph = {(0, 1): 3, (2, 3): 5}
     result = shortest_path_lengths(4, graph)
 
     expected = {
@@ -140,11 +132,7 @@ def test3():
 def test4():
     """Case 4: Strongly connected graph input."""
 
-    graph = {
-        (0, 1): 3,
-        (1, 2): 5,
-        (2, 0): -1,
-    }
+    graph = {(0, 1): 3, (1, 2): 5, (2, 0): -1}
     result = shortest_path_lengths(3, graph)
 
     expected = {

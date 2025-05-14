@@ -1,0 +1,2415 @@
+[
+  {
+    "system": {
+      "cpu_percent": 1.9,
+      "memory_percent": 17.8,
+      "memory_used_gb": 2.5,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076899.28389
+    },
+    "containers": {},
+    "timestamp": 1747076899.2855775,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2326.0,
+          "mem_free_mb": 5742.0,
+          "mem_used_percent": 28.3935546875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 3.1,
+      "memory_percent": 18.0,
+      "memory_used_gb": 2.52,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076900.8619473
+    },
+    "containers": {},
+    "timestamp": 1747076900.8643024,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2319.0,
+          "mem_free_mb": 5749.0,
+          "mem_used_percent": 28.30810546875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 1.9,
+      "memory_percent": 18.1,
+      "memory_used_gb": 2.53,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076902.1205611
+    },
+    "containers": {
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 0.1,
+        "memory_usage_mb": 59.03,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 0.37,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076903.5203156,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2322.0,
+          "mem_free_mb": 5746.0,
+          "mem_used_percent": 28.3447265625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 0.0,
+      "memory_percent": 18.1,
+      "memory_used_gb": 2.54,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076904.660494
+    },
+    "containers": {
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 0.0,
+        "memory_usage_mb": 65.97,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 0.41,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076906.5282295,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 2.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2328.0,
+          "mem_free_mb": 5740.0,
+          "mem_used_percent": 28.41796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 0.0,
+      "memory_percent": 18.4,
+      "memory_used_gb": 2.58,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076907.6644115
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 16.63,
+        "memory_usage_mb": 36.02,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 0.23,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 8.16,
+        "memory_usage_mb": 570.26,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 3.57,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076911.5537715,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2493.0,
+          "mem_free_mb": 5575.0,
+          "mem_used_percent": 30.43212890625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 1.9,
+      "memory_percent": 20.8,
+      "memory_used_gb": 2.85,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076912.6913335
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 9.34,
+        "memory_usage_mb": 1262.2,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.9,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 8.95,
+        "memory_usage_mb": 1783.61,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 11.17,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076916.5849671,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2485.0,
+          "mem_free_mb": 5583.0,
+          "mem_used_percent": 30.33447265625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 0.6,
+      "memory_percent": 20.8,
+      "memory_used_gb": 2.86,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076917.728592
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 9.2,
+        "memory_usage_mb": 2455.48,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 15.38,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 9.27,
+        "memory_usage_mb": 2985.76,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 18.7,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076921.6155636,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2497.0,
+          "mem_free_mb": 5571.0,
+          "mem_used_percent": 30.48095703125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 2.5,
+      "memory_percent": 20.9,
+      "memory_used_gb": 2.86,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076922.7576394
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 90.52,
+        "memory_usage_mb": 3423.46,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.44,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.88,
+        "memory_usage_mb": 3669.36,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 22.98,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076926.643201,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 16.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7777.0,
+          "mem_free_mb": 291.0,
+          "mem_used_percent": 94.93408203125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 20.9,
+      "memory_used_gb": 2.86,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076927.7840722
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 95.12,
+        "memory_usage_mb": 3419.54,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.41,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.5,
+        "memory_usage_mb": 3665.11,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 22.95,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076931.6718216,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 13.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7777.0,
+          "mem_free_mb": 291.0,
+          "mem_used_percent": 94.93408203125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 9.7,
+      "memory_percent": 21.1,
+      "memory_used_gb": 2.88,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076934.043596
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 100.17,
+        "memory_usage_mb": 3419.21,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.41,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.47,
+        "memory_usage_mb": 3722.45,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.31,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076937.7149332,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 18.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7676.0,
+          "mem_free_mb": 392.0,
+          "mem_used_percent": 93.701171875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 10.7,
+      "memory_percent": 21.5,
+      "memory_used_gb": 2.92,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076942.0530815
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.82,
+        "memory_usage_mb": 3464.71,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.69,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.16,
+        "memory_usage_mb": 3763.7,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.57,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076945.7876365,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 13.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7748.0,
+          "mem_free_mb": 320.0,
+          "mem_used_percent": 94.580078125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.4,
+      "memory_percent": 21.7,
+      "memory_used_gb": 2.94,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076948.0901482
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.56,
+        "memory_usage_mb": 3495.21,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.89,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.02,
+        "memory_usage_mb": 3767.95,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.59,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076951.8190897,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 100.0,
+          "mem_util_percent": 23.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7816.0,
+          "mem_free_mb": 252.0,
+          "mem_used_percent": 95.41015625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.4,
+      "memory_percent": 21.7,
+      "memory_used_gb": 2.94,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076952.99526
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.79,
+        "memory_usage_mb": 3495.09,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.88,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.36,
+        "memory_usage_mb": 3768.06,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.59,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076956.8528028,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 13.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7773.0,
+          "mem_free_mb": 295.0,
+          "mem_used_percent": 94.88525390625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.6,
+      "memory_percent": 21.7,
+      "memory_used_gb": 2.95,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076961.651842
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.01,
+        "memory_usage_mb": 3495.25,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.89,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.68,
+        "memory_usage_mb": 3768.18,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.59,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076964.91,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 19.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7832.0,
+          "mem_free_mb": 236.0,
+          "mem_used_percent": 95.60546875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 14.4,
+      "memory_percent": 21.8,
+      "memory_used_gb": 2.96,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076966.580934
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 98.75,
+        "memory_usage_mb": 3512.25,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.81,
+        "memory_usage_mb": 3768.18,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.59,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076969.9499705,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 9.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7773.0,
+          "mem_free_mb": 295.0,
+          "mem_used_percent": 94.88525390625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 15.2,
+      "memory_percent": 21.8,
+      "memory_used_gb": 2.96,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076972.2135968
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 98.56,
+        "memory_usage_mb": 3511.81,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.13,
+        "memory_usage_mb": 3775.18,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076975.9901514,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 20.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7851.0,
+          "mem_free_mb": 217.0,
+          "mem_used_percent": 95.83740234375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076977.1854746
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.86,
+        "memory_usage_mb": 3511.92,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.62,
+        "memory_usage_mb": 3774.98,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076981.0228124,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 6.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7950.0,
+          "mem_free_mb": 118.0,
+          "mem_used_percent": 97.0458984375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.2,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076982.4347548
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.61,
+        "memory_usage_mb": 3511.92,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.24,
+        "memory_usage_mb": 3775.1,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076986.0548532,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 8.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7804.0,
+          "mem_free_mb": 264.0,
+          "mem_used_percent": 95.263671875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 15.7,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076987.4778292
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.18,
+        "memory_usage_mb": 3512.42,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.75,
+        "memory_usage_mb": 3774.71,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076991.0887182,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 13.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7871.0,
+          "mem_free_mb": 197.0,
+          "mem_used_percent": 96.08154296875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 14.7,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076992.978928
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.81,
+        "memory_usage_mb": 3511.86,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.24,
+        "memory_usage_mb": 3775.2,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747076996.121268,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 19.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7866.0,
+          "mem_free_mb": 202.0,
+          "mem_used_percent": 96.0205078125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.7,
+      "memory_percent": 21.8,
+      "memory_used_gb": 2.96,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747076998.041212
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.42,
+        "memory_usage_mb": 3512.21,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.05,
+        "memory_usage_mb": 3774.61,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077001.154615,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 22.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7892.0,
+          "mem_free_mb": 176.0,
+          "mem_used_percent": 96.337890625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.6,
+      "memory_percent": 21.8,
+      "memory_used_gb": 2.96,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077002.7413146
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 100.62,
+        "memory_usage_mb": 3512.29,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.48,
+        "memory_usage_mb": 3774.86,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077006.1813862,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 25.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7873.0,
+          "mem_free_mb": 195.0,
+          "mem_used_percent": 96.10595703125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 15.2,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.96,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077007.3538628
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.55,
+        "memory_usage_mb": 3512.54,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.93,
+        "memory_usage_mb": 3774.77,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077011.2143703,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 36.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7870.0,
+          "mem_free_mb": 198.0,
+          "mem_used_percent": 96.0693359375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 18.8,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.96,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077012.3805804
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 100.98,
+        "memory_usage_mb": 3512.3,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.25,
+        "memory_usage_mb": 3774.77,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077016.2466822,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 35.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7873.0,
+          "mem_free_mb": 195.0,
+          "mem_used_percent": 96.10595703125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 14.6,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077017.4235528
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.58,
+        "memory_usage_mb": 3512.41,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 101.79,
+        "memory_usage_mb": 3774.89,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077021.278864,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 95.0,
+          "mem_util_percent": 35.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7868.0,
+          "mem_free_mb": 200.0,
+          "mem_used_percent": 96.044921875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 11.9,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077022.451196
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.91,
+        "memory_usage_mb": 3512.41,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.79,
+        "memory_usage_mb": 3774.58,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.63,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077026.3197134,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 35.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7809.0,
+          "mem_free_mb": 259.0,
+          "mem_used_percent": 95.32470703125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077027.4986763
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.41,
+        "memory_usage_mb": 3512.66,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 102.34,
+        "memory_usage_mb": 3774.7,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077031.3502324,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 94.0,
+          "mem_util_percent": 35.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7861.0,
+          "mem_free_mb": 207.0,
+          "mem_used_percent": 95.95947265625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.4,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077032.5038974
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 100.05,
+        "memory_usage_mb": 3512.43,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.65,
+        "memory_usage_mb": 3774.59,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077036.384931,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 37.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7866.0,
+          "mem_free_mb": 202.0,
+          "mem_used_percent": 96.0205078125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 14.1,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077037.531315
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.8,
+        "memory_usage_mb": 3512.67,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 105.32,
+        "memory_usage_mb": 3774.71,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077041.4145415,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 35.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7798.0,
+          "mem_free_mb": 270.0,
+          "mem_used_percent": 95.1904296875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.1,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077046.3735547
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.12,
+        "memory_usage_mb": 3512.6,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.8,
+        "memory_usage_mb": 3774.59,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077049.4611459,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 19.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7876.0,
+          "mem_free_mb": 192.0,
+          "mem_used_percent": 96.142578125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.5,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077050.922033
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 101.8,
+        "memory_usage_mb": 3512.58,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.39,
+        "memory_usage_mb": 3774.72,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077054.4951897,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 20.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7870.0,
+          "mem_free_mb": 198.0,
+          "mem_used_percent": 96.0693359375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.7,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077056.589035
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 98.86,
+        "memory_usage_mb": 3512.58,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 98.81,
+        "memory_usage_mb": 3774.72,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077060.5465271,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 16.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7810.0,
+          "mem_free_mb": 258.0,
+          "mem_used_percent": 95.3369140625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.2,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077061.9736986
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.35,
+        "memory_usage_mb": 3512.34,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.0,
+        "memory_usage_mb": 3774.97,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077065.5776315,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 22.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7878.0,
+          "mem_free_mb": 190.0,
+          "mem_used_percent": 96.1669921875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 19.4,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077067.6618726
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.49,
+        "memory_usage_mb": 3512.36,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 98.83,
+        "memory_usage_mb": 3774.86,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077071.6179287,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 31.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7874.0,
+          "mem_free_mb": 194.0,
+          "mem_used_percent": 96.1181640625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 18.1,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.98,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077072.8008173
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.82,
+        "memory_usage_mb": 3512.12,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.44,
+        "memory_usage_mb": 3775.11,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077076.6581504,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 74.0,
+          "mem_util_percent": 18.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7885.0,
+          "mem_free_mb": 183.0,
+          "mem_used_percent": 96.25244140625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.98,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077077.8354793
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 100.17,
+        "memory_usage_mb": 3512.25,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.89,
+        "memory_usage_mb": 3775.24,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077081.6899545,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 92.0,
+          "mem_util_percent": 33.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7880.0,
+          "mem_free_mb": 188.0,
+          "mem_used_percent": 96.19140625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.98,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077082.8480983
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.36,
+        "memory_usage_mb": 3512.12,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.62,
+        "memory_usage_mb": 3775.24,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077086.7201955,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 38.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7884.0,
+          "mem_free_mb": 184.0,
+          "mem_used_percent": 96.240234375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 14.6,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077089.2710114
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 100.49,
+        "memory_usage_mb": 3512.13,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.24,
+        "memory_usage_mb": 3775.25,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077092.7597294,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 59.0,
+          "mem_util_percent": 6.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7881.0,
+          "mem_free_mb": 187.0,
+          "mem_used_percent": 96.20361328125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077093.9094923
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 101.15,
+        "memory_usage_mb": 3512.09,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.37,
+        "memory_usage_mb": 3775.4,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077097.788193,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 35.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7880.0,
+          "mem_free_mb": 188.0,
+          "mem_used_percent": 96.19140625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 14.1,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077098.9515638
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 102.29,
+        "memory_usage_mb": 3512.22,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 102.56,
+        "memory_usage_mb": 3775.52,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077102.8251195,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 34.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7892.0,
+          "mem_free_mb": 176.0,
+          "mem_used_percent": 96.337890625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.5,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077104.078301
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 101.81,
+        "memory_usage_mb": 3512.22,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.61,
+        "memory_usage_mb": 3775.52,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077107.8606594,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 34.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7855.0,
+          "mem_free_mb": 213.0,
+          "mem_used_percent": 95.88623046875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.5,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077109.0473397
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 101.14,
+        "memory_usage_mb": 3512.35,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 101.9,
+        "memory_usage_mb": 3775.57,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077112.8919756,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 25.0,
+          "mem_util_percent": 6.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7827.0,
+          "mem_free_mb": 241.0,
+          "mem_used_percent": 95.54443359375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.4,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077115.2021203
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.86,
+        "memory_usage_mb": 3512.12,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.24,
+        "memory_usage_mb": 3775.56,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077118.928163,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 50.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7794.0,
+          "mem_free_mb": 274.0,
+          "mem_used_percent": 95.1416015625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.1,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077120.1485324
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.27,
+        "memory_usage_mb": 3512.24,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.25,
+        "memory_usage_mb": 3775.53,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077123.9579344,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 49.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7851.0,
+          "mem_free_mb": 217.0,
+          "mem_used_percent": 95.83740234375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.0,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077125.1081576
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.17,
+        "memory_usage_mb": 3512.25,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 98.7,
+        "memory_usage_mb": 3775.3,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077128.990782,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 30.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7859.0,
+          "mem_free_mb": 209.0,
+          "mem_used_percent": 95.93505859375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 15.1,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077130.1426802
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 98.55,
+        "memory_usage_mb": 3512.16,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 99.3,
+        "memory_usage_mb": 3775.43,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077134.0177639,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 97.0,
+          "mem_util_percent": 31.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7862.0,
+          "mem_free_mb": 206.0,
+          "mem_used_percent": 95.9716796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.5,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077135.171216
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 98.75,
+        "memory_usage_mb": 3511.91,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 98.58,
+        "memory_usage_mb": 3775.44,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077139.0493143,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 64.0,
+          "mem_util_percent": 14.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7855.0,
+          "mem_free_mb": 213.0,
+          "mem_used_percent": 95.88623046875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 16.9,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077141.2922993
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.49,
+        "memory_usage_mb": 3512.04,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 100.42,
+        "memory_usage_mb": 3775.2,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077145.0861578,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 53.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7825.0,
+          "mem_free_mb": 243.0,
+          "mem_used_percent": 95.52001953125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.8,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077146.5095296
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 99.6,
+        "memory_usage_mb": 3512.04,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 0.04,
+        "memory_usage_mb": 3775.57,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077150.1144354,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 96.0,
+          "mem_util_percent": 39.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7861.0,
+          "mem_free_mb": 207.0,
+          "mem_used_percent": 95.95947265625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 7.5,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077151.2619753
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 102.3,
+        "memory_usage_mb": 3512.29,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 0.04,
+        "memory_usage_mb": 3775.4,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077155.140846,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 97.0,
+          "mem_util_percent": 38.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7854.0,
+          "mem_free_mb": 214.0,
+          "mem_used_percent": 95.8740234375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.3,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077156.2831547
+    },
+    "containers": {
+      "ollama_deepseek-coder_6.7b-instruct-q3_K_M": {
+        "id": "8f332ae963b7",
+        "name": "ollama_deepseek-coder_6.7b-instruct-q3_K_M",
+        "cpu_percent": 0.05,
+        "memory_usage_mb": 3511.69,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 21.99,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      },
+      "ollama_mistral_7b-instruct-v0.3-q3_K_M": {
+        "id": "3439f77029e8",
+        "name": "ollama_mistral_7b-instruct-v0.3-q3_K_M",
+        "cpu_percent": 0.04,
+        "memory_usage_mb": 3775.16,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 23.64,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747077160.164695,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 1.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7860.0,
+          "mem_free_mb": 208.0,
+          "mem_used_percent": 95.947265625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 1.2,
+      "memory_percent": 21.9,
+      "memory_used_gb": 2.97,
+      "memory_total_gb": 15.6,
+      "swap_percent": 3.7,
+      "swap_used_gb": 0.15,
+      "timestamp": 1747077161.3039212
+    },
+    "containers": {},
+    "timestamp": 1747077165.379067,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 7041.0,
+          "mem_free_mb": 1027.0,
+          "mem_used_percent": 85.94970703125
+        }
+      ],
+      "count": 1
+    }
+  }
+]

@@ -1,43 +1,128 @@
 ```python
 import unittest
+from collections import defaultdict
+from typing import Dict, List, Set
 
-def add_numbers(a, b):
+
+class Graph:
+    """A class representing an undirected graph.
+
+    This class implements functionality to find all Hamiltonian paths
+    starting from a given vertex.
     """
-    Adds two numbers together and returns the result.
-    
-    Args:
-        a (int or float): The first number.
-        b (int or float): The second number.
-    
-    Returns:
-        int or float: The sum of a and b.
-    
-    Examples:
-        >>> add_numbers(2, 3)
-        5
-        >>> add_numbers(-1, 1)
-        0
-        >>> add_numbers(0.5, 0.5)
-        1.0
-    """
-    return a + b
 
-class TestAddNumbers(unittest.TestCase):
+    def __init__(self, edges):
+        """Initialize a graph with a list of edges.
 
-    def test_positive_numbers(self):
-        self.assertEqual(add_numbers(2, 3), 5)
+        Args:
+            edges: A list of tuples where each tuple (u, v) represents
+                  an undirected edge between vertices u and v
+        """
+        self.edges = edges
+        self.graph: Dict[int, Set] = defaultdict(set)
+        self.visited = defaultdict(lambda: False)
 
-    def test_negative_and_positive(self):
-        self.assertEqual(add_numbers(-1, 1), 0)
+        self.make_graph(edges)
 
-    def test_floating_point_numbers(self):
-        self.assertEqual(add_numbers(0.5, 0.5), 1.0)
+        self.visited_nodes = 0
+        self.total_nodes = len(self.graph.keys())
 
-    def test_zero(self):
-        self.assertEqual(add_numbers(0, 0), 0)
+    def make_graph(self, _edges) -> None:
+        """Build the adjacency list representation of the graph.
 
-    def test_negative_numbers(self):
-        self.assertEqual(add_numbers(-2, -3), -5)
+        Adds the provided edges to the graph's adjacency list, ensuring
+        each edge is represented in both directions (undirected graph).
+
+        Args:
+            _edges: A list of tuples where each tuple represents an edge
+        """
+        self.edges.extend(_edges)
+
+        for u, v in self.edges:
+            self.graph[u].add(v)
+            self.graph[v].add(u)
+
+    def visit(self, node):
+        """Mark a node as visited.
+
+        Args:
+            node: The node to mark as visited
+        """
+        self.visited[node] = True
+        self.visited_nodes += 1
+
+    def un_visit(self, node):
+        """Mark a node as unvisited (for backtracking).
+
+        Args:
+            node: The node to mark as unvisited
+        """
+        self.visited[node] = False
+        self.visited_nodes -= 1
+
+    def all_nodes_are_visited(self) -> bool:
+        """Check if all nodes in the graph have been visited.
+
+        Returns:
+            bool: True if all nodes have been visited, False otherwise
+        """
+        return self.visited_nodes == self.total_nodes
+
+    def get_hamiltonian_path(self, start) -> List[List[int]]:
+        """Find all Hamiltonian paths starting from a given node.
+
+        Uses a recursive backtracking approach to find all possible paths
+        that visit each node in the graph exactly once.
+
+        Args:
+            start: The node to start the path from
+
+        Returns:
+            List[List[int]]: A list of all Hamiltonian paths, where each path
+                            is represented as a list of nodes
+        """
+        self.visit(start)
+
+        all_paths = []
+
+        if self.all_nodes_are_visited():
+            all_paths.append([start])
+
+        for node in self.graph[start]:
+            if self.visited[node]:
+                continue
+            paths = self.get_hamiltonian_path(node)
+            for path in paths:
+                if path:
+                    path.append(start)
+                    all_paths.append(path)
+
+        self.un_visit(start)
+        return all_paths
+
+
+class TestGraph(unittest.TestCase):
+    def test_empty_graph(self):
+        graph = Graph([])
+        self.assertEqual(graph.get_hamiltonian_path(1), [])
+
+    def test_simple_graph(self):
+        edges = [(1, 2), (2, 3), (3, 4), (4, 1), (2, 4), (1, 3)]
+        graph = Graph(edges)
+        hamiltonian_path = graph.get_hamiltonian_path(start=1)
+        self.assertTrue(len(hamiltonian_path) > 0)
+
+    def test_graph_with_no_hamiltonian_path(self):
+        edges = [(1, 2), (2, 3)]
+        graph = Graph(edges)
+        hamiltonian_path = graph.get_hamiltonian_path(start=1)
+        self.assertEqual(len(hamiltonian_path), 0)
+
+    def test_graph_with_self_loop(self):
+        edges = [(1, 1)]
+        graph = Graph(edges)
+        hamiltonian_path = graph.get_hamiltonian_path(start=1)
+        self.assertEqual(len(hamiltonian_path), 0)
 
 if __name__ == '__main__':
     unittest.main()

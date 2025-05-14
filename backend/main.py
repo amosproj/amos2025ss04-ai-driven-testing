@@ -37,6 +37,12 @@ if __name__ == "__main__":
         default=os.path.join(SCRIPT_DIR, "output.md"),
         help="Path to save the output (default: output.md in the same directory)",
     )
+    parser.add_argument(
+        "--print_output",
+        type=bool,
+        default=False,
+        help="Print the output to the console (default: False)",
+    )
 
     args = parser.parse_args()
 
@@ -53,7 +59,10 @@ if __name__ == "__main__":
         manager.start_model_container(model_id)
         print(f"\n--- Response from {model_name} ---")
         response, loading_time, final_time = manager.send_prompt(
-            model_id, prompt_text, output_file=args.output_file
+            model_id,
+            prompt_text,
+            output_file=args.output_file,
+            print_output=args.print_output,
         )
         evaluate_and_save_metrics(
             response, model_name, final_time, loading_time
