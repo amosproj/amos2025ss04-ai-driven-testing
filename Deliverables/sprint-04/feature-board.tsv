@@ -1,0 +1,44 @@
+Title	URL	Assignees	Status	Estimated size	Real size
+Initialize API	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/70		Product Backlog		
+Initialize Frontend	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/71		Product Backlog		
+Research Ollama	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/19		Product Backlog		
+Research/Implement How to include whole project	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/74		Product Backlog		
+Module: Code complexity: CCC	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/66		Product Backlog		
+Module: Analyze context size	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/68		Product Backlog		
+Module: External research	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/69		Product Backlog		
+Module: Code Complexity: MCC	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/67		Product Backlog		
+Module: Code Complexity: Complexity Measurement Tool (CMT)	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/73		Product Backlog		
+Module: Code Complexity: CM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/76		Product Backlog		
+Research: Spell checker	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/77		Product Backlog		
+Module: Spell checker	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/78		Product Backlog		
+Continue to Maintain Bill of Materials	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/52		Product Backlog	1	
+Continue to Maintain the Architecture-Document	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/53		Product Backlog	3	
+Add Modul Interface	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/46	adititakale01, Moaiadsu	In Progress	5	
+Write .py script to start docker containers	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/8	Moaiadsu	In Progress	3	
+make CI-Pipeline	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/1	Moaiadsu	Awaiting Review	5	8
+Set up Branchmanagment	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/44	Biranavan-Parameswaran	Awaiting Review	3	
+Continue to Maintain the Architecture-Document	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/49	adititakale01	Awaiting Review	3	
+Unify the python interface	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/21	JonasBrue	Awaiting Review	3	
+Build the first Benchmarking tests	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/43	PeppermintCoding123, theidkamp	Awaiting Review	3	
+Test docker performance	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/25	OlafVanHuusen	Awaiting Review	3	
+Continue to Maintain Bill of Materials	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/50	OlafVanHuusen	Awaiting Review	1	
+Research AI-Model Benchmark	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/42	PeppermintCoding123	Awaiting Review	3	
+initialize ReadMe	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/45	Biranavan-Parameswaran	Feature Archive	2	
+Continue to Maintain the Architecture-Document	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/31	adititakale01, Biranavan-Parameswaran	Feature Archive	3	3
+Write .py script to interact with the LLM 2	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/5	Moaiadsu, PeppermintCoding123	Feature Archive	3	3
+Research Code Complexity	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/24	PeppermintCoding123	Feature Archive	5	5
+Create Python test cases	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/20	Biranavan-Parameswaran	Feature Archive	3	1
+Start Bill of Material	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/11	OlafVanHuusen	Feature Archive	1	1
+Continue to Maintain Bill of Materials	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/30	OlafVanHuusen	Feature Archive	1	1
+Write .py script to interact with the LLM 5	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/15	JonasBrue	Feature Archive	3	3
+Write .py script to interact with the LLM 4	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/13	JonasBrue	Feature Archive	3	3
+Research robot framework	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/26	theidkamp	Feature Archive		3
+Write .py script to interact with the LLM 1	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/3	Biranavan-Parameswaran	Feature Archive	3	5
+Reaserch LLM 1	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/2	Biranavan-Parameswaran	Feature Archive	5	3
+Create initial Architecture Documentation	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/10	theidkamp	Feature Archive	2	2
+Reaserch LLM 2	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/4	PeppermintCoding123, theidkamp	Feature Archive	5	8
+Reaserch LLM 4	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/12	JonasBrue	Feature Archive	5	5
+Research Deepcoder/Phi4-Mini	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/6	adititakale01, OlafVanHuusen	Feature Archive	5	5
+Reaserch LLM 5	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/14	JonasBrue	Feature Archive	5	5
+Finalize T-shirt design	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/9	HaruspexSan	Feature Archive		
+Write .py script to interact with the LLM 3	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/7	OlafVanHuusen	Feature Archive	3	3
