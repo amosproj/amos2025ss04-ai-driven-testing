@@ -24,9 +24,12 @@ manager = LLMManager()
 # --------------------------------------------------------------------------- #
 # Helper – load config once
 # --------------------------------------------------------------------------- #
-with open(os.path.join(SCRIPT_DIR, ALLOWED_MODELS), "r", encoding="utf-8") as fh:
+with open(
+    os.path.join(SCRIPT_DIR, ALLOWED_MODELS), "r", encoding="utf-8"
+) as fh:
     _raw_cfg = json.load(fh)
 AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
+
 
 # --------------------------------------------------------------------------- #
 # Pydantic request / response models
@@ -44,6 +47,7 @@ class PromptResponse(BaseModel):
 
 class ShutdownRequest(BaseModel):
     model_id: str
+
 
 # --------------------------------------------------------------------------- #
 # End-points
@@ -76,12 +80,18 @@ async def prompt(req: PromptRequest):
     try:
         # LLMManager is synchronous → run it in a thread so FastAPI stays async-friendly
         if req.model_id not in manager.active_models:
-            await run_in_threadpool(manager.start_model_container, req.model_id)
+            await run_in_threadpool(
+                manager.start_model_container, req.model_id
+            )
 
-        response, load_t, total_t = await run_in_threadpool(manager.send_prompt, req.model_id, req.prompt)
+        response, load_t, total_t = await run_in_threadpool(
+            manager.send_prompt, req.model_id, req.prompt
+        )
 
         return PromptResponse(
-            response_markdown=response, loading_seconds=load_t, total_seconds=total_t
+            response_markdown=response,
+            loading_seconds=load_t,
+            total_seconds=total_t,
         )
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
@@ -94,4 +104,3 @@ async def shutdown(req: ShutdownRequest):
     """
     await run_in_threadpool(manager.stop_model_container, req.model_id)
     return {"status": "stopped", "model_id": req.model_id}
-
