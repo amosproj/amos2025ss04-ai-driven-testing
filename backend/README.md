@@ -1,6 +1,6 @@
 # AI Driven Testing (AMOS SS 2025)
 
-This project allows you to easily run a local [Ollama](https://github.com/ollama/ollama) container, send prompts to a language model, and save the structured response as Markdown.
+This project allows you to easily run a local [Ollama](https://github.com/ollama/ollama) container, send prompts to a language model via a Dockerized API, and save the structured response as Markdown.
 
 ---
 
@@ -17,9 +17,12 @@ This project allows you to easily run a local [Ollama](https://github.com/ollama
 ## Files Overview
 
 - `environment.yml` — Conda environment definition
-- `main.py` — Main script to run everything
-- `prompt.txt` — Your input prompt
-- `output.md` — The generated Markdown output
+- `main.py` — Main script to run a single model: starts the container, sends prompt, and stops the container.
+- `example_all_models.py` — Example script that sends the same prompt to all allowed models.
+- `llm_manager.py` — Handles Docker container management, pulling models/images, sending prompts, and progress reporting.
+- `allowed_models.json` — Config that defines allowed language models.
+- `prompt.txt` — Default input prompt file.
+- `output-<MODEL_ID>.md` — Output file produced for each model.
 
 All files are located inside the `backend/` directory.
 
@@ -41,7 +44,7 @@ Simply run the main.py script:
 python backend/main.py
 ```
 
-By default, it reads from backend/prompt.txt and writes to backend/output.md.
+By default, it reads from backend/prompt.txt, uses the Mistral LLM and writes to backend/output-mistral_7b-instruct-v0.3-q3_K_M.md.
 
 ## Optional Arguments:
 You can also specify a custom prompt file and output file:
@@ -49,13 +52,35 @@ You can also specify a custom prompt file and output file:
 python backend/main.py --model 0 --prompt_file ./your_prompt.txt --output_file ./your_output.md
 ```
 
+## Running All Models
+
+```bash
+python backend/example_all_models.py
+```
+
+This script does the following:
+- Starts each model's container
+- Sends the provided prompt (from `prompt.txt`)
+- Saves each response into its own `output-<MODEL_ID>.md`
+- Stops all containers after completion
+
+## How It Works
+
+1. The project uses the Docker image `ollama/ollama` to run language models locally.
+2. The `LLMManager` class in `llm_manager.py`:
+   - Pulls the required Docker image with progress indication.
+   - Selects a free port for each container.
+   - Waits until the container’s API becomes available.
+   - Pulls the selected model inside the container.
+   - Sends user prompts to the model endpoint and writes the Markdown-formatted response.
+3. `allowed_models.json` provides a list of allowed models.
+
 ## Note 
 
-The script automatically pulls the model, sends the prompt, and saves the response.
-
-The response is formatted as clean Markdown.
-
-The Ollama Docker container will be started and stopped automatically.
+- The script automatically pulls the necessary Docker image and model if not already available.
+- Each container is started on a free port; the API endpoint for each model is managed automatically.
+- On completion, each container is stopped to free up system resources.
+- The response is formatted as clean Markdown.
 
 ## Example
 
