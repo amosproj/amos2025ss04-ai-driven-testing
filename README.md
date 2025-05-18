@@ -49,31 +49,22 @@ ai-driven-testing/
 
 ## Setup Instructions
 
-### Prerequisites
+### Requirements
 
-- Python 3.10 or newer
-- pip (Python package manager)
+- **Docker** (for running the Ollama container)  
+  ➔ [Install Docker](https://docs.docker.com/get-started/get-docker/)
+  
+- **Conda** (optional, for managing the Python environment)  
+  ➔ [Install Anaconda](https://www.anaconda.com/download)
 
 ### Setting Up the Environment
 
-1. **Create a virtual environment**:
-
-   ```bash
-   # Create a virtual environment
-   python -m venv venv
+1. Create and activate a Conda environment:
    
-   # Activate the environment
-   # On macOS/Linux:
-   source venv/bin/activate
-   # On Windows:
-   # venv\Scripts\activate
-   ```
-
-2. **Install dependencies**:
-
    ```bash
-   pip install -r requirements.txt
-   ```
+   conda env create -f environment.yml
+   conda activate backend
+2. Make sure Docker is running on your machine.
 
 ## Code Quality and Formatting
 
