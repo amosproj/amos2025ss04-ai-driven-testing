@@ -126,9 +126,9 @@ class PerformanceTest:
         all_model_data = []
 
         for model_id in models:
-            print(f"\n{'='*50}")
+            print(f"\n{'=' * 50}")
             print(f"Testing model: {model_id}")
-            print(f"{'='*50}")
+            print(f"{'=' * 50}")
 
             # Start collecting performance data
             performance_data = []
@@ -265,9 +265,9 @@ class PerformanceTest:
 
             # Now prompt each model sequentially
             for model_id in active_models:
-                print(f"\n{'='*50}")
+                print(f"\n{'=' * 50}")
                 print(f"Sending prompt to model: {model_id}")
-                print(f"{'='*50}")
+                print(f"{'=' * 50}")
 
                 # Send the prompt
                 print("Sending prompt...")
