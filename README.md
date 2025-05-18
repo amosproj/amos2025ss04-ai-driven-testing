@@ -40,11 +40,14 @@ The goal of this project is to develop or customize a **LLM-based (Large Languag
 
 ## Overview
 
+
 This project is a frontend application built with Node.js. Follow the steps below to set it up and run it locally.
 
-## Prerequisites
+## Prerequisite
+
 
 - [Node.js](https://nodejs.org/) (Ensure it is installed on your machine)
+
 
 ## Getting Started
 
@@ -61,13 +64,15 @@ This project is a frontend application built with Node.js. Follow the steps belo
    cd frontend/
    ```
 
+
 3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-4. Start the development server:
+4. Start the 
+server:
 
    ```bash
    npm run start
