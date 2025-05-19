@@ -83,21 +83,35 @@ if __name__ == "__main__":
     # Read and pre-process prompt
     with open(args.prompt_file, "r", encoding="utf-8") as f:
         prompt_text = f.read()
-    prompt_text = apply_before_modules(active_modules, prompt_text)
+
+    prompt_data = {
+        "model": {"id": model_id, "name": model_name},
+        "prompt": prompt_text,
+    }
+
+    prompt_data = apply_before_modules(active_modules, prompt_data)
 
     manager = LLMManager()
     try:
-        manager.start_model_container(model_id)
-        print(f"\n--- Response from {model_name} ---")
-        response, loading_time, final_time = manager.send_prompt(
-            model_id, prompt_text, output_file=args.output_file
+        manager.start_model_container(prompt_data["model"]["id"])
+        print(f"\n--- Response from {prompt_data['model']['name']} ---")
+        raw_response, loading_time, final_time = manager.send_prompt(
+            prompt_data["model"]["id"],
+            prompt_data["prompt"],
+            output_file=args.output_file,
         )
 
-        response = apply_after_modules(active_modules, response, prompt_text)
+        response_data = {
+            "response": raw_response,
+            "loading_time": loading_time,
+            "final_time": final_time,
+        }
 
-        evaluate_and_save_metrics(
-            response, model_name, final_time, loading_time
+        response_data = apply_after_modules(
+            active_modules, response_data, prompt_data["prompt"]
         )
+
+        evaluate_and_save_metrics(response_data, prompt_data["model"]["name"])
         print("")
     finally:
-        manager.stop_model_container(model_id)
+        manager.stop_model_container(prompt_data["model"]["id"])

@@ -12,10 +12,10 @@ class ModuleBase(ABC):
         """Return True if the module runs after response is received."""
         pass
 
-    def process_prompt(self, prompt: str) -> str:
+    def process_prompt(self, prompt_data: dict) -> dict:
         """Optionally modify the prompt."""
-        return prompt
+        return prompt_data
 
-    def process_response(self, response: str, prompt: str) -> str:
+    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
         """Optionally modify or analyze the response."""
-        return response
+        return response_data
