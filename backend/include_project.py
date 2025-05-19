@@ -29,25 +29,55 @@ from langchain_community.embeddings.ollama import OllamaEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, PythonLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.vectorstores.chroma import Chroma
-
-def main():
-
-    # Check if the database should be cleared (using the --reset flag).
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--reset", action="store_true", help="Reset the database.")
-    args = parser.parse_args()
-    if args.reset:
-        print("✨ Clearing Database")
-        clear_database()
-
-    # Create (or update) the data store.
-    documents = load_documents()
-    chunks = split_documents(documents)
-    add_to_chroma(chunks)
-
+from llm_manager import LLMManager
 
 DATA_PATH = "python-test-cases"
 CHROMA_PATH = "chroma"
+
+def main():
+    db = None  # Ensure db is always defined
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--reset", action="store_true", help="Reset the database.")
+    parser.add_argument(
+        "--model",
+        type=int,
+        default=0,
+        help="Model selection index (default: 0)",
+    )
+    args = parser.parse_args()
+
+    # Load allowed models and select model_id
+    config = load_allowed_models_config()
+    loaded_models = config.get("models", [])
+    if not loaded_models:
+        raise ValueError("No models found in allowed_models.json")
+    model = loaded_models[args.model]
+    model_id = model["id"]
+
+    manager = LLMManager()
+    try:
+        manager.start_model_container(model_id)
+        if args.reset:
+            print("✨ Clearing Database")
+            clear_database()
+
+        # Create (or update) the data store.
+        documents = load_documents()
+        chunks = split_documents(documents)
+        db = add_to_chroma(chunks)
+
+    except Exception as e:
+        print(f"Error occurred: {str(e)}")
+        raise
+    finally:
+        # Cleanup resources
+        print("\n🧹 Cleaning up...")
+        if db and hasattr(db, 'close'):
+            db.close()
+        if os.path.exists(CHROMA_PATH):
+            shutil.rmtree(CHROMA_PATH)
+        manager.stop_model_container(model_id)
+        print("✅ Cleanup complete")
 
 # Populate database
 
@@ -87,7 +117,6 @@ def get_embedding_function():
     return embeddings
 
 def add_to_chroma(chunks: list[Document]):
-    # Load the existing database.
     db = Chroma(
         persist_directory=CHROMA_PATH, embedding_function=get_embedding_function()
     )
@@ -110,9 +139,8 @@ def add_to_chroma(chunks: list[Document]):
         print(f"👉 Adding new documents: {len(new_chunks)}")
         new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
         db.add_documents(new_chunks, ids=new_chunk_ids)
-        db.persist()
-    else:
-        print("✅ No new documents to add")
+    db.persist()
+    return db
 
 def calculate_chunk_ids(chunks):
 
