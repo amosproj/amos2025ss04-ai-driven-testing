@@ -15,9 +15,6 @@ def snake_to_camel(name: str) -> str:
 
 
 def load_modules(module_names):
-    def snake_to_camel(name: str) -> str:
-        return "".join(word.capitalize() for word in name.split("_"))
-
     modules = []
     for name in module_names:
         try:
@@ -70,9 +67,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--modules",
-        type=str,
-        default="",
-        help="Comma-separated list of modules to apply",
+        nargs='*',
+        default=[],
+        help="List of modules to apply",
     )
     args = parser.parse_args()
 
@@ -81,10 +78,7 @@ if __name__ == "__main__":
     model_name = model["name"]
 
     # Load modules
-    selected_modules = [
-        m.strip() for m in args.modules.split(",") if m.strip()
-    ]
-    active_modules = load_modules(selected_modules)
+    active_modules = load_modules(args.modules)
 
     # Read and pre-process prompt
     with open(args.prompt_file, "r", encoding="utf-8") as f:

@@ -14,10 +14,10 @@ Add the `--modules` flag to the CLI:
 python main.py --model 0 --modules example_logger
 ```
 
-You can pass multiple modules using a comma:
+You can pass multiple modules seperated by spaces:
 
 ```bash
-python main.py --model 0 --modules logger,grammar_corrector,metrics_collector
+python main.py --model 0 --modules logger grammar_corrector metrics_collector
 ```
 
 ---
