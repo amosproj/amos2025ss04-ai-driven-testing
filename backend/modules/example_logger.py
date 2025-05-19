@@ -1,5 +1,6 @@
 from modules.base import ModuleBase
 
+
 class ExampleLogger(ModuleBase):
     def applies_before(self) -> bool:
         return True

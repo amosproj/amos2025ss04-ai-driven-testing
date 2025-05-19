@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class ModuleBase(ABC):
     @abstractmethod
     def applies_before(self) -> bool:

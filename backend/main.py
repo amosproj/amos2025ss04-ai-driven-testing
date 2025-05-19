@@ -9,15 +9,14 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
 MODULES_DIR = os.path.join(SCRIPT_DIR, "modules")
 
+
 def snake_to_camel(name: str) -> str:
-    return ''.join(word.capitalize() for word in name.split('_'))
-
-
+    return "".join(word.capitalize() for word in name.split("_"))
 
 
 def load_modules(module_names):
     def snake_to_camel(name: str) -> str:
-        return ''.join(word.capitalize() for word in name.split('_'))
+        return "".join(word.capitalize() for word in name.split("_"))
 
     modules = []
     for name in module_names:
@@ -37,11 +36,13 @@ def apply_before_modules(modules, prompt):
             prompt = m.process_prompt(prompt)
     return prompt
 
+
 def apply_after_modules(modules, response, prompt):
     for m in modules:
         if m.applies_after():
             response = m.process_response(response, prompt)
     return response
+
 
 if __name__ == "__main__":
     # Load allowed models
@@ -51,11 +52,28 @@ if __name__ == "__main__":
     loaded_models = data.get("models", [])
 
     # CLI
-    parser = argparse.ArgumentParser(description="Run Ollama prompt sending script.")
-    parser.add_argument("--model", type=int, choices=range(len(loaded_models)), default=0)
-    parser.add_argument("--prompt_file", type=str, default=os.path.join(SCRIPT_DIR, "prompt.txt"))
-    parser.add_argument("--output_file", type=str, default=os.path.join(SCRIPT_DIR, "output.md"))
-    parser.add_argument("--modules", type=str, default="", help="Comma-separated list of modules to apply")
+    parser = argparse.ArgumentParser(
+        description="Run Ollama prompt sending script."
+    )
+    parser.add_argument(
+        "--model", type=int, choices=range(len(loaded_models)), default=0
+    )
+    parser.add_argument(
+        "--prompt_file",
+        type=str,
+        default=os.path.join(SCRIPT_DIR, "prompt.txt"),
+    )
+    parser.add_argument(
+        "--output_file",
+        type=str,
+        default=os.path.join(SCRIPT_DIR, "output.md"),
+    )
+    parser.add_argument(
+        "--modules",
+        type=str,
+        default="",
+        help="Comma-separated list of modules to apply",
+    )
     args = parser.parse_args()
 
     model = loaded_models[args.model]
@@ -63,7 +81,9 @@ if __name__ == "__main__":
     model_name = model["name"]
 
     # Load modules
-    selected_modules = [m.strip() for m in args.modules.split(",") if m.strip()]
+    selected_modules = [
+        m.strip() for m in args.modules.split(",") if m.strip()
+    ]
     active_modules = load_modules(selected_modules)
 
     # Read and pre-process prompt
@@ -81,7 +101,9 @@ if __name__ == "__main__":
 
         response = apply_after_modules(active_modules, response, prompt_text)
 
-        evaluate_and_save_metrics(response, model_name, final_time, loading_time)
+        evaluate_and_save_metrics(
+            response, model_name, final_time, loading_time
+        )
         print("")
     finally:
         manager.stop_model_container(model_id)
