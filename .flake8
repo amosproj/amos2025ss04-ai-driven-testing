@@ -13,7 +13,8 @@ exclude =
     ExampleTests/generatedTests,
     ExampleTests/pythonTestPrograms,
     docker_runner.log,
-    formatting_errors.txt
+    formatting_errors.txt,
+    frontend
     
 # Ignoring some common issues that might conflict with Black
 ignore =
