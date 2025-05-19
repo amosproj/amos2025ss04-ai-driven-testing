@@ -67,7 +67,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--modules",
-        nargs='*',
+        nargs="*",
         default=[],
         help="List of modules to apply",
     )
