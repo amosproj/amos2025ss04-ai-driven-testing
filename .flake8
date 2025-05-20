@@ -15,6 +15,7 @@ exclude =
     ExampleTests/pythonTestPrograms,
     docker_runner.log,
     formatting_errors.txt,
+    frontend,
     ./venv,
     ./get-pip.py
 
