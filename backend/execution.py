@@ -1,7 +1,5 @@
 import module_manager
 from llm_manager import LLMManager
-import metrics
-
 
 def execute_prompt(model, active_modules, prompt_text, output_file):
     """Execute the prompt-response flow."""
