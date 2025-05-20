@@ -242,7 +242,7 @@ def run_container_sequence():
             break
 
         logging.info(
-            f"Processing container {i+1}/{len(CONTAINERS)}: {container}"
+            f"Processing container {i + 1}/{len(CONTAINERS)}: {container}"
         )
         result = run_container(container, input_data)
         results.append((container, result))

@@ -74,20 +74,18 @@ def save_metrics(metrics, file_name="metrics.json"):
         json.dump(metrics, f, indent=4)
 
 
-def evaluate_and_save_metrics(
-    response, model_name, generation_time, loading_time
-):
+def evaluate_and_save_metrics(response_data, model_name):
     # Save generated response to a file
     output_path = Path("generated_test.py")
-    cleaned_response = clean_response_text(response)
+    cleaned_response = clean_response_text(response_data["response"])
     with open(output_path, "w") as f:
         f.write(cleaned_response)
     syntax_valid = check_syntax_validity(output_path)
 
     metrics = {
         "Model": model_name,
-        "Generation Time (s)": round(generation_time, 2),
-        "Loading Time (s)": round(loading_time, 2),
+        "Generation Time (s)": round(response_data["loading_time"], 2),
+        "Loading Time (s)": round(response_data["final_time"], 2),
         "Syntax Valid": syntax_valid,
     }
     save_metrics(metrics)
