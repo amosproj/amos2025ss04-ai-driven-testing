@@ -85,6 +85,7 @@ formatting_errors.txt
 .venv/
 
 # backend log files
+/backend/outputs
 /backend/output.md 
 /backend/metrics.json
 /backend/generated_test.py

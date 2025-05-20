@@ -1,6 +1,5 @@
 import module_manager
 from llm_manager import LLMManager
-import metrics
 
 
 def execute_prompt(model, active_modules, prompt_text, output_file):
@@ -44,13 +43,8 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
         }
 
         # Process with modules
-        response_data = module_manager.apply_after_modules(
+        module_manager.apply_after_modules(
             active_modules, response_data, prompt_data
-        )
-
-        # Save metrics
-        metrics.evaluate_and_save_metrics(
-            response_data, prompt_data["model"]["name"]
         )
         print("")
     finally:
