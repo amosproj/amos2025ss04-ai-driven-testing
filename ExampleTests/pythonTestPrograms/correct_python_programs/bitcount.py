@@ -1,6 +1,6 @@
 """Module for counting the number of set bits in an integer.
 
-This module provides a function to determine the number of 1s in the binary 
+This module provides a function to determine the number of 1s in the binary
 representation of an integer using the Brian Kernighan's algorithm.
 """
 

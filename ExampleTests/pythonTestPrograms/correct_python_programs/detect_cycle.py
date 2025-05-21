@@ -1,7 +1,7 @@
 """Module for detecting cycles in linked lists using Floyd's algorithm.
 
-This module provides a function to detect if a linked list contains 
-a cycle using the "tortoise and hare" approach, also known as 
+This module provides a function to detect if a linked list contains
+a cycle using the "tortoise and hare" approach, also known as
 Floyd's cycle-finding algorithm.
 """
 

@@ -77,4 +77,15 @@ get-pip.py
 
 # Log files
 docker_runner.log
+formatting_errors.txt# docker log
+docker-compose-*.log
+docker-runner.log
 formatting_errors.txt
+
+.venv/
+
+# backend log files
+/backend/outputs
+/backend/output.md 
+/backend/metrics.json
+/backend/generated_test.py
