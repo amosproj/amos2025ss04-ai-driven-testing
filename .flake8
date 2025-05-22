@@ -13,8 +13,11 @@ exclude =
     ExampleTests/generatedTests,
     ExampleTests/pythonTestPrograms,
     docker_runner.log,
-    formatting_errors.txt
-    
+    formatting_errors.txt,
+    frontend,
+    ./venv,
+    ./get-pip.py
+
 # Ignoring some common issues that might conflict with Black
 ignore =
     # whitespace before ':'
