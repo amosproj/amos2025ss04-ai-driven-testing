@@ -30,10 +30,20 @@ from langchain_community.document_loaders import DirectoryLoader, PythonLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.vectorstores.chroma import Chroma
 from llm_manager import LLMManager
+from pathlib import Path
+from langchain.prompts import ChatPromptTemplate
+from langchain_community.llms.ollama import Ollama
 
-DATA_PATH = "python-test-cases"
+
+DATA_PATH = "../python-test-cases"
 CHROMA_PATH = "chroma"
-
+PROMPT_TEMPLATE = """
+Answer the query based only on the following context:
+{context}
+---
+Answer the query based on the above context: {question}
+"""
+QUERY_TEXT = "create a unit test for the function in test_case_one.py."
 def main():
     db = None  # Ensure db is always defined
     parser = argparse.ArgumentParser()
@@ -42,7 +52,7 @@ def main():
         "--model",
         type=int,
         default=0,
-        help="Model selection index (default: 0)",
+        help="Model selection index (default: 2)",
     )
     args = parser.parse_args()
 
@@ -66,6 +76,9 @@ def main():
         chunks = split_documents(documents)
         db = add_to_chroma(chunks)
 
+        print("+++++++++++++++++++++++++++++++++++++++")
+        query_format(manager, model_id)
+
     except Exception as e:
         print(f"Error occurred: {str(e)}")
         raise
@@ -83,8 +96,9 @@ def main():
 
 def load_documents():
     # Opens the Python files in the directory
+    abs_path = Path(__file__).parent / "../python-test-cases"
     document_loader = DirectoryLoader(
-        DATA_PATH,
+        str(abs_path.absolute()),
         glob="**/*.py",
         loader_cls=PythonLoader
     )
@@ -173,6 +187,34 @@ def calculate_chunk_ids(chunks):
 def clear_database():
     if os.path.exists(CHROMA_PATH):
         shutil.rmtree(CHROMA_PATH)
+
+
+# ----------------------------------------------------------------------------------------------
+# query the database
+
+def query_format(manager, model_id):
+    query_rag(QUERY_TEXT, manager, model_id)
+
+
+def query_rag(query_text: str, manager, model_id):
+    # Prepare the DB.
+    embedding_function = get_embedding_function()
+    db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
+
+    # Search the DB.
+    results = db.similarity_search_with_score(query_text, k=5)
+
+    context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
+    prompt = prompt_template.format(context=context_text, question=query_text)
+    # Use LLMManager to send the prompt to the selected model
+    response_text, *_ = manager.send_prompt(model_id, prompt)
+
+    sources = [doc.metadata.get("id", None) for doc, _score in results]
+    formatted_response = f"Response: {response_text}\nSources: {sources}"
+    print(formatted_response)
+    return response_text
+
 
 if __name__ == "__main__":
     main()
