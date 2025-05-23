@@ -13,4 +13,4 @@ dependencies:
       - pytest==8.3.5
       - black==25.1.0
       - flake8==7.2.0
-      - transformers==4.38.2
+      - transformers==4.52.2
