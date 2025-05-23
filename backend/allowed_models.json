@@ -19,6 +19,10 @@
     {
       "name": "PHI4",
       "id": "phi4-mini:3.8b-q4_K_M"
+    },
+    {
+      "name": "TINYLLAMA",
+      "id": "tinyllama"
     }
   ]
 }
