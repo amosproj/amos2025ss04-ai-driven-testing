@@ -91,3 +91,4 @@ formatting_errors.txt
 /backend/generated_test.py
 
 /chroma
+/backend/chroma

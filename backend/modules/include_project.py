@@ -19,7 +19,9 @@ This RAG retriever takes the prompt and sends it to the same embedding model, wh
 The information from these chunks can now be put into the context window of the LLM. 
 """
 import argparse
+import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import shutil
 import json
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -35,7 +37,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
 
 
-DATA_PATH = "../python-test-cases"
+DATA_PATH = "../../python-test-cases"
 CHROMA_PATH = "chroma"
 PROMPT_TEMPLATE = """
 Answer the query based only on the following context:
@@ -96,7 +98,7 @@ def main():
 
 def load_documents():
     # Opens the Python files in the directory
-    abs_path = Path(__file__).parent / "../python-test-cases"
+    abs_path = Path(__file__).resolve().parents[2] / "python-test-cases"
     document_loader = DirectoryLoader(
         str(abs_path.absolute()),
         glob="**/*.py",
@@ -117,7 +119,7 @@ def split_documents(documents: list[Document]):
 
 # Create embeddings to populate database and query
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-ALLOWED_MODELS = "allowed_models.json"
+ALLOWED_MODELS = "../allowed_models.json"
 
 def load_allowed_models_config():
     config_path = os.path.join(SCRIPT_DIR, ALLOWED_MODELS)
