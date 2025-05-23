@@ -13,6 +13,8 @@ if __name__ == "__main__":
 
     # Get model information
     model = model_manager.load_models()[args.model]
+    print("using model:")
+    print(model)
 
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
