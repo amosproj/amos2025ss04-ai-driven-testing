@@ -1,0 +1,968 @@
+[
+  {
+    "system": {
+      "cpu_percent": 0.6,
+      "memory_percent": 16.3,
+      "memory_used_gb": 2.23,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087807.9814625
+    },
+    "containers": {},
+    "timestamp": 1747087807.9833088,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 0.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2393.0,
+          "mem_free_mb": 5675.0,
+          "mem_used_percent": 29.21142578125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 12.7,
+      "memory_percent": 16.4,
+      "memory_used_gb": 2.24,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087809.4703689
+    },
+    "containers": {},
+    "timestamp": 1747087809.4722104,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 14.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2389.0,
+          "mem_free_mb": 5679.0,
+          "mem_used_percent": 29.16259765625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 1.2,
+      "memory_percent": 16.5,
+      "memory_used_gb": 2.26,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087810.791358
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 0.0,
+        "memory_usage_mb": 29.26,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 0.18,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087811.8112366,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 4.0,
+          "mem_util_percent": 3.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2373.0,
+          "mem_free_mb": 5695.0,
+          "mem_used_percent": 28.96728515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 5.0,
+      "memory_percent": 16.8,
+      "memory_used_gb": 2.27,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087812.9603207
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 83.16,
+        "memory_usage_mb": 195.02,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 1.22,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087813.9807947,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 7.0,
+          "mem_util_percent": 3.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2373.0,
+          "mem_free_mb": 5695.0,
+          "mem_used_percent": 28.96728515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 3.7,
+      "memory_percent": 18.4,
+      "memory_used_gb": 2.51,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087815.1354394
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 24.25,
+        "memory_usage_mb": 792.88,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 4.96,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087816.1529646,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 9.0,
+          "mem_util_percent": 5.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 2452.0,
+          "mem_free_mb": 5616.0,
+          "mem_used_percent": 29.931640625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 18.4,
+      "memory_used_gb": 2.51,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087817.2980394
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 100.42,
+        "memory_usage_mb": 1031.5,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087818.3140118,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 8.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4822.0,
+          "mem_free_mb": 3246.0,
+          "mem_used_percent": 58.8623046875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.8,
+      "memory_percent": 18.5,
+      "memory_used_gb": 2.52,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087819.4873075
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 100.49,
+        "memory_usage_mb": 1031.29,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087820.5057952,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 9.0,
+          "mem_util_percent": 4.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4804.0,
+          "mem_free_mb": 3264.0,
+          "mem_used_percent": 58.642578125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 18.5,
+      "memory_used_gb": 2.52,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087821.6587782
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 100.37,
+        "memory_usage_mb": 1031.29,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087822.6753883,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 3.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4804.0,
+          "mem_free_mb": 3264.0,
+          "mem_used_percent": 58.642578125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 18.5,
+      "memory_used_gb": 2.52,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087823.8337116
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 101.38,
+        "memory_usage_mb": 1031.29,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087824.8530667,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 5.0,
+          "mem_util_percent": 3.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4805.0,
+          "mem_free_mb": 3263.0,
+          "mem_used_percent": 58.65478515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.3,
+      "memory_percent": 18.5,
+      "memory_used_gb": 2.52,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087826.005752
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 100.56,
+        "memory_usage_mb": 1031.29,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087827.024594,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 6.0,
+          "mem_util_percent": 3.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4805.0,
+          "mem_free_mb": 3263.0,
+          "mem_used_percent": 58.65478515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 18.4,
+      "memory_used_gb": 2.51,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087828.1776526
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 100.39,
+        "memory_usage_mb": 1031.18,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087829.1961505,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 8.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4811.0,
+          "mem_free_mb": 3257.0,
+          "mem_used_percent": 58.72802734375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 13.9,
+      "memory_percent": 18.5,
+      "memory_used_gb": 2.52,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087830.3448777
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 101.39,
+        "memory_usage_mb": 1031.18,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087831.3616765,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 8.0,
+          "mem_util_percent": 2.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4811.0,
+          "mem_free_mb": 3257.0,
+          "mem_used_percent": 58.72802734375
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 8.6,
+      "memory_percent": 18.5,
+      "memory_used_gb": 2.51,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.8,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087832.5160997
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 100.41,
+        "memory_usage_mb": 1031.18,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.46,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087833.5315824,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 1.0,
+          "mem_util_percent": 1.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 4840.0,
+          "mem_free_mb": 3228.0,
+          "mem_used_percent": 59.08203125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 0.6,
+      "memory_percent": 18.7,
+      "memory_used_gb": 2.53,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087834.6766126
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 95.41,
+        "memory_usage_mb": 1108.19,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 6.94,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087835.6912098,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 99.0,
+          "mem_util_percent": 28.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6330.0,
+          "mem_free_mb": 1738.0,
+          "mem_used_percent": 77.2705078125
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.9,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.88,
+      "timestamp": 1747087836.872841
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 105.22,
+        "memory_usage_mb": 1117.7,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087837.9052439,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 89.0,
+          "mem_util_percent": 39.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6358.0,
+          "mem_free_mb": 1709.0,
+          "mem_used_percent": 77.6123046875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 9.4,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.88,
+      "timestamp": 1747087839.0776193
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 104.61,
+        "memory_usage_mb": 1117.7,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087840.0942974,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 90.0,
+          "mem_util_percent": 41.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6373.0,
+          "mem_free_mb": 1695.0,
+          "mem_used_percent": 77.79541015625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087841.2548025
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.83,
+        "memory_usage_mb": 1117.7,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087842.2774897,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 88.0,
+          "mem_util_percent": 38.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6342.0,
+          "mem_free_mb": 1726.0,
+          "mem_used_percent": 77.4169921875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087843.442253
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 104.7,
+        "memory_usage_mb": 1117.82,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087844.4589908,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 88.0,
+          "mem_util_percent": 38.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6326.0,
+          "mem_free_mb": 1742.0,
+          "mem_used_percent": 77.2216796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.9,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087845.651267
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.99,
+        "memory_usage_mb": 1117.82,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087846.6717744,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 86.0,
+          "mem_util_percent": 39.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6326.0,
+          "mem_free_mb": 1742.0,
+          "mem_used_percent": 77.2216796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.3,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087847.8191803
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.57,
+        "memory_usage_mb": 1117.82,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087848.836366,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 87.0,
+          "mem_util_percent": 39.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6322.0,
+          "mem_free_mb": 1746.0,
+          "mem_used_percent": 77.1728515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.3,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087849.9892774
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.91,
+        "memory_usage_mb": 1117.82,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087851.008475,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 88.0,
+          "mem_util_percent": 39.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6322.0,
+          "mem_free_mb": 1746.0,
+          "mem_used_percent": 77.1728515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.8,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087852.1629775
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.81,
+        "memory_usage_mb": 1117.82,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087853.1853764,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 90.0,
+          "mem_util_percent": 39.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6322.0,
+          "mem_free_mb": 1746.0,
+          "mem_used_percent": 77.1728515625
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 7.4,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087854.3316426
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 104.31,
+        "memory_usage_mb": 1118.07,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087855.3531075,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 90.0,
+          "mem_util_percent": 38.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6326.0,
+          "mem_free_mb": 1742.0,
+          "mem_used_percent": 77.2216796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087856.5123096
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.6,
+        "memory_usage_mb": 1118.07,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087857.5280595,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 90.0,
+          "mem_util_percent": 38.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6326.0,
+          "mem_free_mb": 1742.0,
+          "mem_used_percent": 77.2216796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 6.2,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087858.6752326
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.18,
+        "memory_usage_mb": 1118.07,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087859.6916065,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 92.0,
+          "mem_util_percent": 40.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6326.0,
+          "mem_free_mb": 1742.0,
+          "mem_used_percent": 77.2216796875
+        }
+      ],
+      "count": 1
+    }
+  },
+  {
+    "system": {
+      "cpu_percent": 7.4,
+      "memory_percent": 19.0,
+      "memory_used_gb": 2.57,
+      "memory_total_gb": 15.6,
+      "swap_percent": 21.9,
+      "swap_used_gb": 0.87,
+      "timestamp": 1747087860.844844
+    },
+    "containers": {
+      "ollama_phi4-mini_3.8b-q4_K_M": {
+        "id": "3bc2d6e781b0",
+        "name": "ollama_phi4-mini_3.8b-q4_K_M",
+        "cpu_percent": 103.93,
+        "memory_usage_mb": 1118.07,
+        "memory_limit_mb": 15970.32,
+        "memory_percent": 7.0,
+        "image": "ollama/ollama:latest",
+        "uses_gpu": true
+      }
+    },
+    "timestamp": 1747087861.8678858,
+    "gpu": {
+      "devices": [
+        {
+          "index": 0,
+          "gpu_util_percent": 85.0,
+          "mem_util_percent": 37.0,
+          "mem_total_mb": 8192.0,
+          "mem_used_mb": 6326.0,
+          "mem_free_mb": 1742.0,
+          "mem_used_percent": 77.2216796875
+        }
+      ],
+      "count": 1
+    }
+  }
+]

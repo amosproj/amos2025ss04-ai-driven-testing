@@ -1,0 +1,73 @@
+{
+  "timestamp": "20250513_000457",
+  "mode": "sequential",
+  "models_tested": [
+    "mistral:7b-instruct-v0.3-q3_K_M",
+    "deepseek-coder:6.7b-instruct-q3_K_M",
+    "qwen2.5-coder:3b-instruct-q8_0",
+    "gemma3:4b-it-q4_K_M",
+    "phi4-mini:3.8b-q4_K_M"
+  ],
+  "results": [
+    {
+      "model_id": "mistral:7b-instruct-v0.3-q3_K_M",
+      "data_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/raw_data/sequential_mistral_7b-instruct-v0.3-q3_K_M_20250513_000457.json",
+      "visualizations": {
+        "system": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_mistral_7b-instruct-v0.3-q3_K_M_system_usage_20250513_000457.png",
+        "gpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_mistral_7b-instruct-v0.3-q3_K_M_gpu_usage_20250513_000457.png",
+        "vram": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_mistral_7b-instruct-v0.3-q3_K_M_vram_usage_20250513_000457.png",
+        "container_cpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_mistral_7b-instruct-v0.3-q3_K_M_container_cpu_20250513_000457.png",
+        "container_memory": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_mistral_7b-instruct-v0.3-q3_K_M_container_memory_20250513_000457.png"
+      },
+      "report": "PERFORMANCE TEST SUMMARY REPORT\n=============================\n\nTest Time: 2025-05-13 00:06:18\nTest Duration: 77.63 seconds\nNumber of Samples: 37\n\nSYSTEM RESOURCE USAGE:\n  CPU Average: 6.20%\n  CPU Peak: 10.60%\n  Memory Average: 18.84%\n  Memory Peak: 19.40%\n\nGPU RESOURCE USAGE:\n  GPU 0:\n    Utilization Average: 52.73%\n    Utilization Peak: 100.00%\n    VRAM Usage Average: 75.62%\n    VRAM Usage Peak: 91.60%\n\nCONTAINER RESOURCE USAGE:\n  ollama_mistral_7b-instruct-v0.3-q3_K_M:\n    CPU Average: 92.73%\n    CPU Peak: 104.00%\n    Memory Average: 1552.70 MB\n    Memory Peak: 1709.38 MB"
+    },
+    {
+      "model_id": "deepseek-coder:6.7b-instruct-q3_K_M",
+      "data_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/raw_data/sequential_deepseek-coder_6.7b-instruct-q3_K_M_20250513_000457.json",
+      "visualizations": {
+        "system": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_deepseek-coder_6.7b-instruct-q3_K_M_system_usage_20250513_000457.png",
+        "gpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_deepseek-coder_6.7b-instruct-q3_K_M_gpu_usage_20250513_000457.png",
+        "vram": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_deepseek-coder_6.7b-instruct-q3_K_M_vram_usage_20250513_000457.png",
+        "container_cpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_deepseek-coder_6.7b-instruct-q3_K_M_container_cpu_20250513_000457.png",
+        "container_memory": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_deepseek-coder_6.7b-instruct-q3_K_M_container_memory_20250513_000457.png"
+      },
+      "report": "PERFORMANCE TEST SUMMARY REPORT\n=============================\n\nTest Time: 2025-05-13 00:07:33\nTest Duration: 72.37 seconds\nNumber of Samples: 34\n\nSYSTEM RESOURCE USAGE:\n  CPU Average: 5.78%\n  CPU Peak: 12.50%\n  Memory Average: 18.26%\n  Memory Peak: 18.80%\n\nGPU RESOURCE USAGE:\n  GPU 0:\n    Utilization Average: 37.59%\n    Utilization Peak: 99.00%\n    VRAM Usage Average: 70.16%\n    VRAM Usage Peak: 94.89%\n\nCONTAINER RESOURCE USAGE:\n  ollama_deepseek-coder_6.7b-instruct-q3_K_M:\n    CPU Average: 82.57%\n    CPU Peak: 103.68%\n    Memory Average: 1431.19 MB\n    Memory Peak: 1626.95 MB"
+    },
+    {
+      "model_id": "qwen2.5-coder:3b-instruct-q8_0",
+      "data_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/raw_data/sequential_qwen2.5-coder_3b-instruct-q8_0_20250513_000457.json",
+      "visualizations": {
+        "system": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_qwen2.5-coder_3b-instruct-q8_0_system_usage_20250513_000457.png",
+        "gpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_qwen2.5-coder_3b-instruct-q8_0_gpu_usage_20250513_000457.png",
+        "vram": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_qwen2.5-coder_3b-instruct-q8_0_vram_usage_20250513_000457.png",
+        "container_cpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_qwen2.5-coder_3b-instruct-q8_0_container_cpu_20250513_000457.png",
+        "container_memory": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_qwen2.5-coder_3b-instruct-q8_0_container_memory_20250513_000457.png"
+      },
+      "report": "PERFORMANCE TEST SUMMARY REPORT\n=============================\n\nTest Time: 2025-05-13 00:08:56\nTest Duration: 80.39 seconds\nNumber of Samples: 38\n\nSYSTEM RESOURCE USAGE:\n  CPU Average: 5.78%\n  CPU Peak: 10.80%\n  Memory Average: 18.54%\n  Memory Peak: 19.00%\n\nGPU RESOURCE USAGE:\n  GPU 0:\n    Utilization Average: 39.55%\n    Utilization Peak: 89.00%\n    VRAM Usage Average: 65.01%\n    VRAM Usage Peak: 78.56%\n\nCONTAINER RESOURCE USAGE:\n  ollama_qwen2.5-coder_3b-instruct-q8_0:\n    CPU Average: 89.06%\n    CPU Peak: 104.99%\n    Memory Average: 1293.67 MB\n    Memory Peak: 1449.84 MB"
+    },
+    {
+      "model_id": "gemma3:4b-it-q4_K_M",
+      "data_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/raw_data/sequential_gemma3_4b-it-q4_K_M_20250513_000457.json",
+      "visualizations": {
+        "system": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_gemma3_4b-it-q4_K_M_system_usage_20250513_000457.png",
+        "gpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_gemma3_4b-it-q4_K_M_gpu_usage_20250513_000457.png",
+        "vram": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_gemma3_4b-it-q4_K_M_vram_usage_20250513_000457.png",
+        "container_cpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_gemma3_4b-it-q4_K_M_container_cpu_20250513_000457.png",
+        "container_memory": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_gemma3_4b-it-q4_K_M_container_memory_20250513_000457.png"
+      },
+      "report": "PERFORMANCE TEST SUMMARY REPORT\n=============================\n\nTest Time: 2025-05-13 00:10:07\nTest Duration: 68.23 seconds\nNumber of Samples: 32\n\nSYSTEM RESOURCE USAGE:\n  CPU Average: 8.77%\n  CPU Peak: 56.20%\n  Memory Average: 20.68%\n  Memory Peak: 21.80%\n\nGPU RESOURCE USAGE:\n  GPU 0:\n    Utilization Average: 59.34%\n    Utilization Peak: 89.00%\n    VRAM Usage Average: 71.75%\n    VRAM Usage Peak: 79.69%\n\nCONTAINER RESOURCE USAGE:\n  ollama_gemma3_4b-it-q4_K_M:\n    CPU Average: 122.21%\n    CPU Peak: 384.28%\n    Memory Average: 2307.53 MB\n    Memory Peak: 2598.43 MB"
+    },
+    {
+      "model_id": "phi4-mini:3.8b-q4_K_M",
+      "data_file": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/raw_data/sequential_phi4-mini_3.8b-q4_K_M_20250513_000457.json",
+      "visualizations": {
+        "system": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_phi4-mini_3.8b-q4_K_M_system_usage_20250513_000457.png",
+        "gpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_phi4-mini_3.8b-q4_K_M_gpu_usage_20250513_000457.png",
+        "vram": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_phi4-mini_3.8b-q4_K_M_vram_usage_20250513_000457.png",
+        "container_cpu": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_phi4-mini_3.8b-q4_K_M_container_cpu_20250513_000457.png",
+        "container_memory": "/home/olaf_van_huusen/amos-ai-driven-testing/FeatureBranch25/amos2025ss04-ai-driven-testing/performance/performance_results/run_20250513_000457/visualizations/sequential_phi4-mini_3.8b-q4_K_M_container_memory_20250513_000457.png"
+      },
+      "report": "PERFORMANCE TEST SUMMARY REPORT\n=============================\n\nTest Time: 2025-05-13 00:11:04\nTest Duration: 53.88 seconds\nNumber of Samples: 26\n\nSYSTEM RESOURCE USAGE:\n  CPU Average: 6.40%\n  CPU Peak: 13.90%\n  Memory Average: 18.42%\n  Memory Peak: 19.00%\n\nGPU RESOURCE USAGE:\n  GPU 0:\n    Utilization Average: 47.85%\n    Utilization Peak: 99.00%\n    VRAM Usage Average: 62.35%\n    VRAM Usage Peak: 77.80%\n\nCONTAINER RESOURCE USAGE:\n  ollama_phi4-mini_3.8b-q4_K_M:\n    CPU Average: 94.04%\n    CPU Peak: 105.22%\n    Memory Average: 991.25 MB\n    Memory Peak: 1118.07 MB"
+    }
+  ]
+}

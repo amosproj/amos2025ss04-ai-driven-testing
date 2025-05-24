@@ -100,7 +100,11 @@ class LLMManager:
         del self.active_models[model_id]
 
     def send_prompt(
-        self, model_id: str, prompt: str, output_file: str = None
+        self,
+        model_id: str,
+        prompt: str,
+        output_file: str = None,
+        print_output: bool = False,
     ) -> str:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
@@ -137,7 +141,8 @@ class LLMManager:
                     try:
                         chunk_json = json.loads(decoded_chunk)
                         chunk_response = chunk_json.get("response", "")
-                        print(chunk_response, end="", flush=True)
+                        if print_output:
+                            print(chunk_response, end="", flush=True)
                         collected_response += chunk_response
                     except json.JSONDecodeError:
                         continue

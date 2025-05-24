@@ -10,7 +10,7 @@ def add_numbers(a, b):
         b (int or float): The second number.
     
     Returns:
-        int or float: The sum of a and b.
+        int or float: The sum of a and b.sd
     
     Examples:
         >>> add_numbers(2, 3)
