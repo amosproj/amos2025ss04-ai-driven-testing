@@ -23,6 +23,8 @@ class ContextSizeCalculator(ModuleBase):
         print(f"[ContextSizeCalculator] Counting tokens for model: {model_id}")
         token_count = self._count_tokens_with_tokenizer(
             prompt_data["prompt"], model_id
+        ) + self._count_tokens_with_tokenizer(
+            prompt_data["ollama_parameters"]["system"], model_id
         )
 
         # If tokenizer is unavailable, estimate token count
@@ -32,18 +34,20 @@ class ContextSizeCalculator(ModuleBase):
             )
             estimated_token_count = self._estimate_token_count(
                 prompt_data["prompt"]
-            )  #
+            ) + self._estimate_token_count(
+                prompt_data["ollama_parameters"]["system"]
+            )
             print(
                 f"[ContextSizeCalculator] Estimated token count: {estimated_token_count}"
             )
-            prompt_data["metadata"]["token_count"] = estimated_token_count
-            prompt_data["metadata"]["token_count_estimated"] = True
+            prompt_data["token_count"] = estimated_token_count
+            prompt_data["token_count_estimated"] = True
         else:
             print(f"[ContextSizeCalculator] Token count: {token_count}")
-            prompt_data["metadata"]["token_count"] = token_count
-            prompt_data["metadata"]["token_count_estimated"] = False
+            prompt_data["token_count"] = token_count
+            prompt_data["token_count_estimated"] = False
 
-        max_ctx_size = prompt_data["metadata"]["ollama_options"]["num_ctx"]
+        max_ctx_size = prompt_data["ollama_parameters"]["options"]["num_ctx"]
 
         # TODO include system prompt etc in calculation when available
         if token_count > max_ctx_size:
