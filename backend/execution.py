@@ -14,7 +14,8 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
     prompt_data = {
         "model": {"id": model_id, "name": model_name},
         "prompt": prompt_text,
-        "metadata": {},
+        # TODO mit tatsächlichem Wert aktualisieren, ist nur ein Platzhalter damit modules/context_size_calculator.py funktioniert
+        "metadata": {"ollama_options": {"num_ctx": 4096}},
     }
 
     # Process with modules
