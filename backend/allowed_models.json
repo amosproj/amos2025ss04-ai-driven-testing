@@ -32,7 +32,7 @@
     },
     {
       "name": "TINYLLAMA",
-      "id": "tinyllama:1.1b"
+      "id": "tinyllama:1.1b",
       "licence": "Apache 2.0 License",
       "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
     }
