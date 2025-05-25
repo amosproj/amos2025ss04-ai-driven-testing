@@ -8,7 +8,6 @@ class ContextSizeCalculator(ModuleBase):
     def __init__(self):
         self.tokenizer = None
         self.tokenizer_model_id = None
-        self.max_context_size = None
 
     def applies_before(self) -> bool:
         return True
@@ -43,6 +42,15 @@ class ContextSizeCalculator(ModuleBase):
             print(f"[ContextSizeCalculator] Token count: {token_count}")
             prompt_data["metadata"]["token_count"] = token_count
             prompt_data["metadata"]["token_count_estimated"] = False
+
+        max_ctx_size = prompt_data["metadata"]["ollama_options"]["num_ctx"]
+
+        # TODO include system prompt etc in calculation when available
+        if token_count > max_ctx_size:
+            raise ValueError(
+                f"Token count ({token_count}) exceeds maximum context size ({max_ctx_size}) by {token_count - max_ctx_size} tokens."
+            )
+
         return prompt_data
 
     def process_response(self, response_data, prompt_data):
