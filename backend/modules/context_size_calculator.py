@@ -2,6 +2,7 @@ from modules.base import ModuleBase
 from transformers import AutoTokenizer
 import re
 import os
+import warnings
 
 
 class ContextSizeCalculator(ModuleBase):
@@ -21,10 +22,10 @@ class ContextSizeCalculator(ModuleBase):
 
         # Count tokens using the Hugging Face tokenizer
         print(f"[ContextSizeCalculator] Counting tokens for model: {model_id}")
+        # might be one token off
         token_count = self._count_tokens_with_tokenizer(
-            prompt_data["prompt"], model_id
-        ) + self._count_tokens_with_tokenizer(
-            prompt_data["ollama_parameters"]["system"], model_id
+            prompt_data["prompt"] + prompt_data["ollama_parameters"]["system"],
+            model_id,
         )
 
         # If tokenizer is unavailable, estimate token count
@@ -32,15 +33,14 @@ class ContextSizeCalculator(ModuleBase):
             print(
                 "[ContextSizeCalculator] Tokenizer unavailable, estimating token count..."
             )
-            estimated_token_count = self._estimate_token_count(
+            token_count = self._estimate_token_count(
                 prompt_data["prompt"]
-            ) + self._estimate_token_count(
-                prompt_data["ollama_parameters"]["system"]
+                + prompt_data["ollama_parameters"]["system"]
             )
             print(
-                f"[ContextSizeCalculator] Estimated token count: {estimated_token_count}"
+                f"[ContextSizeCalculator] Estimated token count: {token_count}"
             )
-            prompt_data["token_count"] = estimated_token_count
+            prompt_data["token_count"] = token_count
             prompt_data["token_count_estimated"] = True
         else:
             print(f"[ContextSizeCalculator] Token count: {token_count}")
@@ -101,9 +101,14 @@ class ContextSizeCalculator(ModuleBase):
                 )
                 return AutoTokenizer.from_pretrained(local_path)
             except Exception as e:
-                print(
-                    f"[ContextSizeCalculator] Error loading local tokenizer: {e}"
+                warnings.warn(
+                    f"[ContextSizeCalculator] Error loading local tokenizer: {e}",
+                    UserWarning,
                 )
+        else:
+            print(
+                f"[ContextSizeCalculator] Local tokenizer not found at: {local_path}"
+            )
 
         # Fall back to downloading from Hugging Face using download_tokenizer.py
         print(
@@ -118,13 +123,15 @@ class ContextSizeCalculator(ModuleBase):
                 )
                 return AutoTokenizer.from_pretrained(local_path)
             except Exception as e:
-                print(
-                    f"[ContextSizeCalculator] Error loading newly downloaded tokenizer: {e}"
+                warnings.warn(
+                    f"[ContextSizeCalculator] Error loading downloaded tokenizer: {e}",
+                    UserWarning,
                 )
 
         else:
-            print(
-                f"[ContextSizeCalculator] Failed to download tokenizer for {hf_model_id}"
+            warnings.warn(
+                f"[ContextSizeCalculator] Failed to download tokenizer for model {hf_model_id}. Consider manually adding it. For further info see: modules/context_size_calculator/README.md",
+                UserWarning,
             )
             return None
 
@@ -146,8 +153,9 @@ class ContextSizeCalculator(ModuleBase):
             return model_mapping[model_id]
 
         # Default to a general tokenizer if we can't find a match
-        print(
-            "no match found for model_id, consider manually adding it to the _get_huggingface_model_id method"
+        warnings.warn(
+            f"No match found for model_id '{model_id}', consider manually adding it. For further info see: modules/context_size_calculator/README.md",
+            UserWarning,
         )
         return None
 
@@ -192,7 +200,6 @@ class ContextSizeCalculator(ModuleBase):
             f"[ContextSizeCalculator] Downloading tokenizer for {hf_model_id}..."
         )
         try:
-            # First try without trust_remote_code
             tokenizer = AutoTokenizer.from_pretrained(hf_model_id)
             tokenizer.save_pretrained(tokenizer_dir)
             print(
