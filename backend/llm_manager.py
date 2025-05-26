@@ -124,7 +124,10 @@ class LLMManager:
             "prompt": prompt,
             "system": system_message,
             "stream": True,
-            "seed": 42,
+            "options": {
+                "seed": 42,
+                "num_ctx": 4096,  # Default context size, can be adjusted
+            },
         }
 
         collected_response = ""
