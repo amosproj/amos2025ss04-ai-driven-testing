@@ -1,0 +1,8 @@
+{
+    "Model": "MISTRAL",
+    "Syntax Valid": true,
+    "Loading Time (s)": 23.19,
+    "Generation Time (s)": 23.2,
+    "Coverage (%)": 0.0,
+    "Error": "Evaluation failed: 'MetricsCollector' object has no attribute 'run_mutation_testing'"
+}

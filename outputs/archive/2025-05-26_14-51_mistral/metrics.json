@@ -1,0 +1,7 @@
+{
+    "Model": "MISTRAL",
+    "Syntax Valid": false,
+    "Loading Time (s)": 13.94,
+    "Generation Time (s)": 13.95,
+    "Error": "Syntax error in generated test file"
+}
