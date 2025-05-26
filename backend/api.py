@@ -4,6 +4,7 @@ from typing import Dict, List
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.concurrency import run_in_threadpool
+from fastapi.middleware.cors import CORSMiddleware
 
 from llm_manager import LLMManager
 
@@ -17,6 +18,14 @@ app = FastAPI(
     title="Local-Ollama API",
     description="Tiny FastAPI wrapper around LLMManager; good enough for a UI.",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
 )
 
 manager = LLMManager()
@@ -41,7 +50,6 @@ class PromptRequest(BaseModel):
 
 class PromptResponse(BaseModel):
     response_markdown: str
-    loading_seconds: float
     total_seconds: float
 
 
@@ -65,6 +73,8 @@ def list_models() -> List[Dict]:
                 "id": m_id,
                 "name": m["name"],
                 "running": m_id in manager.active_models,
+                "licence": m.get("licence", ""),
+                "licence_link": m.get("licence_link", ""),
             }
         )
     return out
@@ -90,7 +100,6 @@ async def prompt(req: PromptRequest):
 
         return PromptResponse(
             response_markdown=response,
-            loading_seconds=load_t,
             total_seconds=total_t,
         )
     except Exception as exc:
