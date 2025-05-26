@@ -5,14 +5,18 @@ import json
 from pathlib import Path
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings.ollama import OllamaEmbeddings
-from langchain_community.document_loaders import DirectoryLoader, PythonLoader
+from langchain_chroma import Chroma
+from langchain_ollama import OllamaEmbeddings
+from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.prompts import ChatPromptTemplate
 from llm_manager import LLMManager
+import subprocess
 
 CHROMA_PATH = "chroma"
 ALLOWED_MODELS = "allowed_models.json"
+GITHUB_REPO_URL = "https://github.com/phiho1609/derOrtAnDemIDahoamBims"
+CLONE_PATH = Path(__file__).parent.parent / "cloned_project"
+LOCAL_PATH = Path(__file__).parent.parent / "../python-test-cases"
 PROMPT_TEMPLATE = """
 Answer the query based only on the following context:
 {context}
@@ -21,7 +25,7 @@ Answer the query based on the above context: {question}
 """
 
 
-class IncludeProjectModule(ModuleBase):
+class IncludeProject(ModuleBase):
     def applies_before(self) -> bool:
         return True
 
@@ -77,12 +81,35 @@ class IncludeProjectModule(ModuleBase):
         return prompt_data
 
     def load_documents(self):
-        # Opens the Python files in the directory
-        abs_path = Path(__file__).parent.parent / "../python-test-cases"
-        document_loader = DirectoryLoader(
-            str(abs_path.absolute()), glob="**/*.py", loader_cls=PythonLoader
+        # Always re-clone the GitHub repo to ensure it's up to date
+        if CLONE_PATH.exists():
+            print(f"Removing existing cloned repo at {CLONE_PATH}...")
+            shutil.rmtree(CLONE_PATH)
+        print(f"Cloning GitHub repo to {CLONE_PATH}...")
+        subprocess.run(
+            ["git", "clone", GITHUB_REPO_URL, str(CLONE_PATH)],
+            check=True,
         )
-        return document_loader.load()
+        # Load from both local and cloned repo
+        loaders = [
+            DirectoryLoader(
+                str(LOCAL_PATH.absolute()),
+                glob="**/*",
+                loader_cls=TextLoader,
+            ),
+            DirectoryLoader(
+                str(CLONE_PATH.absolute()),
+                glob="**/*",
+                loader_cls=TextLoader,
+            ),
+        ]
+        documents = []
+        for loader in loaders:
+            try:
+                documents.extend(loader.load())
+            except Exception as e:
+                print(f"Error loading documents: {e}")
+        return documents
 
     def split_documents(self, documents: list[Document]):
         # Splits documents into smaller chunks to fit in the context window
@@ -156,6 +183,8 @@ class IncludeProjectModule(ModuleBase):
     def clear_database(self):
         if os.path.exists(CHROMA_PATH):
             shutil.rmtree(CHROMA_PATH)
+        if CLONE_PATH.exists():
+            shutil.rmtree(CLONE_PATH)
 
     # Query the database
     def query_rag(self, query_text: str, manager, model_id):
