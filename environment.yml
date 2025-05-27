@@ -12,3 +12,11 @@ dependencies:
       - pytest==8.3.5
       - black==25.1.0
       - flake8==7.2.0
+      - langchain-text-splitters==0.3.8
+      - langchain-core==0.3.62
+      - langchain==0.3.25
+      - langchain-chroma==0.2.4
+      - langchain-ollama==0.3.3
+      - langchain-community==0.3.24
+      - chromadb==1.0.10
+      - ollama==0.7.1
