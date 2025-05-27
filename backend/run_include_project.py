@@ -1,7 +1,6 @@
 from modules.include_project import IncludeProject
 
 
-
 if __name__ == "__main__":
     # to run directly, independant of main.py
     prompt_data = {
