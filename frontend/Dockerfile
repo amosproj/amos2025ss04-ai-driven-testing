@@ -2,15 +2,22 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Abhängigkeiten installieren
+# Kopiere package.json und package-lock.json
 COPY frontend/package*.json ./
+
+# Installiere Abhängigkeiten
 RUN npm install
 
-# Quellcode kopieren und Build ausführen
+# Kopiere den restlichen Quellcode
 COPY frontend/ .
+
+# Build ausführen
 RUN npm run build
 
-# Statisches Serving-Tool installieren und bereitstellen
+# Statisches Serving-Tool installieren
 RUN npm install -g serve
+
 EXPOSE 3000
-CMD ["serve", "-s", "dist", "-l", "3000"] 
+
+# Stelle sicher, dass der serve-Befehl auf das build-Verzeichnis zeigt
+CMD ["serve", "-s", "build", "-l", "3000", "--single"] 

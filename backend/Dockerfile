@@ -1,19 +1,21 @@
 FROM continuumio/miniconda3
 
+# Setze Arbeitsverzeichnis
 WORKDIR /app
 
-# Environment-Datei kopieren
-COPY backend/environment.yml ./environment.yml
+# Kopiere zuerst nur die environment.yml
+COPY backend/environment.yml /app/backend/
 
-# Erstelle die Conda-Umgebung
-RUN conda env create -f environment.yml
-
-# Aktiviere die Conda-Umgebung
+# Erstelle und aktiviere die Conda-Umgebung
+RUN conda env create -f /app/backend/environment.yml
 RUN echo "conda activate backend" >> ~/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 
-# Kopiere den Anwendungscode in das Package-Verzeichnis
-COPY backend ./backend
+# Kopiere den gesamten Backend-Code
+COPY backend /app/backend/
 
-# Starte die Anwendung
-CMD ["conda", "run", "--no-capture-output", "-n", "backend", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
+# Setze Arbeitsverzeichnis auf das Backend-Verzeichnis
+WORKDIR /app/backend
+
+# Starte die FastAPI-Anwendung
+CMD ["conda", "run", "--no-capture-output", "-n", "backend", "python", "-m", "uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
