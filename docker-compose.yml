@@ -9,6 +9,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./backend/ollama-models:/app/backend/ollama-models
+    networks:
+      - app-network
 
   frontend:
     build:
@@ -21,3 +23,9 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -75,6 +75,10 @@ class LLMManager:
             volumes={
                 OLLAMA_MODELS_VOLUME: {"bind": "/root/.ollama", "mode": "rw"}
             },
+            environment={
+                "OLLAMA_ORIGINS": "*",  # Allow all origins for testing
+                "OLLAMA_HOST": "0.0.0.0:11434"
+            },
             detach=True,
             remove=True,
         )
@@ -86,6 +90,7 @@ class LLMManager:
 
         # Track it
         self.active_models[model_id] = (container, port)
+        print(f"Modell {model_id} wurde erfolgreich geladen und ist bereit!")
 
     def stop_model_container(self, model_id: str) -> None:
         """
@@ -101,7 +106,7 @@ class LLMManager:
 
     def send_prompt(
         self, model_id: str, prompt: str, output_file: str = None
-    ) -> str:
+    ) -> tuple[str, float, float]:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
         """
@@ -126,24 +131,39 @@ class LLMManager:
             "stream": True,
             "options": {
                 "seed": 42,
-                "num_ctx": 4096,  # Default context size, can be adjusted
+                "num_ctx": 4096,
             },
         }
 
+        print(f"Sende Anfrage an Modell {model_id}...")
         collected_response = ""
         start_time = time.time()
-        with requests.post(url, json=payload, stream=True) as r:
-            r.raise_for_status()
-            for chunk in r.iter_lines():
-                if chunk:
-                    decoded_chunk = chunk.decode("utf-8")
+        try:
+            with requests.post(url, json=payload, stream=True) as r:
+                if not r.ok:
+                    error_detail = r.text
                     try:
-                        chunk_json = json.loads(decoded_chunk)
-                        chunk_response = chunk_json.get("response", "")
-                        print(chunk_response, end="", flush=True)
-                        collected_response += chunk_response
-                    except json.JSONDecodeError:
-                        continue
+                        error_json = r.json()
+                        if 'error' in error_json:
+                            error_detail = error_json['error']
+                    except:
+                        pass
+                    raise RuntimeError(f"API-Fehler: {r.status_code} - {error_detail}")
+                
+                for chunk in r.iter_lines():
+                    if chunk:
+                        decoded_chunk = chunk.decode("utf-8")
+                        try:
+                            chunk_json = json.loads(decoded_chunk)
+                            chunk_response = chunk_json.get("response", "")
+                            print(chunk_response, end="", flush=True)
+                            collected_response += chunk_response
+                        except json.JSONDecodeError:
+                            continue
+
+        except Exception as e:
+            print(f"\nFehler beim Senden des Prompts: {str(e)}")
+            raise
 
         end_time_loading = time.time()
         if not output_file:
@@ -234,22 +254,26 @@ class LLMManager:
             if pbar:
                 pbar.close()
 
-    def _wait_for_api(self, port: int, timeout=60):
+    def _wait_for_api(self, port: int, timeout=120):
         """
         Waits until the container's API is available or times out.
         """
         start_time = time.time()
         url = f"http://localhost:{port}/api/tags"
+        print(f"Warte auf Ollama API (Port {port})...")
         while time.time() - start_time < timeout:
             try:
                 r = requests.get(url)
                 if r.status_code == 200:
-                    print(f"Ollama API on port {port} is ready!")
+                    print(f"Ollama API auf Port {port} ist bereit!")
+                    # Zusätzliche Wartezeit für die vollständige Initialisierung
+                    time.sleep(5)
                     return
             except requests.exceptions.ConnectionError:
+                print(".", end="", flush=True)
                 pass
             time.sleep(2)
-        raise TimeoutError("Ollama API did not become available in time.")
+        raise TimeoutError(f"Ollama API wurde nicht rechtzeitig verfügbar (Timeout nach {timeout}s)")
 
     def _get_free_port(self) -> int:
         """
