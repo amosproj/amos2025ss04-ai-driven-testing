@@ -14,7 +14,12 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
     prompt_data = {
         "model": {"id": model_id, "name": model_name},
         "prompt": prompt_text,
-        "metadata": {},
+        # TODO mit tatsächlichem Wert aktualisieren, ist nur ein Platzhalter damit modules/context_size_calculator.py funktioniert
+        "ollama_parameters": {
+            "options": {"num_ctx": 4096},
+            "system": "You are a helpful assistant. Provide your answer always in Markdown.\n"
+            "Format code blocks appropriately, and do not include text outside valid Markdown.",
+        },
     }
 
     # Process with modules
