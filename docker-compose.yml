@@ -10,7 +10,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./backend/ollama-models:/app/backend/ollama-models
     networks:
-      - app-network
+      - backend
 
   frontend:
     build:
@@ -24,8 +24,10 @@ services:
     environment:
       - NODE_ENV=production
     networks:
-      - app-network
+      - backend
 
 networks:
-  app-network:
+  backend:
     driver: bridge
+    external: false
+    name: backend

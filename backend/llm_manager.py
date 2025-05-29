@@ -27,7 +27,7 @@ class LLMManager:
         self.client = docker.from_env()
         # Map: model_name -> (container, port)
         self.active_models: Dict[
-            str, (docker.models.containers.Container, int)
+            str, (docker.models.containers.Container, int, str)
         ] = {}
 
     def _verify_model_id(self, model_id: str) -> None:
@@ -63,33 +63,34 @@ class LLMManager:
 
         print(f"Pulling docker image {OLLAMA_IMAGE} ...")
         self._pull_ollama_image()
+        print("container_name:")
+        print(container_name)
 
         # Grab a random free port
-        port = self._get_free_port()
 
-        print(f"Starting container {container_name} on free port {port}...")
         container = self.client.containers.run(
             OLLAMA_IMAGE,
             name=container_name,
-            ports={"11434/tcp": port},
-            volumes={
-                OLLAMA_MODELS_VOLUME: {"bind": "/root/.ollama", "mode": "rw"}
-            },
-            environment={
-                "OLLAMA_ORIGINS": "*",  # Allow all origins for testing
-                "OLLAMA_HOST": "0.0.0.0:11434"
-            },
+            ports={"11434/tcp": 0},  # Let Docker assign a random host port
             detach=True,
             remove=True,
+            network="backend"  # or no network override
         )
 
-        self._wait_for_api(port)
+        # Refresh container attributes
+        container.reload()
+
+        # Get the dynamically assigned host port
+        port = 11434
+        print(f"Ollama is reachable on host port {port}")
+
+        self._wait_for_api(port, container_name)
 
         # Pull the model inside the container
-        self._pull_model(port, model_id)
+        self._pull_model(port, model_id, container_name)
 
         # Track it
-        self.active_models[model_id] = (container, port)
+        self.active_models[model_id] = (container, port, container_name)
         print(f"Modell {model_id} wurde erfolgreich geladen und ist bereit!")
 
     def stop_model_container(self, model_id: str) -> None:
@@ -99,7 +100,7 @@ class LLMManager:
         if model_id not in self.active_models:
             print(f"No active container found for '{model_id}'.")
             return
-        container, _ = self.active_models[model_id]
+        container, _, _ = self.active_models[model_id]
         print(f"Stopping container for model {model_id}...")
         container.stop()
         del self.active_models[model_id]
@@ -115,8 +116,9 @@ class LLMManager:
                 f"Model '{model_id}' is inactive. "
                 f"Start it first via start_model_container()."
             )
-        _, port = self.active_models[model_id]
-        url = f"http://localhost:{port}/api/generate"
+        _, port, container_name = self.active_models[model_id]
+        url = f"http://{container_name}:{port}/api/generate"
+        print(url)
 
         # Provide a minimal system instruction
         system_message = (
@@ -214,12 +216,12 @@ class LLMManager:
         for pbar in progress_bars.values():
             pbar.close()
 
-    def _pull_model(self, port: int, model_name: str):
+    def _pull_model(self, port: int, model_name: str, container_name: str):
         """
         Pulls the given model inside the Ollama container.
         """
         print(f"Pulling model: {model_name}")
-        url = f"http://localhost:{port}/api/pull"
+        url = f"http://{container_name}:{port}/api/pull"
         with requests.post(url, json={"name": model_name}, stream=True) as r:
             r.raise_for_status()
             pbar = None
@@ -254,13 +256,13 @@ class LLMManager:
             if pbar:
                 pbar.close()
 
-    def _wait_for_api(self, port: int, timeout=120):
+    def _wait_for_api(self, port: int,container_name: str ,timeout=120):
         """
         Waits until the container's API is available or times out.
         """
         start_time = time.time()
-        url = f"http://localhost:{port}/api/tags"
-        print(f"Warte auf Ollama API (Port {port})...")
+        url = f"http://{container_name}:{11434}/api/tags"
+        print(f"Warte auf Ollama API (url {url})...")
         while time.time() - start_time < timeout:
             try:
                 r = requests.get(url)
