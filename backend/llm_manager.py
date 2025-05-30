@@ -72,12 +72,11 @@ class LLMManager:
         container = self.client.containers.run(
             OLLAMA_IMAGE,
             name=container_name,
-            ports={f"{port}/tcp": port},  
-            environment={"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},  
-
+            ports={f"{port}/tcp": port},
+            environment={"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},
             detach=True,
             remove=True,
-            network="backend"  
+            network="backend",
         )
 
         container.reload()
@@ -146,12 +145,14 @@ class LLMManager:
                     error_detail = r.text
                     try:
                         error_json = r.json()
-                        if 'error' in error_json:
-                            error_detail = error_json['error']
+                        if "error" in error_json:
+                            error_detail = error_json["error"]
                     except:
                         pass
-                    raise RuntimeError(f"API-Fehler: {r.status_code} - {error_detail}")
-                
+                    raise RuntimeError(
+                        f"API-Fehler: {r.status_code} - {error_detail}"
+                    )
+
                 for chunk in r.iter_lines():
                     if chunk:
                         decoded_chunk = chunk.decode("utf-8")
@@ -256,7 +257,7 @@ class LLMManager:
             if pbar:
                 pbar.close()
 
-    def _wait_for_api(self, port: int,container_name: str ,timeout=120):
+    def _wait_for_api(self, port: int, container_name: str, timeout=120):
         """
         Waits until the container's API is available or times out.
         """
@@ -275,7 +276,9 @@ class LLMManager:
                 print(".", end="", flush=True)
                 pass
             time.sleep(2)
-        raise TimeoutError(f"Ollama API wurde nicht rechtzeitig verfügbar (Timeout nach {timeout}s)")
+        raise TimeoutError(
+            f"Ollama API wurde nicht rechtzeitig verfügbar (Timeout nach {timeout}s)"
+        )
 
     def _get_free_port(self) -> int:
         """
@@ -291,8 +294,9 @@ class LLMManager:
 def running_in_docker():
     return os.getenv("IN_DOCKER") == "true"
 
+
 def get_base_url(container_name: str):
-    if(running_in_docker):
+    if running_in_docker:
         return f"http://{container_name}"
     else:
         "http://{localhost}"
