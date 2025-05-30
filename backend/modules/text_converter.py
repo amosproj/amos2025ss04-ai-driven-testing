@@ -5,6 +5,39 @@ from pathlib import Path
 from typing import Optional, Union
 
 
+from modules.base import ModuleBase
+
+
+class TextConverter(ModuleBase):
+
+    def applies_before(self) -> bool:
+        return False
+
+    def applies_after(self) -> bool:
+        return True
+
+    def process_prompt(self, prompt_data: dict) -> dict:
+        return prompt_data
+
+    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
+        # Prefer model id, fallback to model name, then "output"
+        model = response_data.get("model") or prompt_data.get("model") or "output"
+        if isinstance(model, dict):
+            model_id = model.get("id", "output")
+        else:
+            model_id = str(model)
+        safe_model_id = model_id.replace(":", "_")
+        output_filename = f"{safe_model_id}.py"
+        output_dir = Path(__file__).parent.parent / "outputs" / "extracted"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_path = output_dir / output_filename
+
+        # get responce from response_data
+        code_content = response_data.get("text") or response_data.get("code") or response_data.get("response")or""
+        write_cleaned_python_code_to_file(code_content, output_path)
+        return response_data
+
+
 def clean_response_text(response_text: str) -> str:
     """
     Extracts and cleans all Python code blocks from the input text,
@@ -12,7 +45,7 @@ def clean_response_text(response_text: str) -> str:
     Concatenates all code blocks into a single string.
     """
     if not response_text or not response_text.strip():
-        return ""
+        return "no responce"
 
     # Find all code blocks marked with ```python ... ```
     code_blocks = re.findall(
@@ -76,30 +109,17 @@ def convert_to_python_file(
 
 
 def write_cleaned_python_code_to_file(
-    text: str, destination_file: str
+    text: str, destination_path: Path
 ) -> Path:
     """
     Cleans the input text to extract Python code blocks and writes the result
-    to outputs/extracted/<destination_file>. Returns the path to the generated file.
+    to the specified destination_path. Returns the path to the generated file.
     """
-    output_dir = Path(__file__).parent / "outputs/extracted"
-    output_dir.mkdir(parents=True, exist_ok=True)
     code = clean_response_text(text)
-    output_path = output_dir / destination_file
-    with open(output_path, "w", encoding="utf-8") as f:
+    # Ensure the parent directory exists
+    destination_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(destination_path, "w", encoding="utf-8") as f:
         f.write(code)
-    return output_path
+    return destination_path
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python text_converter.py <input_path> [destination]")
-        sys.exit(1)
-    input_path = sys.argv[1]
-    destination = sys.argv[2] if len(sys.argv) > 2 else None
-    try:
-        output_path = convert_to_python_file(input_path, destination)
-        print(f"Python file generated at: {output_path}")
-    except Exception as e:
-        print(f"Error: {e}")
-        sys.exit(1)
