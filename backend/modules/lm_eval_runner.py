@@ -24,10 +24,11 @@ class LmEvalRunner(ModuleBase):
         command = [
             "lm_eval",
             "--model", "hf",
-            "--model_args", "pretrained=mistralai/Mistral-7B-Instruct-v0.3",
+            "--model_args", "pretrained=mistralai/Mistral-7B-Instruct-v0.3,device=cpu",
             "--tasks", "humaneval",
             "--batch_size", "1",
-            "--output_path", str(output_path)
+            "--output_path", str(output_path),
+            "--confirm_run_unsafe_code",
         ]
 
         print(f"[HumanEval] Running benchmark for {model_id}...")
