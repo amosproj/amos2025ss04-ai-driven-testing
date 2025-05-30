@@ -21,19 +21,27 @@ class TextConverter(ModuleBase):
 
     def process_response(self, response_data: dict, prompt_data: dict) -> dict:
         # Prefer model id, fallback to model name, then "output"
-        model = response_data.get("model") or prompt_data.get("model") or "output"
+        model = (
+            response_data.get("model") or prompt_data.get("model") or "output"
+        )
         if isinstance(model, dict):
             model_id = model.get("id", "output")
         else:
             model_id = str(model)
         safe_model_id = model_id.replace(":", "_")
         output_filename = f"{safe_model_id}.py"
-        output_dir = Path(__file__).parent.parent / "outputs" / "extracted"
+        # Change output_dir to backend/extracted
+        output_dir = Path(__file__).parent.parent / "extracted"
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / output_filename
 
         # get responce from response_data
-        code_content = response_data.get("text") or response_data.get("code") or response_data.get("response")or""
+        code_content = (
+            response_data.get("text")
+            or response_data.get("code")
+            or response_data.get("response")
+            or ""
+        )
         write_cleaned_python_code_to_file(code_content, output_path)
         return response_data
 
@@ -81,7 +89,7 @@ def convert_to_python_file(
 ) -> Path:
     """
     Converts a JSON or Markdown file to a Python file and saves it in the destination directory.
-    If destination is not provided, saves to /backend/outputs/extracted with the same name as the input file.
+    If destination is not provided, saves to /backend/extracted with the same name as the input file.
     Returns the path to the generated Python file.
     """
     input_path = Path(input_path)
@@ -105,7 +113,11 @@ def convert_to_python_file(
         output_path.parent.mkdir(parents=True, exist_ok=True)
         return write_cleaned_python_code_to_file(code, output_path.name)
     else:
-        return write_cleaned_python_code_to_file(code, output_filename)
+        # Change default output directory to backend/extracted
+        output_dir = Path(__file__).parent.parent / "extracted"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_path = output_dir / output_filename
+        return write_cleaned_python_code_to_file(code, output_path)
 
 
 def write_cleaned_python_code_to_file(
@@ -121,5 +133,3 @@ def write_cleaned_python_code_to_file(
     with open(destination_path, "w", encoding="utf-8") as f:
         f.write(code)
     return destination_path
-
-
