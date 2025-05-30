@@ -147,7 +147,8 @@ class LLMManager:
                         error_json = r.json()
                         if "error" in error_json:
                             error_detail = error_json["error"]
-                    except:
+                    except Exception as e:
+                        print(e)
                         pass
                     raise RuntimeError(
                         f"API-Fehler: {r.status_code} - {error_detail}"
