@@ -67,21 +67,21 @@ class LLMManager:
         print(container_name)
 
         # Grab a random free port
+        port = self._get_free_port()
 
         container = self.client.containers.run(
             OLLAMA_IMAGE,
             name=container_name,
-            ports={"11434/tcp": 0},  # Let Docker assign a random host port
+            ports={f"{port}/tcp": port},  
+            environment={"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},  
+
             detach=True,
             remove=True,
-            network="backend"  # or no network override
+            network="backend"  
         )
 
-        # Refresh container attributes
         container.reload()
 
-        # Get the dynamically assigned host port
-        port = 11434
         print(f"Ollama is reachable on host port {port}")
 
         self._wait_for_api(port, container_name)
@@ -117,7 +117,7 @@ class LLMManager:
                 f"Start it first via start_model_container()."
             )
         _, port, container_name = self.active_models[model_id]
-        url = f"http://{container_name}:{port}/api/generate"
+        url = f"{get_base_url(container_name)}:{port}/api/generate"
         print(url)
 
         # Provide a minimal system instruction
@@ -221,7 +221,7 @@ class LLMManager:
         Pulls the given model inside the Ollama container.
         """
         print(f"Pulling model: {model_name}")
-        url = f"http://{container_name}:{port}/api/pull"
+        url = f"{get_base_url(container_name)}:{port}/api/pull"
         with requests.post(url, json={"name": model_name}, stream=True) as r:
             r.raise_for_status()
             pbar = None
@@ -261,7 +261,7 @@ class LLMManager:
         Waits until the container's API is available or times out.
         """
         start_time = time.time()
-        url = f"http://{container_name}:{11434}/api/tags"
+        url = f"{get_base_url(container_name)}:{port}/api/tags"
         print(f"Warte auf Ollama API (url {url})...")
         while time.time() - start_time < timeout:
             try:
@@ -286,3 +286,13 @@ class LLMManager:
             s.bind(("localhost", 0))
             port = s.getsockname()[1]
             return port
+
+
+def running_in_docker():
+    return os.getenv("IN_DOCKER") == "true"
+
+def get_base_url(container_name: str):
+    if(running_in_docker):
+        return f"http://{container_name}"
+    else:
+        "http://{localhost}"

@@ -9,6 +9,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./backend/ollama-models:/app/backend/ollama-models
+    environment:
+      - IN_DOCKER=true
     networks:
       - backend
 
