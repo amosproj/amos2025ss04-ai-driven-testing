@@ -3,6 +3,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Optional, Union
+import black
 
 
 from modules.base import ModuleBase
@@ -51,6 +52,7 @@ def clean_response_text(response_text: str) -> str:
     Extracts and cleans all Python code blocks from the input text,
     removing markdown code block markers and trailing explanations.
     Concatenates all code blocks into a single string.
+    Formats the result using Black.
     """
     if not response_text or not response_text.strip():
         return "no responce"
@@ -80,7 +82,15 @@ def clean_response_text(response_text: str) -> str:
         )
         cleaned_blocks.append(cleaned_block)
 
-    return "\n\n".join(filter(None, cleaned_blocks))
+    code = "\n\n".join(filter(None, cleaned_blocks))
+
+    # Format the code using Black
+    try:
+        formatted_code = black.format_str(code, mode=black.Mode())
+    except Exception:
+        formatted_code = code  # Fallback to unformatted if Black fails
+
+    return formatted_code
 
 
 def convert_to_python_file(
