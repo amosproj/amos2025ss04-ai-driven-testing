@@ -30,12 +30,10 @@ class IncludeProject(ModuleBase):
         return True
 
     def applies_after(self) -> bool:
-        return False
+        return True
 
     def process_prompt(self, prompt_data: dict) -> dict:
         # Expect prompt_data to contain 'model_index', 'reset', and 'prompt' keys
-
-        db = None  # Ensure db is always defined
 
         # Load allowed models and select model_id
         model_index = prompt_data.get("model_index", 0)
@@ -62,23 +60,26 @@ class IncludeProject(ModuleBase):
             # Create (or update) the data store.
             documents = self.load_documents()
             chunks = self.split_documents(documents)
-            db = self.add_to_chroma(chunks)
+            self.add_to_chroma(chunks)
 
             # Query using the prompt
-            response_text = self.query_rag(query_text, manager, model_id)
-            prompt_data["rag_response"] = response_text
+            rag_prompt, sources = self.query_rag(query_text, manager, model_id)
+            prompt_data["rag_prompt"] = rag_prompt
+            prompt_data["rag_sources"] = sources
         except Exception as e:
             print(f"Error occurred: {str(e)}")
             raise
-        finally:
-            print("\n🧹 Cleaning up...")
-            if db and hasattr(db, "close"):
-                db.close()
-            if os.path.exists(CHROMA_PATH):
-                shutil.rmtree(CHROMA_PATH)
-            manager.stop_model_container(model_id)
-            print("✅ Cleanup complete")
         return prompt_data
+
+    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
+        print("\n🧹 Cleaning up...")
+        if os.path.exists(CHROMA_PATH):
+            shutil.rmtree(CHROMA_PATH)
+        if CLONE_PATH.exists():
+            shutil.rmtree(CLONE_PATH)
+        # If you need to stop the model container, you may need to pass manager/model_id here
+        print("✅ Cleanup complete")
+        return response_data
 
     def load_documents(self):
         # Always re-clone the GitHub repo to ensure it's up to date
@@ -196,7 +197,7 @@ class IncludeProject(ModuleBase):
         )
 
         # Search the DB.
-        results = db.similarity_search_with_score(query_text, k=5)
+        results = db.similarity_search_with_score(query_text, k=10)
         context_text = "\n\n---\n\n".join(
             [doc.page_content for doc, _score in results]
         )
@@ -204,13 +205,10 @@ class IncludeProject(ModuleBase):
         prompt = prompt_template.format(
             context=context_text, question=query_text
         )
-        # Use LLMManager to send the prompt to the selected model
-        response_text, *_ = manager.send_prompt(model_id, prompt)
 
         sources = [doc.metadata.get("id", None) for doc, _score in results]
-        formatted_response = f"Response: {response_text}\nSources: {sources}"
-        print(formatted_response)
-        return response_text
+        # Return the prompt and sources, do NOT call the LLM here
+        return prompt, sources
 
 
 # Still open: Add a function to update the chunk when a file is edited
