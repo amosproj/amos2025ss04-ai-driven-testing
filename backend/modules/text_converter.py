@@ -87,7 +87,16 @@ def clean_response_text(response_text: str) -> str:
     try:
         formatted_code = black.format_str(code, mode=black.Mode())
     except Exception:
-        formatted_code = code  # Fallback to unformatted if Black fails
+        formatted_code = fix_indent(code)
+        formatted_code = add_pass_to_empty_functions(formatted_code)
+        try:
+            formatted_code = black.format_str(
+                formatted_code, mode=black.Mode()
+            )
+        except Exception:
+            formatted_code = (
+                formatted_code  # fallback to fixed code if Black fails again
+            )
 
     return formatted_code
 
@@ -142,3 +151,70 @@ def write_cleaned_python_code_to_file(
     with open(destination_path, "w", encoding="utf-8") as f:
         f.write(code)
     return destination_path
+
+
+def fix_indent(code: str) -> str:
+    # Try to fix indentation for class methods with 'self'
+    lines = code.splitlines()
+    new_lines = []
+    inside_class = False
+    indent = "    "
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        class_match = re.match(r"^class\s+\w+", line)
+        func_match = re.match(r"^def\s+\w+\s*\(.*self.*\):", line)
+        if class_match:
+            inside_class = True
+            new_lines.append(line)
+            i += 1
+            continue
+        if inside_class:
+            if func_match:
+                # Indent the function definition
+                new_lines.append(indent + line)
+                i += 1
+                # Indent following lines until next def/class at base level
+                while i < len(lines):
+                    next_line = lines[i]
+                    if re.match(
+                        r"^(class|def)\s", next_line
+                    ) and not next_line.startswith(indent):
+                        break
+                    if next_line.strip() == "":
+                        new_lines.append("")
+                    else:
+                        new_lines.append(indent + next_line)
+                    i += 1
+                continue  # skip increment, already done
+            # If line is not a function, just add it
+            if not line.strip().startswith("def "):
+                new_lines.append(line)
+        else:
+            new_lines.append(line)
+        i += 1
+    fixed_code = "\n".join(new_lines)
+    return fixed_code
+
+
+def add_pass_to_empty_functions(code_str):
+    # This regex matches function definitions that are empty or only contain comments/whitespace
+    pattern = re.compile(
+        r"(^def\s+\w+\s*\(.*?\):\s*\n"  # function header
+        r"(?:(?:\s*#.*\n|\s*\n)*)"
+        r")(?=(\s*def|\s*class|\Z))",  # next def/class or end of string
+        re.MULTILINE,
+    )
+
+    def replacer(match):
+        func_header = match.group(1)
+        return func_header + "    pass\n"
+
+    # Also handle one-line empty functions: def foo():
+    code_str = re.sub(
+        r"(^def\s+\w+\s*\(.*?\):\s*)($|\n(?=\s*def|\s*class|\Z))",
+        r"\1\n    pass\n",
+        code_str,
+        flags=re.MULTILINE,
+    )
+    return pattern.sub(replacer, code_str)
