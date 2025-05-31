@@ -9,6 +9,7 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.prompts import ChatPromptTemplate
+from langchain_huggingface import HuggingFaceEmbeddings
 from llm_manager import LLMManager
 import subprocess
 
@@ -123,10 +124,34 @@ class IncludeProject(ModuleBase):
         return text_splitter.split_documents(documents)
 
     def get_embedding_function(self):
-        # Other open-source embeddings can be used to enhance performance, if necessary
-        # https://python.langchain.com/docs/integrations/text_embedding/
-        embeddings = OllamaEmbeddings(model="nomic-embed-text")
-        return embeddings
+        # Use local embedding model for offline operation
+        # Model is stored locally to avoid internet dependency
+        local_model_path = os.path.join(
+            os.path.dirname(__file__), 
+            "include_project", 
+            "models--sentence-transformers--all-MiniLM-L6-v2",
+            "snapshots",
+            "c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
+        )
+        
+        try:
+            # Try to use local model first
+            if os.path.exists(local_model_path):
+                print(f"Using local embedding model from: {local_model_path}")
+                return HuggingFaceEmbeddings(
+                    model_name=local_model_path,
+                    cache_folder=os.path.dirname(local_model_path)
+                )
+            else:
+                # Fallback to downloading if local model doesn't exist
+                print("Local model not found, downloading from HuggingFace...")
+                return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        except ImportError:
+            print(
+                "HuggingFaceEmbeddings not found. "
+                "Using OllamaEmbeddings as fallback."
+            )
+            return OllamaEmbeddings(model="llama2")
 
     def add_to_chroma(self, chunks: list[Document]):
         db = Chroma(
