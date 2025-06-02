@@ -16,7 +16,6 @@ dependencies:
       - black==25.1.0
       - flake8==7.2.0
       - langchain
-      - langchain-community
       - langchain-chroma
       - langchain-ollama
       - langchain-text-splitters

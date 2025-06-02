@@ -9,7 +9,6 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.prompts import ChatPromptTemplate
-from langchain_huggingface import HuggingFaceEmbeddings
 from llm_manager import LLMManager
 import subprocess
 
@@ -123,35 +122,11 @@ class IncludeProject(ModuleBase):
         )
         return text_splitter.split_documents(documents)
 
-    def get_embedding_function(self):
-        # Use local embedding model for offline operation
-        # Model is stored locally to avoid internet dependency
-        local_model_path = os.path.join(
-            os.path.dirname(__file__), 
-            "include_project", 
-            "models--sentence-transformers--all-MiniLM-L6-v2",
-            "snapshots",
-            "c9745ed1d9f207416be6d2e6f8de32d1f16199bf"
-        )
-        
-        try:
-            # Try to use local model first
-            if os.path.exists(local_model_path):
-                print(f"Using local embedding model from: {local_model_path}")
-                return HuggingFaceEmbeddings(
-                    model_name=local_model_path,
-                    cache_folder=os.path.dirname(local_model_path)
-                )
-            else:
-                # Fallback to downloading if local model doesn't exist
-                print("Local model not found, downloading from HuggingFace...")
-                return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-        except ImportError:
-            print(
-                "HuggingFaceEmbeddings not found. "
-                "Using OllamaEmbeddings as fallback."
-            )
-            return OllamaEmbeddings(model="llama2")
+    def get_embedding_function(self, model_index=0):
+        # Always use nomic-embed-text for embeddings
+        embedding_model = "nomic-embed-text"
+        print(f"Using OllamaEmbeddings for embeddings with model: {embedding_model}")
+        return OllamaEmbeddings(model=embedding_model)
 
     def add_to_chroma(self, chunks: list[Document]):
         db = Chroma(
