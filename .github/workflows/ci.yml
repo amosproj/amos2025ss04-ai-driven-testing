@@ -14,7 +14,7 @@ jobs:
           miniforge-variant: Miniforge3
           miniforge-version: latest
           use-mamba: true
-          environment-file: backend/environment.yml
+          environment-file: environment.yml
           activate-environment: backend
           channels: conda-forge,defaults  # solver sees conda-forge first
           auto-activate-base: false # we rely on the named env only

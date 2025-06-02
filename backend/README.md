@@ -33,7 +33,7 @@ All files are located inside the `backend/` directory.
 1. **(Optional)** Create and activate a Conda environment:
    
    ```bash
-   conda env create -f backend/environment.yml
+   conda env create -f environment.yml
    conda activate backend
 2. Make sure Docker is running on your machine.
 
