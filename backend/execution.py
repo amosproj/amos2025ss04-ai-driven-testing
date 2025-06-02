@@ -31,9 +31,8 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
 
     # Initialize LLM manager
     manager = LLMManager()
-    manager.active_models[model_id] = (None, 11434)
     try:
-        # manager.start_model_container(prompt_data["model"]["id"])
+        manager.start_model_container(prompt_data["model"]["id"])
         print(f"\n--- Response from {prompt_data.model.name} ---")
 
         # Send prompt
@@ -62,5 +61,4 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(response_json, f, indent=2)
     finally:
-        print("stopping")
-        # manager.stop_model_container(prompt_data["model"]["id"])
+        manager.stop_model_container(prompt_data["model"]["id"])
