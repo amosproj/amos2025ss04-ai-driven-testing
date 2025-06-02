@@ -1,4 +1,5 @@
 from modules.base import ModuleBase
+from schemas import PromptData, ResponseData
 
 
 class ExampleLogger(ModuleBase):
@@ -8,12 +9,14 @@ class ExampleLogger(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
-    def process_prompt(self, prompt_data: dict) -> dict:
+    def process_prompt(self, prompt_data: PromptData) -> PromptData:
         print("[Logger] Prompt being sent:")
-        print(prompt_data["prompt"])
+        print(prompt_data.input)
         return prompt_data
 
-    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
         print("[Logger] Response received:")
-        print(response_data["response"])
+        print(response_data.output)
         return response_data

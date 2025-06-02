@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 from modules.base import ModuleBase
+from schemas import PromptData, ResponseData
 
 
 class MetricsCollector(ModuleBase):
@@ -17,27 +18,33 @@ class MetricsCollector(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
-    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
-        # Prepare folders
-        model_name = prompt_data["model"]["name"]
-        self.latest_dir, self.archive_dir = self.make_output_dirs(model_name)
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
 
-        cleaned = self.clean_response_text(response_data["response"])
+        # Prepare folders
+        model_name = prompt_data.model.name
+        cleaned = self.clean_response_text(
+            response_data.output.markdown or ""
+        )  # TODO replace with response_data.code as soon as we implemented output cleaning
 
         # Save cleaned code
+        self.latest_dir, self.archive_dir = self.make_output_dirs(model_name)
+
         self.write_to_outputs("generated_test.py", cleaned)
 
         # Check syntax
         syntax_valid = self.check_syntax_validity(
             self.latest_dir / "generated_test.py"
         )
+        response_data.output.syntax_valid = syntax_valid
 
         metrics = {
-            "Model": prompt_data["model"]["name"],
+            "Model": model_name,
             "Syntax Valid": syntax_valid,
-            "Loading Time (s)": round(response_data.get("loading_time", 0), 2),
+            "Loading Time (s)": round(response_data.timing.loading_time, 2),
             "Generation Time (s)": round(
-                response_data.get("final_time", 0), 2
+                response_data.timing.generation_time, 2
             ),
         }
 

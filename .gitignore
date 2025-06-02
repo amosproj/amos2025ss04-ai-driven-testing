@@ -86,8 +86,8 @@ formatting_errors.txt
 
 # backend log files
 /backend/outputs
-/backend/output.md 
-/backend/metrics.json
-/backend/generated_test.py
+/backend/output.md
 /backend/extracted/*
 !/backend/extracted/.gitkeep
+
+outputs

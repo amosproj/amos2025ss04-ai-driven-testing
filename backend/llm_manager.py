@@ -5,6 +5,7 @@ import os
 from tqdm import tqdm
 import json
 from typing import Dict
+from schemas import PromptData, ResponseData, OutputData, TimingData
 import socket
 
 OLLAMA_IMAGE = "ollama/ollama"
@@ -24,7 +25,7 @@ class LLMManager:
     """
 
     def __init__(self):
-        self.client = docker.from_env()
+        self.client = None  # docker.from_env()
         # Map: model_name -> (container, port)
         self.active_models: Dict[
             str, (docker.models.containers.Container, int)
@@ -100,11 +101,22 @@ class LLMManager:
         del self.active_models[model_id]
 
     def send_prompt(
-        self, model_id: str, prompt: str, output_file: str = None
-    ) -> str:
+        self, prompt_data: PromptData, output_file: str = None
+    ) -> ResponseData:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
         """
+
+        model_id = prompt_data.model.id
+        input_ = prompt_data.input
+
+        user_message = input_.user_message
+        source_code = input_.source_code
+        system_message = input_.system_message
+        options = input_.options.dict()  # turn Pydantic object into dict
+
+        full_prompt = f"{user_message}\n{source_code}"
+
         if model_id not in self.active_models:
             raise ValueError(
                 f"Model '{model_id}' is inactive. "
@@ -113,21 +125,12 @@ class LLMManager:
         _, port = self.active_models[model_id]
         url = f"http://localhost:{port}/api/generate"
 
-        # Provide a minimal system instruction
-        system_message = (
-            "You are a helpful assistant. Provide your answer always in Markdown.\n"
-            "Format code blocks appropriately, and do not include text outside valid Markdown."
-        )
-
         payload = {
             "model": model_id,
-            "prompt": prompt,
+            "prompt": full_prompt,
             "system": system_message,
             "stream": True,
-            "options": {
-                "seed": 42,
-                "num_ctx": 4096,  # Default context size, can be adjusted
-            },
+            "options": options,
         }
 
         collected_response = ""
@@ -145,19 +148,22 @@ class LLMManager:
                     except json.JSONDecodeError:
                         continue
 
-        end_time_loading = time.time()
-        if not output_file:
-            # Generate a default output filename from the model_id
-            safe_model_id = model_id.replace(":", "_")
-            output_file = "output-" + safe_model_id + ".md"
+        end_loading = time.time()
 
-        output_path = os.path.join(SCRIPT_DIR, output_file)
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(collected_response)
-        end_time_final = time.time()
-        loading_response_time = end_time_loading - start_time
-        final_response_time = end_time_final - start_time
-        return collected_response, loading_response_time, final_response_time
+        output = OutputData(markdown=collected_response)
+
+        end_generation = time.time()
+
+        timing = TimingData(
+            loading_time=end_loading - start_time,
+            generation_time=end_generation - start_time,
+        )
+
+        return ResponseData(
+            model=prompt_data.model,
+            output=output,
+            timing=timing,
+        )
 
     def _pull_ollama_image(self):
         """
