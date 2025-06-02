@@ -69,15 +69,21 @@ class LLMManager:
         # Grab a random free port
         port = self._get_free_port()
 
-        container = self.client.containers.run(
-            OLLAMA_IMAGE,
-            name=container_name,
-            ports={f"{port}/tcp": port},
-            environment={"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},
-            detach=True,
-            remove=True,
-            network="backend",
-        )
+        # Prepare container arguments
+        container_args = {
+            "image": OLLAMA_IMAGE,
+            "name": container_name,
+            "ports": {f"{port}/tcp": port},
+            "environment": {"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},
+            "detach": True,
+            "remove": True,
+        }
+        
+        # Add network only when running in Docker
+        if running_in_docker():
+            container_args["network"] = "backend"
+
+        container = self.client.containers.run(**container_args)
 
         container.reload()
 
@@ -297,7 +303,7 @@ def running_in_docker():
 
 
 def get_base_url(container_name: str):
-    if running_in_docker:
+    if running_in_docker():
         return f"http://{container_name}"
     else:
-        "http://{localhost}"
+        return "http://localhost"
