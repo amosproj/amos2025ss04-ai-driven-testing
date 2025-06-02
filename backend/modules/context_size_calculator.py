@@ -49,7 +49,7 @@ class ContextSizeCalculator(ModuleBase):
         else:
             print(f"[ContextSizeCalculator] Token count: {token_count}")
             prompt_data.token_count = token_count
-            prompt_data.token_count_estimated = True
+            prompt_data.token_count_estimated = False
 
         max_ctx_size = prompt_data.input.options.num_ctx
 
