@@ -74,6 +74,9 @@ class LLMManager:
             "image": OLLAMA_IMAGE,
             "name": container_name,
             "ports": {f"{port}/tcp": port},
+            "volumes": {
+                OLLAMA_MODELS_VOLUME: {"bind": "/root/.ollama", "mode": "rw"}
+            },
             "environment": {"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},
             "detach": True,
             "remove": True,
