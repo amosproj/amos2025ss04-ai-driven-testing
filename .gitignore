@@ -89,7 +89,6 @@ formatting_errors.txt
 /backend/output.md 
 /backend/metrics.json
 /backend/generated_test.py
-
 /chroma
 /backend/chroma
 /backend/extracted/*
