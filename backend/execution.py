@@ -29,7 +29,9 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
         print(f"\n--- Response from {prompt_data['model']['name']} ---")
 
         # Send prompt
-        prompt_to_use = prompt_data.get("rag_prompt", prompt_data["prompt"]) # for module IncludeProject
+        prompt_to_use = prompt_data.get(
+            "rag_prompt", prompt_data["prompt"]
+        )  # for module IncludeProject
         raw_response, loading_time, final_time = manager.send_prompt(
             prompt_data["model"]["id"],
             prompt_to_use,

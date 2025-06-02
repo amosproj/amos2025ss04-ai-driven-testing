@@ -125,7 +125,9 @@ class IncludeProject(ModuleBase):
     def get_embedding_function(self, model_index=0):
         # Always use nomic-embed-text for embeddings
         embedding_model = "nomic-embed-text"
-        print(f"Using OllamaEmbeddings for embeddings with model: {embedding_model}")
+        print(
+            f"Using OllamaEmbeddings for embeddings with model: {embedding_model}"
+        )
         return OllamaEmbeddings(model=embedding_model)
 
     def add_to_chroma(self, chunks: list[Document]):
