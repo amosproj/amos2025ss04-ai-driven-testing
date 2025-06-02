@@ -78,7 +78,7 @@ class LLMManager:
             "detach": True,
             "remove": True,
         }
-        
+
         # Add network only when running in Docker
         if running_in_docker():
             container_args["network"] = "backend"
