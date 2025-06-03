@@ -48,7 +48,8 @@ The goal of this project is to develop or customize a **LLM-based (Large Languag
 ---
 ## Command
    ```bash
-   ./setup.sh
+  chmod +x setup.sh
+  ./setup.sh
    ```
  &nbsp;
 # FRONTEND
