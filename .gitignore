@@ -93,3 +93,4 @@ formatting_errors.txt
 /backend/chroma
 /backend/extracted/*
 !/backend/extracted/.gitkeep
+/backend/cloned_project

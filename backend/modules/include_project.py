@@ -30,45 +30,28 @@ class IncludeProject(ModuleBase):
         return True
 
     def applies_after(self) -> bool:
-        return True
+        return False
 
     def process_prompt(self, prompt_data: dict) -> dict:
-        # Expect prompt_data to contain 'model_index', 'reset', and 'prompt' keys
-
-        # Load allowed models and select model_id
-        model_index = prompt_data.get("model_index", 0)
-        reset = prompt_data.get("reset", False)
+        # Use keys from the prompt_data dict
         query_text = prompt_data.get("prompt", "")
+        reset = prompt_data.get("reset", False)
 
-        SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-        config_path = os.path.join(os.path.dirname(SCRIPT_DIR), ALLOWED_MODELS)
-        with open(config_path, "r", encoding="utf-8") as f:
-            config = json.load(f)
-        loaded_models = config.get("models", [])
-        if not loaded_models:
-            raise ValueError("No models found in allowed_models.json")
-        model = loaded_models[model_index]
-        model_id = model["id"]
+        if reset:
+            print("✨ Clearing database")
+            self.clear_database()
 
-        manager = LLMManager()
-        try:
-            manager.start_model_container(model_id)
-            if reset:
-                print("✨ Clearing Database")
-                self.clear_database()
+        documents = self.load_documents()
+        chunks = self.split_documents(documents)
+        self.add_to_chroma(chunks)
 
-            # Create (or update) the data store.
-            documents = self.load_documents()
-            chunks = self.split_documents(documents)
-            self.add_to_chroma(chunks)
+        # Query Chroma for relevant chunks
+        rag_prompt, sources = self.query_rag(query_text)
 
-            # Query using the prompt
-            rag_prompt, sources = self.query_rag(query_text, manager, model_id)
-            prompt_data["rag_prompt"] = rag_prompt
-            prompt_data["rag_sources"] = sources
-        except Exception as e:
-            print(f"Error occurred: {str(e)}")
-            raise
+        # Inject the updated prompt into the prompt_data
+        prompt_data["prompt"] = rag_prompt
+        prompt_data["rag_sources"] = sources
+
         return prompt_data
 
     def process_response(self, response_data: dict, prompt_data: dict) -> dict:
@@ -190,7 +173,7 @@ class IncludeProject(ModuleBase):
             shutil.rmtree(CLONE_PATH)
 
     # Query the database
-    def query_rag(self, query_text: str, manager, model_id):
+    def query_rag(self, query_text: str):
         # Prepare the DB.
         embedding_function = self.get_embedding_function()
         db = Chroma(
