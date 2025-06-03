@@ -145,7 +145,7 @@ class ContextSizeCalculator(ModuleBase):
             "qwen2.5-coder:3b-instruct-q8_0": "Qwen/Qwen2.5-Coder-3B-Instruct",
             "gemma3:4b-it-q4_K_M": "google/gemma-3-4b-it",
             "phi4-mini:3.8b-q4_K_M": "microsoft/Phi-4-mini-instruct",
-            "tinyllama": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
+            "tinyllama:1.1b": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
         }
 
         # Try exact match first
