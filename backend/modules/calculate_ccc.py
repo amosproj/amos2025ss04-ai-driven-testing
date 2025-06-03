@@ -12,6 +12,7 @@ class CalculateCcc(ModuleBase):
     def __init__(self):
         super().__init__()
         print("CalculateCcc module initialized.")
+
     def applies_before(self) -> bool:
         return True
 
