@@ -1,4 +1,5 @@
 import re
+import warnings
 
 class CCCEstimator:
     """
@@ -15,7 +16,6 @@ class CCCEstimator:
             'try': 1, 'catch': 1, 'except': 1, 'finally': 1, # exception handling
             'match': 1, # For languages like Python (3.10+) or Rust
             # Other potential control flow, might need context
-            # 'return': 0, 'break': 0, 'continue': 0 # These typically don't add decision weight directly
         }
         # Common brace/scope delimiters
         self.open_braces = {'{', '(', '['}
@@ -286,6 +286,19 @@ class CCCEstimator:
                     # print(f"Line {line_num:4}: CCC = {ccc_line:5} | Indent: {current_indentation:2} | BraceL: {current_brace_level:2} | Tokens: {S_k:3} | Wc: {W_c:2} | Wn: {W_n:2} | Wtc: {W_tc:2} | Wrc: {W_rc:2} | Wad: {W_ad:2} | Wcc: {W_cc:2} | Wio: {W_io:2} | {stripped_line}")
 
         except Exception as e:
-            print(f"Error processing file {file_path}: {e}")
-            return -1
+            raise e 
         return total_ccc
+    
+def get_ccc_for_file(filepath):
+    """
+    Reads a Python file and calculates its CCC.
+    """
+    try:
+        ccc_score = CCCEstimator().calculate_ccc(filepath)
+        return ccc_score
+    except FileNotFoundError:
+        warnings.warn(f"File {filepath} not found. Cannot calculate CCC.")
+        return None
+    except Exception as e:
+        warnings.warn(f"Error calculating CCC for file {filepath}: {e}")
+        return None
