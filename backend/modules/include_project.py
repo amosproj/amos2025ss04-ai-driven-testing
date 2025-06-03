@@ -1,7 +1,6 @@
 from modules.base import ModuleBase
 import os
 import shutil
-import json
 from pathlib import Path
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
@@ -9,7 +8,7 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.prompts import ChatPromptTemplate
-from llm_manager import LLMManager
+
 import subprocess
 
 CHROMA_PATH = "chroma"
