@@ -141,7 +141,7 @@ class LLMManager:
             "stream": True,
             "options": {
                 "seed": 42,
-                "num_ctx": 4096,
+                "num_ctx": 4096,  # Default context size, can be adjusted
             },
         }
 
