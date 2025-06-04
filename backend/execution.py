@@ -37,6 +37,23 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
 
         # Send prompt
         response_data = manager.send_prompt(prompt_data, output_file)
+        # check this block  -->
+        prompt_to_use = prompt_data.get(
+            "rag_prompt", prompt_data["prompt"]
+        )  # for module IncludeProject
+        raw_response, loading_time, final_time = manager.send_prompt(
+            prompt_data["model"]["id"],
+            prompt_to_use,
+            output_file,
+        )
+
+        # Create response data structure
+        response_data = {
+            "response": raw_response,
+            "loading_time": loading_time,
+            "final_time": final_time,
+        }
+        # until here <--
 
         # Process with modules
         module_manager.apply_after_modules(

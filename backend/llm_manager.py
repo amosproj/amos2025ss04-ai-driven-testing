@@ -145,6 +145,7 @@ class LLMManager:
             "prompt": full_prompt,
             "system": system_message,
             "stream": True,
+
             "options": options,
         }
 
