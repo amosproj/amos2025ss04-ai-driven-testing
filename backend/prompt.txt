@@ -4,14 +4,14 @@ Write unit tests for the following Python function:
 def add_numbers(a, b):
     """
     Adds two numbers together and returns the result.
-    
+
     Args:
         a (int or float): The first number.
         b (int or float): The second number.
-    
+
     Returns:
         int or float: The sum of a and b.
-    
+
     Examples:
         >>> add_numbers(2, 3)
         5

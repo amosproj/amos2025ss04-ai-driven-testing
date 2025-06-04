@@ -89,3 +89,10 @@ formatting_errors.txt
 /backend/output.md 
 /backend/metrics.json
 /backend/generated_test.py
+/chroma
+/backend/chroma
+/backend/extracted/*
+!/backend/extracted/.gitkeep
+/backend/cloned_project
+/backend/run_include_project
+/backend/modules/include_project
