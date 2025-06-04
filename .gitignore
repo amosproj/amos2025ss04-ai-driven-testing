@@ -94,3 +94,5 @@ formatting_errors.txt
 /backend/extracted/*
 !/backend/extracted/.gitkeep
 /backend/cloned_project
+/backend/run_include_project
+/backend/modules/include_project
