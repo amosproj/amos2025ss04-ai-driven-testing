@@ -56,7 +56,9 @@ class IncludeProject(ModuleBase):
 
         return prompt_data
 
-    def process_response(self, response_data: ResponseData, prompt_data: PromptData) -> ResponseData:
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
         print("\n🧹 Cleaning up...")
         if os.path.exists(CHROMA_PATH):
             shutil.rmtree(CHROMA_PATH)

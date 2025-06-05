@@ -66,6 +66,7 @@ def list_models() -> List[Dict]:
         )
     return out
 
+
 '''
 @app.post("/prompt")
 async def prompt(req: PromptData):
@@ -93,6 +94,8 @@ async def prompt(req: PromptData):
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 '''
+
+
 @app.post("/prompt")
 async def prompt(req: PromptData):
     try:
@@ -115,8 +118,10 @@ async def prompt(req: PromptData):
 
     except Exception as exc:
         import traceback
+
         traceback.print_exc()  # ⬅️ Add this
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
 
 @app.post("/shutdown")
 async def shutdown(req: Dict[str, str]):

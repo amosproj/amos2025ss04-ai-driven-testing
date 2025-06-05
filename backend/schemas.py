@@ -2,7 +2,6 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 
 
-
 class ModelMeta(BaseModel):
     id: str = Field(
         ...,

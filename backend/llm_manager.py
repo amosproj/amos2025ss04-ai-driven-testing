@@ -7,7 +7,6 @@ import json
 from typing import Dict
 from schemas import PromptData, ResponseData, OutputData, TimingData
 import socket
-from pathlib import Path
 
 OLLAMA_IMAGE = "ollama/ollama"
 OLLAMA_MODELS_VOLUME = os.path.abspath("./ollama-models")
@@ -134,7 +133,7 @@ class LLMManager:
         full_prompt = (
             prompt_data.rag_prompt
             if prompt_data.rag_prompt
-            else f"{input_.user_message}\n{input_.source_code}"
+            else f"{user_message}\n{source_code}"
         )
 
         if model_id not in self.active_models:
