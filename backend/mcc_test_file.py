@@ -6,6 +6,7 @@ class BaseProcessor:
     def process(self):
         pass
 
+
 class AdvancedProcessor(BaseProcessor):
     def __init__(self, data):
         super().__init__(data)
@@ -22,6 +23,7 @@ class AdvancedProcessor(BaseProcessor):
                     print(f"Error: {e}")
                     return 0
             return n + self.recursive_sum(n - 1)
+
 
 def main():
     my_data = [1, 2, 3]
