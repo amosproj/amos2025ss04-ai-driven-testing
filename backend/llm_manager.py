@@ -8,7 +8,9 @@ from typing import Dict
 import socket
 
 OLLAMA_IMAGE = "ollama/ollama"
-OLLAMA_MODELS_VOLUME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ollama-models")
+OLLAMA_MODELS_VOLUME = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "ollama-models"
+)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
 
