@@ -1,0 +1,134 @@
+{
+  "results": {
+    "humaneval": {
+      "alias": "humaneval",
+      "pass@1,create_test": 1.0,
+      "pass@1_stderr,create_test": "N/A"
+    }
+  },
+  "group_subtasks": {
+    "humaneval": []
+  },
+  "configs": {
+    "humaneval": {
+      "task": "humaneval",
+      "dataset_path": "openai/openai_humaneval",
+      "test_split": "test",
+      "doc_to_text": "{{prompt}}",
+      "doc_to_target": "{{test}}\ncheck({{entry_point}})",
+      "unsafe_code": true,
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "def pass_at_k(references: list[str], predictions: list[list[str]], k: list[int] = None):\n    global compute_\n    assert k is not None\n    if isinstance(k, int):\n        k = [k]\n    res = compute_.compute(\n        references=references,\n        predictions=predictions,\n        k=k,\n    )\n    return res[0]\n",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "k": [
+            1
+          ]
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "\nclass",
+          "\ndef",
+          "\n#",
+          "\nif",
+          "\nprint"
+        ],
+        "max_gen_toks": 1024,
+        "do_sample": false
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "create_test",
+          "filter": [
+            {
+              "function": "custom",
+              "filter_fn": "<function build_predictions at 0x1059f02c0>"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "microsoft/phi-1_5",
+        "device": "cpu"
+      }
+    }
+  },
+  "versions": {
+    "humaneval": 1.0
+  },
+  "n-shot": {
+    "humaneval": 0
+  },
+  "higher_is_better": {
+    "humaneval": {
+      "pass_at_k": true
+    }
+  },
+  "n-samples": {
+    "humaneval": {
+      "original": 164,
+      "effective": 1
+    }
+  },
+  "config": {
+    "model": "hf",
+    "model_args": "pretrained=microsoft/phi-1_5,device=cpu",
+    "model_num_parameters": 1418270720,
+    "model_dtype": "torch.float16",
+    "model_revision": "main",
+    "model_sha": "675aa382d814580b22651a30acb1a585d7c25963",
+    "batch_size": "1",
+    "batch_sizes": [],
+    "device": null,
+    "use_cache": null,
+    "limit": 1.0,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": null,
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": "ed582d4",
+  "date": 1749147277.789898,
+  "pretty_env_info": "PyTorch version: 2.7.1\nIs debug build: False\nCUDA used to build PyTorch: None\nROCM used to build PyTorch: N/A\n\nOS: macOS 15.4.1 (arm64)\nGCC version: Could not collect\nClang version: 17.0.0 (clang-1700.0.13.3)\nCMake version: version 4.0.1\nLibc version: N/A\n\nPython version: 3.12.10 | packaged by conda-forge | (main, Apr 10 2025, 22:19:24) [Clang 18.1.8 ] (64-bit runtime)\nPython platform: macOS-15.4.1-arm64-arm-64bit\nIs CUDA available: False\nCUDA runtime version: No CUDA\nCUDA_MODULE_LOADING set to: N/A\nGPU models and configuration: No CUDA\nNvidia driver version: No CUDA\ncuDNN version: No CUDA\nHIP runtime version: N/A\nMIOpen runtime version: N/A\nIs XNNPACK available: True\n\nCPU:\nApple M1 Pro\n\nVersions of relevant libraries:\n[pip3] flake8==7.2.0\n[pip3] mypy_extensions==1.1.0\n[pip3] numpy==2.2.6\n[pip3] onnxruntime==1.22.0\n[pip3] torch==2.7.1\n[conda] numpy                     2.2.6                    pypi_0    pypi\n[conda] torch                     2.7.1                    pypi_0    pypi",
+  "transformers_version": "4.52.4",
+  "lm_eval_version": "0.4.8",
+  "upper_git_hash": null,
+  "tokenizer_pad_token": [
+    "<|endoftext|>",
+    "50256"
+  ],
+  "tokenizer_eos_token": [
+    "<|endoftext|>",
+    "50256"
+  ],
+  "tokenizer_bos_token": [
+    "<|endoftext|>",
+    "50256"
+  ],
+  "eot_token_id": 50256,
+  "max_length": 2048,
+  "task_hashes": {},
+  "model_source": "hf",
+  "model_name": "microsoft/phi-1_5",
+  "model_name_sanitized": "microsoft__phi-1_5",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": false,
+  "chat_template": null,
+  "chat_template_sha": null,
+  "start_time": 371866.984657791,
+  "end_time": 372143.276841375,
+  "total_evaluation_time_seconds": "276.29218358400976"
+}

@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 from modules.base import ModuleBase
+import os
 
 class LmEvalRunner(ModuleBase):
     def __init__(self):
@@ -24,16 +25,21 @@ class LmEvalRunner(ModuleBase):
         command = [
             "lm_eval",
             "--model", "hf",
-            "--model_args", "pretrained=mistralai/Mistral-7B-Instruct-v0.3,device=cpu",
-            "--tasks", "humaneval",
+            "--model_args", "pretrained=microsoft/phi-1_5,device=cpu", #<---- small model for testing, adapt hf-id here to try out different models
+            "--tasks", "humaneval", "--limit", "1", #<--- for now only passing 1 task, butdlete this for the whole set
             "--batch_size", "1",
             "--output_path", str(output_path),
             "--confirm_run_unsafe_code",
+            "--write_out",
         ]
 
+        env = os.environ.copy()
+        env["HF_ALLOW_CODE_EVAL"] = "1"
+        print("")
+        print("")
         print(f"[HumanEval] Running benchmark for {model_id}...")
         try:
-            subprocess.run(command, check=True)
+            subprocess.run(command, check=True, env=env)
             print("[HumanEval] Benchmark finished.")
 
             if output_path.exists():
