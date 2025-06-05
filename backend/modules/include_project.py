@@ -8,6 +8,7 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.prompts import ChatPromptTemplate
+from schemas import PromptData, ResponseData
 
 import subprocess
 
@@ -31,10 +32,9 @@ class IncludeProject(ModuleBase):
     def applies_after(self) -> bool:
         return False
 
-    def process_prompt(self, prompt_data: dict) -> dict:
-        # Use keys from the prompt_data dict
-        query_text = prompt_data.get("prompt", "")
-        reset = prompt_data.get("reset", False)
+    def process_prompt(self, prompt_data: PromptData) -> PromptData:
+        query_text = prompt_data.input.user_message
+        reset = getattr(prompt_data, "reset", False)
 
         if reset:
             print("✨ Clearing database")
@@ -44,16 +44,19 @@ class IncludeProject(ModuleBase):
         chunks = self.split_documents(documents)
         self.add_to_chroma(chunks)
 
-        # Query Chroma for relevant chunks
+        # Get enhanced prompt from Chroma
         rag_prompt, sources = self.query_rag(query_text)
 
-        # Inject the updated prompt into the prompt_data
-        prompt_data["prompt"] = rag_prompt
-        prompt_data["rag_sources"] = sources
+        # Save into schema fields
+        prompt_data.rag_prompt = rag_prompt
+        prompt_data.rag_sources = sources
+
+        # Optionally override the user message to use the RAG prompt directly
+        prompt_data.input.user_message = rag_prompt
 
         return prompt_data
 
-    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
+    def process_response(self, response_data: ResponseData, prompt_data: PromptData) -> ResponseData:
         print("\n🧹 Cleaning up...")
         if os.path.exists(CHROMA_PATH):
             shutil.rmtree(CHROMA_PATH)

@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
+
 
 
 class ModelMeta(BaseModel):
@@ -39,6 +40,8 @@ class PromptData(BaseModel):
     input: InputData
     token_count: Optional[int] = None
     token_count_estimated: Optional[bool] = None
+    rag_prompt: Optional[str] = None
+    rag_sources: Optional[List[str]] = None
 
 
 class OutputData(BaseModel):

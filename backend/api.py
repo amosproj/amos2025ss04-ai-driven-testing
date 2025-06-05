@@ -66,7 +66,7 @@ def list_models() -> List[Dict]:
         )
     return out
 
-
+'''
 @app.post("/prompt")
 async def prompt(req: PromptData):
     """
@@ -92,6 +92,31 @@ async def prompt(req: PromptData):
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
+'''
+@app.post("/prompt")
+async def prompt(req: PromptData):
+    try:
+        print("📥 Request received:")
+        print(req)
+
+        model_id = req.model.id
+
+        if model_id not in manager.active_models:
+            await run_in_threadpool(manager.start_model_container, model_id)
+
+        response_data: ResponseData = await run_in_threadpool(
+            manager.send_prompt, req
+        )
+
+        return {
+            "response_markdown": response_data.output.markdown,
+            "total_seconds": response_data.timing.generation_time,
+        }
+
+    except Exception as exc:
+        import traceback
+        traceback.print_exc()  # ⬅️ Add this
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 @app.post("/shutdown")
 async def shutdown(req: Dict[str, str]):
