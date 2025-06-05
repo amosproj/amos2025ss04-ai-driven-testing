@@ -11,7 +11,7 @@ export interface PromptResponse {
   total_seconds: number;
 }
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "http://localhost:8000";
 
 export async function getModels(): Promise<Model[]> {
   const res = await fetch(`${API_BASE_URL}/models`);
