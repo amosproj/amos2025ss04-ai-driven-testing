@@ -1,6 +1,7 @@
 from .base import ModuleBase
 from mccabe import get_code_complexity
 import os
+from schemas import PromptData, ResponseData
 
 
 class CalculateMcc(ModuleBase):
@@ -10,8 +11,9 @@ class CalculateMcc(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
-    def process_prompt(self, prompt_data: dict) -> dict:
-        mcc = calculate_mcc(prompt_data)
+    def process_prompt(self, prompt_data: PromptData) -> PromptData:
+        prompt = prompt_data.input.source_code
+        mcc = get_code_complexity(prompt, 0, filename="stdin")
         # Use relative path for output_dir
         output_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -21,10 +23,14 @@ class CalculateMcc(ModuleBase):
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(f"mcc: {mcc}\n")
             f.write(f"prompt_data: {prompt_data}\n")
+
         return prompt_data
 
-    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
-        mcc = calculate_mcc(prompt_data)
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
+        code = response_data.output
+        mcc = get_code_complexity(code, 0, filename="stdin")
 
         output_dir = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -37,20 +43,8 @@ class CalculateMcc(ModuleBase):
         return response_data
 
 
-def calculate_mcc(prompt_data: dict) -> float:
-    # Use relative path for the test case file
-    code_path = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        "..",
-        "python-test-cases",
-        "test_case_five.py",
-    )
-    code_path = os.path.abspath(code_path)
-    with open(code_path, "r", encoding="utf-8") as f:
-        code = f.read()
-    complexity = get_code_complexity(code, 0, filename=code_path)
+def calculate_mcc(prompt_data: PromptData) -> float:
+    # Use the code from prompt_data.input.source_code
+    code = prompt_data.input.source_code
+    complexity = get_code_complexity(code, 0, filename=None)
     return complexity
-
-
-if __name__ == "__main__":
-    calculate_mcc({})
