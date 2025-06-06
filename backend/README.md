@@ -166,4 +166,14 @@ if __name__ == "__main__":
 ```   
 This unit tests assumes all numbers being added together must result in the expected sum (positive integers and negative integer). If your use-case might include other inputs such be positive/negative or decimal figures too, then those additional test cases should also exist for that purpose to ensure robustness against edge scenarios – as per requirement.
 
+### Input/Output Schema Explained
+
+The schema defined in schemas.py provides a structured and explicit format for communication between the backend and any API client (e.g., frontend or scripts). It separates input and output data into clear, strongly-typed models using Pydantic. The PromptData object encapsulates everything the model needs to generate a response, including model metadata, prompt text, system instructions, and generation options. On the other side, the ResponseData structure contains the generated Markdown response, any extracted code, token usage statistics, and timing metrics.
+
+To work with this schema:
+
+- Ensure your backend modules read from and write to these defined fields. 
+- When adding a new feature (e.g., extra metadata or generation parameters), extend the relevant schema class (e.g., InputOptions or OutputData).
+- Any API endpoint or processing function should use PromptData as input and return a ResponseData to remain compatible.
+This structure keeps the system modular, validates data automatically, and ensures seamless integration with FastAPI, Swagger docs, and any future UI.
 ```
