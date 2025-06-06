@@ -44,6 +44,7 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
         else:
             raw_response, loading_time, final_time = manager.send_prompt(
                 prompt_data["model"]["id"],
+                prompt_data["prompt"],
                 output_file,
             )
 
