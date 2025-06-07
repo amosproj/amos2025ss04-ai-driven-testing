@@ -59,7 +59,6 @@ coverage.xml
 .vscode/
 *.swp
 *.swo
-pyproject.toml
 
 # Jupyter Notebook
 .ipynb_checkpoints
