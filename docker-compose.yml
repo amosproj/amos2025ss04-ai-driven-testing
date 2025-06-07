@@ -8,7 +8,11 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./backend/ollama-models:/app/backend/ollama-models
+      - type: bind
+        source: ./backend/ollama-models
+        target: /app/backend/ollama-models
+        bind:
+          create_host_path: true
     environment:
       - IN_DOCKER=true
     networks:

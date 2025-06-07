@@ -3,7 +3,7 @@ FROM continuumio/miniconda3
 # Setze Arbeitsverzeichnis
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y curl && apt-get clean
+RUN apt-get update && apt-get install -y curl build-essential git && apt-get clean
 
 # Kopiere zuerst nur die environment.yml
 COPY backend/environment.yml /app/backend/

@@ -8,7 +8,7 @@ import { Container, Box } from '@mui/material';
 
 const App: React.FC = () => {
   const [models, setModels] = useState<Model[]>([]);
-  const [selectedModel, setSelectedModel] = useState<string>('');
+  const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -18,7 +18,7 @@ const App: React.FC = () => {
       .then((data) => {
         setModels(data);
         if (data.length > 0) {
-          setSelectedModel(data[0].id);
+          setSelectedModel(data[0]);
         }
       })
       .catch((err) => {
@@ -32,7 +32,8 @@ const App: React.FC = () => {
 
     setLoading(true);
     console.log('Sende Nachricht:', message);
-    sendPrompt(selectedModel, message)
+    if (!selectedModel) return;
+    sendPrompt(selectedModel, message, message)
       .then((res) => {
         console.log('Antwort erhalten:', res);
         // füge Assistant-Antwort zum Verlauf hinzu
@@ -52,8 +53,8 @@ const App: React.FC = () => {
           .then((data) => {
             setModels(data);
             // falls aktuelles Modell nicht mehr existiert, erstes wählen
-            if (!data.some((m) => m.id === selectedModel) && data.length > 0) {
-              setSelectedModel(data[0].id);
+            if (!selectedModel || !data.some((m) => m.id === selectedModel.id)) {
+              setSelectedModel(data[0]);
             }
           })
           .catch((err) => console.error('Fehler beim Aktualisieren der Modelle:', err));
@@ -61,7 +62,8 @@ const App: React.FC = () => {
   };
 
   const handleShutdownModel = () => {
-    shutdownModel(selectedModel)
+    if (!selectedModel) return;
+    shutdownModel(selectedModel.id)
       .then(() => {
         // Nach dem Herunterfahren: Modelle neu laden
         return getModels();
@@ -69,8 +71,10 @@ const App: React.FC = () => {
       .then((data) => {
         setModels(data);
         // falls aktuelles Modell nicht mehr existiert, erstes wählen
-        if (!data.some((m) => m.id === selectedModel) && data.length > 0) {
-          setSelectedModel(data[0].id);
+        if (!selectedModel || !data.some((m) => m.id === selectedModel.id)) {
+          if (data.length > 0) {
+            setSelectedModel(data[0]);
+          }
         }
       })
       .catch((err) => console.error('Fehler beim Herunterfahren des Modells:', err));
@@ -80,8 +84,11 @@ const App: React.FC = () => {
     <Box display="flex" flexDirection="column" height="100vh" sx={{ bgcolor: 'grey.100' }}>
       <TopBar
         models={models}
-        selectedModel={selectedModel}
-        onChangeModel={setSelectedModel}
+        selectedModel={selectedModel?.id || ''}
+        onChangeModel={(modelId) => {
+              const model = models.find((m) => m.id === modelId);
+              if (model) setSelectedModel(model);
+            }}
         onShutdownModel={handleShutdownModel}
       />
 
@@ -118,8 +125,8 @@ const App: React.FC = () => {
             }}
           >
             <InfoBar
-              licence={models.find((m) => m.id === selectedModel)?.licence ?? '—'}
-              licenceLink={models.find((m) => m.id === selectedModel)?.licence_link ?? 'https://choosealicense.com/licenses/'}
+                licence={models.find((m) => m.id === selectedModel?.id)?.licence ?? '—'}
+                licenceLink={models.find((m) => m.id === selectedModel?.id)?.licence_link ?? 'https://choosealicense.com/licenses/'}
             />
 
             <ChatInput onSend={handleSendMessage} />
