@@ -6,7 +6,6 @@ from modules.calculate_ccc_lib.ccc_calculator_python import (
 from modules.calculate_ccc_lib.ccc_estimator_general import (
     get_ccc_for_code as get_ccc_for_code_general,
 )
-from schemas import PromptData, ResponseData
 
 # Error handling in this module is a mess, but it works 👍
 
@@ -34,7 +33,7 @@ class CalculateCcc(ModuleBase):
         try:
             ccc = get_ccc_for_code_python(source_code)
             print("Using Python CCC calculator for source code")
-        except SyntaxError as e:
+        except Exception as e:
             print(f"Python CCC calculator failed: {e}")
             ccc = get_ccc_for_code_general(source_code)
             print("Using general CCC estimator for source code")
