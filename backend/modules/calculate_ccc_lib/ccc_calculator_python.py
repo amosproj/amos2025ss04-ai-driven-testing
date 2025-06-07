@@ -261,7 +261,10 @@ class CCCCalculator(ast.NodeVisitor):
         self.function_recursion_counts = {}
         self.results = []
 
-        tree = ast.parse(code_string)
+        try:
+            tree = ast.parse(code_string)
+        except Exception:
+            raise Exception("Code not recognized as valid Python code. ")
         self.visit(tree)
         return self.total_ccc
 
@@ -273,12 +276,16 @@ def get_ccc_for_file(filepath):
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             code_string = f.read()
-        calculator = CCCCalculator()
-        ccc_score = calculator.calculate_ccc(code_string)
-        return ccc_score
+        return get_ccc_for_code(code_string)
     except FileNotFoundError:
         warnings.warn(f"File not found: {filepath}")
         return None
-    except Exception as e:
-        warnings.warn(f"Error processing file {filepath}: {e}")
-        return None
+
+
+def get_ccc_for_code(code_string):
+    """
+    Calculates CCC directly from a code string.
+    """
+    calculator = CCCCalculator()
+    ccc_score = calculator.calculate_ccc(code_string)
+    return ccc_score

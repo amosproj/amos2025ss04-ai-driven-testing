@@ -1,5 +1,7 @@
 import re
 import warnings
+import tempfile
+import os
 
 
 class CCCEstimator:
@@ -192,7 +194,7 @@ class CCCEstimator:
         )
         if match_collection:
             content = match_collection.group(1)
-            # Attempt to count elements by splitting by comma, ignoring empty content
+            # Attempt to count elements by splitting with comma, ignoring empty content
             elements_str = content.strip("[]()").strip()
             if (
                 elements_str and elements_str != "*"
@@ -398,7 +400,7 @@ class CCCEstimator:
 
 def get_ccc_for_file(filepath):
     """
-    Reads a Python file and calculates its CCC.
+    Reads a file and calculates its CCC using the estimator.
     """
     try:
         ccc_score = CCCEstimator().calculate_ccc(filepath)
@@ -408,4 +410,28 @@ def get_ccc_for_file(filepath):
         return None
     except Exception as e:
         warnings.warn(f"Error calculating CCC for file {filepath}: {e}")
+        return None
+
+
+def get_ccc_for_code(code_string):
+    """
+    Calculates CCC directly from a code string using the estimator.
+    """
+    try:
+        # Create a temporary file with the code string
+        with tempfile.NamedTemporaryFile(
+            mode="w", delete=False, suffix=".tmp"
+        ) as temp_file:
+            temp_file.write(code_string)
+            temp_file_path = temp_file.name
+
+        try:
+            # Calculate CCC using the existing file-based method
+            total_ccc = get_ccc_for_file(temp_file_path)
+        finally:
+            # Clean up the temporary file
+            os.unlink(temp_file_path)
+        return total_ccc
+    except Exception as e:
+        warnings.warn(f"Error calculating CCC for code: {e}")
         return None
