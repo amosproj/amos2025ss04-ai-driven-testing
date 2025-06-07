@@ -9,14 +9,29 @@ from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
+    order_before = 1
+    order_after = 1
 
     def applies_before(self) -> bool:
-        return False
+        return True
 
     def applies_after(self) -> bool:
         return True
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
+        model_id = prompt_data.model.id
+        safe_model_id = model_id.replace(":", "_")
+        output_filename = f"prompt_{safe_model_id}.py"
+        output_dir = Path(__file__).parent.parent / "extracted"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_path = output_dir / output_filename
+
+        # Filter and clean the prompt code
+        raw_code = prompt_data.input.source_code or ""
+        cleaned_code = clean_response_text(raw_code)
+        # Save cleaned prompt code
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_code)
         return prompt_data
 
     def process_response(
@@ -24,17 +39,17 @@ class TextConverter(ModuleBase):
     ) -> ResponseData:
         model_id = prompt_data.model.id
         safe_model_id = model_id.replace(":", "_")
-        output_filename = f"{safe_model_id}.py"
-        # Change output_dir to backend/extracted
+        output_filename = f"responce_{safe_model_id}.py"
         output_dir = Path(__file__).parent.parent / "extracted"
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / output_filename
 
-        # get responce from response_data -> this is setting
+        # get response from response_data
         raw_markdown = response_data.output.markdown or ""
         cleaned_code = clean_response_text(raw_markdown)
         response_data.output.code = cleaned_code
-        write_cleaned_python_code_to_file(cleaned_code, output_path)
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_code)
         return response_data
 
 
