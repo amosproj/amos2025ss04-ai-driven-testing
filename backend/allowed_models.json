@@ -35,6 +35,12 @@
       "id": "tinyllama:1.1b",
       "licence": "Apache 2.0 License",
       "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "name": "Qwen3",
+      "id": "qwen3:4b-q4_K_M",
+      "licence": "Apache 2.0 License",
+      "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
     }
   ]
 }
