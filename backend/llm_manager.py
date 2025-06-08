@@ -5,10 +5,13 @@ import os
 from tqdm import tqdm
 import json
 from typing import Dict
+from schemas import PromptData, ResponseData, OutputData, TimingData
 import socket
 
 OLLAMA_IMAGE = "ollama/ollama"
-OLLAMA_MODELS_VOLUME = os.path.abspath("./ollama-models")
+OLLAMA_MODELS_VOLUME = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "ollama-models"
+)
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
 
@@ -27,7 +30,7 @@ class LLMManager:
         self.client = None #docker.from_env()
         # Map: model_name -> (container, port)
         self.active_models: Dict[
-            str, (docker.models.containers.Container, int)
+            str, (docker.models.containers.Container, int, str)
         ] = {}
 
     def _verify_model_id(self, model_id: str) -> None:
@@ -63,29 +66,43 @@ class LLMManager:
 
         print(f"Pulling docker image {OLLAMA_IMAGE} ...")
         self._pull_ollama_image()
+        print("container_name:")
+        print(container_name)
 
         # Grab a random free port
         port = self._get_free_port()
 
-        print(f"Starting container {container_name} on free port {port}...")
-        container = self.client.containers.run(
-            OLLAMA_IMAGE,
-            name=container_name,
-            ports={"11434/tcp": port},
-            volumes={
+        # Prepare container arguments
+        container_args = {
+            "image": OLLAMA_IMAGE,
+            "name": container_name,
+            "ports": {f"{port}/tcp": port},
+            "volumes": {
                 OLLAMA_MODELS_VOLUME: {"bind": "/root/.ollama", "mode": "rw"}
             },
-            detach=True,
-            remove=True,
-        )
+            "environment": {"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},
+            "detach": True,
+            "remove": True,
+        }
 
-        self._wait_for_api(port)
+        # Add network only when running in Docker
+        if running_in_docker():
+            container_args["network"] = "backend"
+
+        container = self.client.containers.run(**container_args)
+
+        container.reload()
+
+        print(f"Ollama is reachable on host port {port}")
+
+        self._wait_for_api(port, container_name)
 
         # Pull the model inside the container
-        self._pull_model(port, model_id)
+        self._pull_model(port, model_id, container_name)
 
         # Track it
-        self.active_models[model_id] = (container, port)
+        self.active_models[model_id] = (container, port, container_name)
+        print(f"Modell {model_id} wurde erfolgreich geladen und ist bereit!")
 
     def stop_model_container(self, model_id: str) -> None:
         """
@@ -94,67 +111,99 @@ class LLMManager:
         if model_id not in self.active_models:
             print(f"No active container found for '{model_id}'.")
             return
-        container, _ = self.active_models[model_id]
+        container, _, _ = self.active_models[model_id]
         print(f"Stopping container for model {model_id}...")
         container.stop()
         del self.active_models[model_id]
 
     def send_prompt(
-        self, model_id: str, prompt: str, output_file: str = None
-    ) -> str:
+        self, prompt_data: PromptData, output_file: str = None
+    ) -> ResponseData:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
         """
+
+        model_id = prompt_data.model.id
+        input_ = prompt_data.input
+
+        user_message = input_.user_message
+        source_code = input_.source_code
+        system_message = input_.system_message
+        options = input_.options.dict()  # turn Pydantic object into dict
+
+        # Use rag_prompt if available, else construct full prompt
+        full_prompt = (
+            prompt_data.rag_prompt
+            if prompt_data.rag_prompt
+            else f"{user_message}\n{source_code}"
+        )
+
         if model_id not in self.active_models:
             raise ValueError(
                 f"Model '{model_id}' is inactive. "
                 f"Start it first via start_model_container()."
             )
-        _, port = self.active_models[model_id]
-        url = f"http://localhost:{port}/api/generate"
-
-        # Provide a minimal system instruction
-        system_message = (
-            "You are a helpful assistant. Provide your answer always in Markdown.\n"
-            "Format code blocks appropriately, and do not include text outside valid Markdown."
-        )
+        _, port, container_name = self.active_models[model_id]
+        url = f"{get_base_url(container_name)}:{port}/api/generate"
+        print(url)
 
         payload = {
             "model": model_id,
-            "prompt": prompt,
+            "prompt": full_prompt,
             "system": system_message,
             "stream": True,
-            "seed": 42,
+            "options": options,
         }
 
+        print(f"Sende Anfrage an Modell {model_id}...")
         collected_response = ""
         start_time = time.time()
-        with requests.post(url, json=payload, stream=True) as r:
-            r.raise_for_status()
-            for chunk in r.iter_lines():
-                if chunk:
-                    decoded_chunk = chunk.decode("utf-8")
+        try:
+            with requests.post(url, json=payload, stream=True) as r:
+                if not r.ok:
+                    error_detail = r.text
                     try:
-                        chunk_json = json.loads(decoded_chunk)
-                        chunk_response = chunk_json.get("response", "")
-                        print(chunk_response, end="", flush=True)
-                        collected_response += chunk_response
-                    except json.JSONDecodeError:
-                        continue
+                        error_json = r.json()
+                        if "error" in error_json:
+                            error_detail = error_json["error"]
+                    except Exception as e:
+                        print(e)
+                        pass
+                    raise RuntimeError(
+                        f"API-Fehler: {r.status_code} - {error_detail}"
+                    )
 
-        end_time_loading = time.time()
-        if not output_file:
-            # Generate a default output filename from the model_id
-            safe_model_id = model_id.replace(":", "_")
-            output_file = "output-" + safe_model_id + ".md"
+                for chunk in r.iter_lines():
+                    if chunk:
+                        decoded_chunk = chunk.decode("utf-8")
+                        try:
+                            chunk_json = json.loads(decoded_chunk)
+                            chunk_response = chunk_json.get("response", "")
+                            print(chunk_response, end="", flush=True)
+                            collected_response += chunk_response
+                        except json.JSONDecodeError:
+                            continue
 
-        output_path = os.path.join(SCRIPT_DIR, output_file)
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(collected_response)
-        end_time_final = time.time()
-        loading_response_time = end_time_loading - start_time
-        final_response_time = end_time_final - start_time
-        return collected_response, loading_response_time, final_response_time
+        except Exception as e:
+            print(f"\nFehler beim Senden des Prompts: {str(e)}")
+            raise
+
+        end_loading = time.time()
+
+        output = OutputData(markdown=collected_response)
+
+        end_generation = time.time()
+
+        timing = TimingData(
+            loading_time=end_loading - start_time,
+            generation_time=end_generation - start_time,
+        )
+
+        return ResponseData(
+            model=prompt_data.model,
+            output=output,
+            timing=timing,
+        )
 
     def _pull_ollama_image(self):
         """
@@ -191,12 +240,12 @@ class LLMManager:
         for pbar in progress_bars.values():
             pbar.close()
 
-    def _pull_model(self, port: int, model_name: str):
+    def _pull_model(self, port: int, model_name: str, container_name: str):
         """
         Pulls the given model inside the Ollama container.
         """
         print(f"Pulling model: {model_name}")
-        url = f"http://localhost:{port}/api/pull"
+        url = f"{get_base_url(container_name)}:{port}/api/pull"
         with requests.post(url, json={"name": model_name}, stream=True) as r:
             r.raise_for_status()
             pbar = None
@@ -231,22 +280,28 @@ class LLMManager:
             if pbar:
                 pbar.close()
 
-    def _wait_for_api(self, port: int, timeout=60):
+    def _wait_for_api(self, port: int, container_name: str, timeout=120):
         """
         Waits until the container's API is available or times out.
         """
         start_time = time.time()
-        url = f"http://localhost:{port}/api/tags"
+        url = f"{get_base_url(container_name)}:{port}/api/tags"
+        print(f"Warte auf Ollama API (url {url})...")
         while time.time() - start_time < timeout:
             try:
                 r = requests.get(url)
                 if r.status_code == 200:
-                    print(f"Ollama API on port {port} is ready!")
+                    print(f"Ollama API auf Port {port} ist bereit!")
+                    # Zusätzliche Wartezeit für die vollständige Initialisierung
+                    time.sleep(5)
                     return
             except requests.exceptions.ConnectionError:
+                print(".", end="", flush=True)
                 pass
             time.sleep(2)
-        raise TimeoutError("Ollama API did not become available in time.")
+        raise TimeoutError(
+            f"Ollama API wurde nicht rechtzeitig verfügbar (Timeout nach {timeout}s)"
+        )
 
     def _get_free_port(self) -> int:
         """
@@ -257,3 +312,14 @@ class LLMManager:
             s.bind(("localhost", 0))
             port = s.getsockname()[1]
             return port
+
+
+def running_in_docker():
+    return os.getenv("IN_DOCKER") == "true"
+
+
+def get_base_url(container_name: str):
+    if running_in_docker():
+        return f"http://{container_name}"
+    else:
+        return "http://localhost"

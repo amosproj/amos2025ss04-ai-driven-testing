@@ -36,6 +36,22 @@ The goal of this project is to develop or customize a **LLM-based (Large Languag
 4. Integrate test code into your existing test suite
 
 
+# Build
+## Prerequisite
+- [Node.js](https://nodejs.org/) (Ensure it is installed on your machine)
+- **Docker** (for running the Ollama container)  
+  ➔ [Install Docker](https://docs.docker.com/get-started/get-docker/)
+  
+- **Conda** (for managing the Python environment)  
+  ➔ [Install Anaconda](https://www.anaconda.com/download)
+
+---
+## Command
+   ```bash
+  chmod +x setup.sh
+  ./setup.sh
+   ```
+ &nbsp;
 # FRONTEND
 
 ## Overview
