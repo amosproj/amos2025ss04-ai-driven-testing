@@ -150,6 +150,7 @@ class ContextSizeCalculator(ModuleBase):
             "gemma3:4b-it-q4_K_M": "google/gemma-3-4b-it",
             "phi4-mini:3.8b-q4_K_M": "microsoft/Phi-4-mini-instruct",
             "tinyllama": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
+            "qwen3:4b-q4_K_M": "Qwen/Qwen3-4B",
         }
 
         # Try exact match first
