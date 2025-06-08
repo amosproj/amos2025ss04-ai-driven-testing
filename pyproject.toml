@@ -15,5 +15,7 @@ exclude = '''
   | ExampleTests/generatedTests
   | docker_runner\.log
   | formatting_errors\.txt
+  | backend/outputs
+  | backend/extracted
 )/
 '''
