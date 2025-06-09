@@ -56,39 +56,44 @@ class TextConverter(ModuleBase):
 def clean_response_text(response_text: str) -> str:
     """
     Extracts and cleans all Python code blocks from the input text,
-    removing markdown code block markers and trailing explanations.
-    Concatenates all code blocks into a single string.
+    removing markdown code block markers and any text before the first code block.
+    Handles missing closing code block by extracting everything after the opening marker.
     Formats the result using Black.
     """
     if not response_text or not response_text.strip():
         return "no response"
 
-    # Find all code blocks marked with ```python ... ```
-    code_blocks = re.findall(
-        r"```python(.*?)```", response_text, flags=re.DOTALL | re.IGNORECASE
+    # Remove everything before the first code block (```python or ```)
+    code_block_start = re.search(
+        r"```python", response_text, flags=re.IGNORECASE
     )
+    if code_block_start:
+        # If there is a closing ```, extract between them; otherwise, take everything after the opening marker
+        after_start = response_text[code_block_start.end() :]
+        code_block_end = re.search(r"```", after_start)
+        if code_block_end:
+            code = after_start[: code_block_end.start()].strip()
+        else:
+            code = after_start.strip()
+    else:
+        # Fallback: try generic code block
+        code_block_start = re.search(r"```", response_text)
+        if code_block_start:
+            after_start = response_text[code_block_start.end() :]
+            code_block_end = re.search(r"```", after_start)
+            if code_block_end:
+                code = after_start[: code_block_end.start()].strip()
+            else:
+                code = after_start.strip()
+        else:
+            code = response_text.strip()
 
-    # If no python code blocks found, try generic code blocks
-    if not code_blocks:
-        code_blocks = re.findall(
-            r"```(.*?)```", response_text, flags=re.DOTALL | re.IGNORECASE
-        )
-
-    # If still no code blocks, treat the whole text as a single block
-    if not code_blocks:
-        code_blocks = [response_text]
-
-    cleaned_blocks = []
-    for block in code_blocks:
-        # Remove leading/trailing whitespace and empty lines
-        cleaned_block = "\n".join(
-            line.rstrip()
-            for line in block.strip().splitlines()
-            if line.strip()
-        )
-        cleaned_blocks.append(cleaned_block)
-
-    code = "\n\n".join(filter(None, cleaned_blocks))
+    # Remove leading/trailing empty lines
+    code = "\n".join(
+        line.rstrip()
+        for line in code.splitlines()
+        if line.strip() or line == ""
+    )
 
     # Format the code using Black
     try:

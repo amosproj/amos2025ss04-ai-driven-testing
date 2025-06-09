@@ -2,7 +2,6 @@ from .base import ModuleBase
 from mccabe import get_code_complexity
 import os
 from schemas import PromptData, ResponseData
-import sys
 
 
 class CalculateMcc(ModuleBase):
