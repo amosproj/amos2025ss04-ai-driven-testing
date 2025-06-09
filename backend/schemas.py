@@ -41,6 +41,9 @@ class PromptData(BaseModel):
     token_count_estimated: Optional[bool] = None
     rag_prompt: Optional[str] = None
     rag_sources: Optional[List[str]] = None
+    ccc_complexity: Optional[int] = Field(
+        None, description="Cognitive Code Complexity (CCC) of the input code"
+    )
 
 
 class OutputData(BaseModel):
@@ -53,6 +56,9 @@ class OutputData(BaseModel):
     )
     syntax_valid: Optional[bool] = Field(
         None, description="Whether the extracted code is syntactically valid"
+    )
+    ccc_complexity: Optional[int] = Field(
+        None, description="Cognitive Code Complexity (CCC) of the output code"
     )
 
 
