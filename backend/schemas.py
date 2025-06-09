@@ -19,7 +19,6 @@ class InputOptions(BaseModel):
 
 
 class InputData(BaseModel):
-
     user_message: str = Field(
         ...,
         description="Instruction or natural language question from the user",
@@ -52,6 +51,9 @@ class OutputData(BaseModel):
         None, description="Token count used for the request"
     )
     syntax_valid: Optional[bool] = Field(
+        None, description="Whether the extracted code is syntactically valid"
+    )
+    human_eval: Optional[dict] = Field(
         None, description="Whether the extracted code is syntactically valid"
     )
 

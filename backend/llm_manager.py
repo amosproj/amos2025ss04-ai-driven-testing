@@ -27,7 +27,7 @@ class LLMManager:
     """
 
     def __init__(self):
-        self.client = None #docker.from_env()
+        self.client = docker.from_env()
         # Map: model_name -> (container, port)
         self.active_models: Dict[
             str, (docker.models.containers.Container, int, str)

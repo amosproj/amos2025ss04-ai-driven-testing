@@ -31,7 +31,6 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
 
     # Initialize LLM manager
     manager = LLMManager()
-    manager.active_models[model_id] = (None, 11434)
     try:
         manager.start_model_container(prompt_data.model.id)
         print(f"\n--- Response from {prompt_data.model.name} ---")

@@ -9,7 +9,6 @@ from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
-
     def applies_before(self) -> bool:
         return False
 
