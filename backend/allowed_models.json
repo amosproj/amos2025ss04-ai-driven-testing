@@ -13,7 +13,7 @@
       "licence_link": "https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL"
     },
     {
-      "name": "Qwen",
+      "name": "Qwen2.5-coder",
       "id": "qwen2.5-coder:3b-instruct-q8_0",
       "licence": "Apache 2.0 License",
       "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
