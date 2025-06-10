@@ -134,6 +134,8 @@ class LLMManager:
             "Format code blocks appropriately, and do not include text outside valid Markdown."
         )
 
+        prompt = trim_prompt(container_name, port, model_id, prompt)
+
         payload = {
             "model": model_id,
             "prompt": prompt,
@@ -310,3 +312,48 @@ def get_base_url(container_name: str):
         return f"http://{container_name}"
     else:
         return "http://localhost"
+
+def get_context_size(container_name: str, port:int, model_id: str) -> int:
+    url = f"{get_base_url(container_name)}:{port}/api/show"
+
+    response = requests.post(url, json={"name": model_id})
+    data = response.json()
+
+    context_size = None
+    for key, value in data.get("model_info", {}).items():
+        if key.endswith(".context_length"):
+            context_size = value
+            break
+    print(f"Context size for model '{model_id}': {context_size}")
+    """
+    Returns the context size for the given model.
+    This is a placeholder function; actual implementation may vary.
+    """
+    return context_size
+
+def estimate_tokens(text: str) -> int:
+    words = text.split()
+    avg_tokens_per_word = 1.3  # Rough average for English
+    return int(len(words) * avg_tokens_per_word)
+
+def trim_prompt(container_name: str, port:int, model_id: str, prompt: str) -> str:
+    """
+    Trims the prompt to fit within the model's context size.
+    """
+    
+    context_size = get_context_size(container_name, port, model_id) *0.8
+
+    # llama models returns gibberish if the context size is completely filled
+    if "llama" in model_id.lower():
+        context_size = int(context_size * 0.7)
+
+    estimated_tokens = estimate_tokens(prompt)
+    if estimated_tokens <= context_size:
+        return prompt
+
+    # If the prompt is too long, trim it
+    print(f"Prompt exceeds context size ({context_size} tokens). Trimming...")
+    words = prompt.split()
+    trimmed_prompt = " ".join(words[:context_size])
+    print(f"Trimmed prompt to {len(trimmed_prompt.split())} tokens.")
+    return trimmed_prompt

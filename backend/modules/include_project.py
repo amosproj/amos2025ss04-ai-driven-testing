@@ -17,10 +17,10 @@ GITHUB_REPO_URL = "https://github.com/phiho1609/derOrtAnDemIDahoamBims"
 CLONE_PATH = Path(__file__).parent.parent / "cloned_project"
 LOCAL_PATH = Path(__file__).parent.parent / "../python-test-cases"
 PROMPT_TEMPLATE = """
+Answer the query based on the above context: {question}
+---
 Answer the query based only on the following context:
 {context}
----
-Answer the query based on the above context: {question}
 """
 
 
