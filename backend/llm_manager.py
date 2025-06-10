@@ -313,7 +313,8 @@ def get_base_url(container_name: str):
     else:
         return "http://localhost"
 
-def get_context_size(container_name: str, port:int, model_id: str) -> int:
+
+def get_context_size(container_name: str, port: int, model_id: str) -> int:
     url = f"{get_base_url(container_name)}:{port}/api/show"
 
     response = requests.post(url, json={"name": model_id})
@@ -331,17 +332,21 @@ def get_context_size(container_name: str, port:int, model_id: str) -> int:
     """
     return context_size
 
+
 def estimate_tokens(text: str) -> int:
     words = text.split()
     avg_tokens_per_word = 1.3  # Rough average for English
     return int(len(words) * avg_tokens_per_word)
 
-def trim_prompt(container_name: str, port:int, model_id: str, prompt: str) -> str:
+
+def trim_prompt(
+    container_name: str, port: int, model_id: str, prompt: str
+) -> str:
     """
     Trims the prompt to fit within the model's context size.
     """
-    
-    context_size = get_context_size(container_name, port, model_id) *0.8
+
+    context_size = get_context_size(container_name, port, model_id) * 0.8
 
     # llama models returns gibberish if the context size is completely filled
     if "llama" in model_id.lower():
