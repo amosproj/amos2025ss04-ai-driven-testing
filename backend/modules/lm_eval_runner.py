@@ -63,7 +63,7 @@ class LmEvalRunner(ModuleBase):
                 score = result.get("pass@1", "N/A")
                 print(f"[HumanEval] pass@1 = {score}")
 
-                response_data.output.human_eval = result
+                response_data.output.lm_eval = result
 
                 # Also save to metrics.json if you want
                 metrics_out = {
@@ -77,6 +77,6 @@ class LmEvalRunner(ModuleBase):
 
         except subprocess.CalledProcessError as e:
             print(f"[HumanEval] Benchmark failed: {e}")
-            response_data.output.human_eval = {"error": str(e)}
+            response_data.output.lm_eval = {"error": str(e)}
 
         return response_data
