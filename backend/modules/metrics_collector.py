@@ -21,7 +21,6 @@ class MetricsCollector(ModuleBase):
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-
         # Prepare folders
         model_name = prompt_data.model.name
         cleaned = self.clean_response_text(
