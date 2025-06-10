@@ -17,5 +17,6 @@ exclude = '''
   | formatting_errors\.txt
   | backend/outputs
   | backend/output\.md
+  | backend/extracted
 )/
 '''

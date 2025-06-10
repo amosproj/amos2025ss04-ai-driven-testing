@@ -8,6 +8,7 @@ REQUESTED_MODELS = [
     "qwen2.5-coder:3b-instruct-q8_0",
     "gemma3:4b-it-q4_K_M",
     "phi4-mini:3.8b-q4_K_M",
+    "qwen3:4b-q4_K_M",
 ]
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROMPT = "prompt.txt"

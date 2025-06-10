@@ -13,7 +13,7 @@
       "licence_link": "https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL"
     },
     {
-      "name": "Qwen",
+      "name": "Qwen2.5-coder",
       "id": "qwen2.5-coder:3b-instruct-q8_0",
       "licence": "Apache 2.0 License",
       "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
@@ -33,6 +33,12 @@
     {
       "name": "TINYLLAMA",
       "id": "tinyllama:1.1b",
+      "licence": "Apache 2.0 License",
+      "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "name": "Qwen3",
+      "id": "qwen3:4b-q4_K_M",
       "licence": "Apache 2.0 License",
       "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
     }
