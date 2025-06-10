@@ -3,31 +3,25 @@ import json
 from pathlib import Path
 from typing import Optional, Union
 import black
-
+from schemas import PromptData, ResponseData
 
 from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
-
     def applies_before(self) -> bool:
         return False
 
     def applies_after(self) -> bool:
         return True
 
-    def process_prompt(self, prompt_data: dict) -> dict:
+    def process_prompt(self, prompt_data: PromptData) -> PromptData:
         return prompt_data
 
-    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
-        # Prefer model id, fallback to model name, then "output"
-        model = (
-            response_data.get("model") or prompt_data.get("model") or "output"
-        )
-        if isinstance(model, dict):
-            model_id = model.get("id", "output")
-        else:
-            model_id = str(model)
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
+        model_id = prompt_data.model.id
         safe_model_id = model_id.replace(":", "_")
         output_filename = f"{safe_model_id}.py"
         # Change output_dir to backend/extracted
@@ -35,14 +29,11 @@ class TextConverter(ModuleBase):
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / output_filename
 
-        # get responce from response_data
-        code_content = (
-            response_data.get("text")
-            or response_data.get("code")
-            or response_data.get("response")
-            or ""
-        )
-        write_cleaned_python_code_to_file(code_content, output_path)
+        # get responce from response_data -> this is setting
+        raw_markdown = response_data.output.markdown or ""
+        cleaned_code = clean_response_text(raw_markdown)
+        response_data.output.code = cleaned_code
+        write_cleaned_python_code_to_file(cleaned_code, output_path)
         return response_data
 
 
@@ -54,7 +45,7 @@ def clean_response_text(response_text: str) -> str:
     Formats the result using Black.
     """
     if not response_text or not response_text.strip():
-        return "no responce"
+        return "no response"
 
     # Find all code blocks marked with ```python ... ```
     code_blocks = re.findall(

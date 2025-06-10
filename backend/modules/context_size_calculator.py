@@ -1,5 +1,6 @@
 from modules.base import ModuleBase
 from transformers import AutoTokenizer
+from schemas import PromptData
 import re
 import os
 import warnings
@@ -16,38 +17,41 @@ class ContextSizeCalculator(ModuleBase):
     def applies_after(self) -> bool:
         return False
 
-    def process_prompt(self, prompt_data):
+    def process_prompt(self, prompt_data: PromptData):
         # Get model ID from prompt data
-        model_id = prompt_data["model"]["id"]
+        model_id = prompt_data.model.id
 
         # Count tokens using the Hugging Face tokenizer
         print(f"[ContextSizeCalculator] Counting tokens for model: {model_id}")
-        # might be one token off
-        token_count = self._count_tokens_with_tokenizer(
-            prompt_data["prompt"] + prompt_data["ollama_parameters"]["system"],
-            model_id,
+
+        # Construct full text (user + code + system)
+        full_text = (
+            prompt_data.input.user_message
+            + "\n"
+            + prompt_data.input.source_code
+            + "\n"
+            + prompt_data.input.system_message
         )
+        # might be one token off
+        token_count = self._count_tokens_with_tokenizer(full_text, model_id)
 
         # If tokenizer is unavailable, estimate token count
         if token_count is None:
             print(
                 "[ContextSizeCalculator] Tokenizer unavailable, estimating token count..."
             )
-            token_count = self._estimate_token_count(
-                prompt_data["prompt"]
-                + prompt_data["ollama_parameters"]["system"]
-            )
+            token_count = self._estimate_token_count(full_text)
             print(
                 f"[ContextSizeCalculator] Estimated token count: {token_count}"
             )
-            prompt_data["token_count"] = token_count
-            prompt_data["token_count_estimated"] = True
+            prompt_data.token_count = token_count
+            prompt_data.token_count_estimated = True
         else:
             print(f"[ContextSizeCalculator] Token count: {token_count}")
-            prompt_data["token_count"] = token_count
-            prompt_data["token_count_estimated"] = False
+            prompt_data.token_count = token_count
+            prompt_data.token_count_estimated = False
 
-        max_ctx_size = prompt_data["ollama_parameters"]["options"]["num_ctx"]
+        max_ctx_size = prompt_data.input.options.num_ctx
 
         # TODO include system prompt etc in calculation when available
         if token_count > max_ctx_size:
@@ -145,7 +149,8 @@ class ContextSizeCalculator(ModuleBase):
             "qwen2.5-coder:3b-instruct-q8_0": "Qwen/Qwen2.5-Coder-3B-Instruct",
             "gemma3:4b-it-q4_K_M": "google/gemma-3-4b-it",
             "phi4-mini:3.8b-q4_K_M": "microsoft/Phi-4-mini-instruct",
-            "tinyllama": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
+            "tinyllama:1.1b": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
+            "qwen3:4b-q4_K_M": "Qwen/Qwen3-4B",
         }
 
         # Try exact match first
