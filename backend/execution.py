@@ -17,7 +17,7 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
     prompt_data = PromptData(
         model=ModelMeta(id=model_id, name=model_name),
         input=InputData(
-            user_message="Create a pytest unittest for the given source code. Only provide the code in the response, no explanations.",
+            user_message="Was macht dieser Code?",
             source_code=prompt_text,
             system_message="You are a helpful assistant. Provide your answer always in Markdown.\n"
             "Format code blocks appropriately, and do not include text outside valid Markdown.",
