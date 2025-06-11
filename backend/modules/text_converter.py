@@ -3,85 +3,103 @@ import json
 from pathlib import Path
 from typing import Optional, Union
 import black
-
+from schemas import PromptData, ResponseData
 
 from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
+    order_before = 1
+    order_after = 1
 
     def applies_before(self) -> bool:
-        return False
+        return True
 
     def applies_after(self) -> bool:
         return True
 
-    def process_prompt(self, prompt_data: dict) -> dict:
-        return prompt_data
-
-    def process_response(self, response_data: dict, prompt_data: dict) -> dict:
-        # Prefer model id, fallback to model name, then "output"
-        model = (
-            response_data.get("model") or prompt_data.get("model") or "output"
-        )
-        if isinstance(model, dict):
-            model_id = model.get("id", "output")
-        else:
-            model_id = str(model)
+    def process_prompt(self, prompt_data: PromptData) -> PromptData:
+        model_id = prompt_data.model.id
         safe_model_id = model_id.replace(":", "_")
-        output_filename = f"{safe_model_id}.py"
-        # Change output_dir to backend/extracted
+        output_filename = f"prompt_{safe_model_id}.py"
         output_dir = Path(__file__).parent.parent / "extracted"
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / output_filename
 
-        # get responce from response_data
-        code_content = (
-            response_data.get("text")
-            or response_data.get("code")
-            or response_data.get("response")
-            or ""
-        )
-        write_cleaned_python_code_to_file(code_content, output_path)
+        # Filter and clean the prompt code
+        raw_code = prompt_data.input.source_code or ""
+        cleaned_code = clean_response_text(raw_code)
+        # Save cleaned prompt code
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_code)
+        prompt_data.prompt_code_path = str(
+            output_path
+        )  # Store path to cleaned prompt code
+        return prompt_data
+
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
+        model_id = prompt_data.model.id
+        safe_model_id = model_id.replace(":", "_")
+        output_filename = f"responce_{safe_model_id}.py"
+        output_dir = Path(__file__).parent.parent / "extracted"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_path = output_dir / output_filename
+
+        # get response from response_data
+        raw_markdown = response_data.output.markdown or ""
+        cleaned_code = clean_response_text(raw_markdown)
+        response_data.output.code = cleaned_code
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_code)
+        response_data.output.output_code_path = str(
+            output_path
+        )  # Store path to cleaned response code
         return response_data
 
 
 def clean_response_text(response_text: str) -> str:
     """
     Extracts and cleans all Python code blocks from the input text,
-    removing markdown code block markers and trailing explanations.
-    Concatenates all code blocks into a single string.
+    removing markdown code block markers and any text before the first code block.
+    Handles missing closing code block by extracting everything after the opening marker.
     Formats the result using Black.
     """
     if not response_text or not response_text.strip():
-        return "no responce"
+        return "no response"
 
-    # Find all code blocks marked with ```python ... ```
-    code_blocks = re.findall(
-        r"```python(.*?)```", response_text, flags=re.DOTALL | re.IGNORECASE
+    # Remove everything before the first code block (```python or ```)
+    code_block_start = re.search(
+        r"```python", response_text, flags=re.IGNORECASE
     )
+    if code_block_start:
+        # If there is a closing ```, extract between them; otherwise, take everything after the opening marker
+        after_start = response_text[code_block_start.end() :]
+        code_block_end = re.search(r"```", after_start)
+        if code_block_end:
+            code = after_start[: code_block_end.start()].strip()
+        else:
+            code = after_start.strip()
+    else:
+        # Fallback: try generic code block
+        code_block_start = re.search(r"```", response_text)
+        if code_block_start:
+            after_start = response_text[code_block_start.end() :]
+            code_block_end = re.search(r"```", after_start)
+            if code_block_end:
+                code = after_start[: code_block_end.start()].strip()
+            else:
+                code = after_start.strip()
+        else:
+            code = response_text.strip()
 
-    # If no python code blocks found, try generic code blocks
-    if not code_blocks:
-        code_blocks = re.findall(
-            r"```(.*?)```", response_text, flags=re.DOTALL | re.IGNORECASE
-        )
-
-    # If still no code blocks, treat the whole text as a single block
-    if not code_blocks:
-        code_blocks = [response_text]
-
-    cleaned_blocks = []
-    for block in code_blocks:
-        # Remove leading/trailing whitespace and empty lines
-        cleaned_block = "\n".join(
-            line.rstrip()
-            for line in block.strip().splitlines()
-            if line.strip()
-        )
-        cleaned_blocks.append(cleaned_block)
-
-    code = "\n\n".join(filter(None, cleaned_blocks))
+    # Remove leading/trailing empty lines
+    code = "\n".join(
+        line.rstrip()
+        for line in code.splitlines()
+        if line.strip() or line == ""
+    )
 
     # Format the code using Black
     try:
