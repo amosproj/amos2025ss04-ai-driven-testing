@@ -43,6 +43,12 @@ class PromptData(BaseModel):
     ccc_complexity: Optional[int] = Field(
         None, description="Cognitive Code Complexity (CCC) of the input code"
     )
+    mcc_complexity: Optional[int] = Field(
+        None, description="McCabe Code Complexity (MCC) of the input code"
+    )
+    prompt_code_path: Optional[str] = Field(
+        None, description="The original prompt code"
+    )
 
 
 class OutputData(BaseModel):
@@ -62,6 +68,12 @@ class OutputData(BaseModel):
     )
     ccc_complexity: Optional[int] = Field(
         None, description="Cognitive Code Complexity (CCC) of the output code"
+    )
+    mcc_complexity: Optional[int] = Field(
+        None, description="McCabe Code Complexity (MCC) of the output code"
+    )
+    output_code_path: Optional[str] = Field(
+        None, description="The original output code"
     )
 
 

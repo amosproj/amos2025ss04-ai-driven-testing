@@ -32,6 +32,9 @@ class TextConverter(ModuleBase):
         # Save cleaned prompt code
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(cleaned_code)
+        prompt_data.prompt_code_path = str(
+            output_path
+        )  # Store path to cleaned prompt code
         return prompt_data
 
     def process_response(
@@ -50,6 +53,9 @@ class TextConverter(ModuleBase):
         response_data.output.code = cleaned_code
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(cleaned_code)
+        response_data.output.output_code_path = str(
+            output_path
+        )  # Store path to cleaned response code
         return response_data
 
 
