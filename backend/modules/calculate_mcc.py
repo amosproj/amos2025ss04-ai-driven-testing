@@ -7,6 +7,8 @@ import ast
 
 
 class CalculateMcc(ModuleBase):
+    """Berechnet die McCabe Complexity (MCC) für Python-Code mittels AST-Analyse."""
+
     order_before = 5
     order_after = 5
 
