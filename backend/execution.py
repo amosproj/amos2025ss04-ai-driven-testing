@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 
 
-def execute_prompt(model, active_modules, prompt_text, output_file):
+def execute_prompt(
+    model, active_modules, prompt_text, source_code, output_file
+):
     """Execute the prompt-response flow."""
 
     # Read prompt
@@ -17,8 +19,8 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
     prompt_data = PromptData(
         model=ModelMeta(id=model_id, name=model_name),
         input=InputData(
-            user_message="Was macht dieser Code?",
-            source_code=prompt_text,
+            user_message=prompt_text,
+            source_code=source_code,
             system_message="You are a helpful assistant. Provide your answer always in Markdown.\n"
             "Format code blocks appropriately, and do not include text outside valid Markdown.",
             options=InputOptions(num_ctx=4096),
@@ -59,6 +61,8 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
         ]:
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(response_json, f, indent=2)
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(response_data.output.markdown)
     finally:
         print("")
         manager.stop_model_container(prompt_data.model.id)

@@ -18,3 +18,5 @@ dependencies:
       - langchain-ollama
       - langchain-chroma
       - langchain-text-splitters
+      - keybert
+      - beautifulsoup4

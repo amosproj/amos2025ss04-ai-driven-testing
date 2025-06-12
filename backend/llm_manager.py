@@ -148,7 +148,7 @@ class LLMManager:
         print(url)
 
         full_prompt = trim_prompt(container_name, port, model_id, full_prompt)
-
+        print(full_prompt)
         payload = {
             "model": model_id,
             "prompt": full_prompt,
