@@ -10,8 +10,8 @@ from modules.base import ModuleBase
 
 class TextConverter(ModuleBase):
 
-    pre_processing_order = 1
-    post_processing_order = 1
+    order_before = 1
+    order_after = 1
 
     def applies_before(self) -> bool:
         return True

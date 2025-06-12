@@ -7,10 +7,6 @@ import warnings
 
 
 class ContextSizeCalculator(ModuleBase):
-
-    pre_processing_order = 10
-    post_processing_order = 10
-
     def __init__(self):
         self.tokenizer = None
         self.tokenizer_model_id = None

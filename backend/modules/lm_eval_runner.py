@@ -8,10 +8,6 @@ from schemas import PromptData, ResponseData
 
 
 class LmEvalRunner(ModuleBase):
-
-    pre_processing_order = 10
-    post_processing_order = 10
-
     def __init__(self):
         self.output_dir = Path("outputs/human_eval")
 

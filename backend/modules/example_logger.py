@@ -3,10 +3,6 @@ from schemas import PromptData, ResponseData
 
 
 class ExampleLogger(ModuleBase):
-
-    pre_processing_order = 10
-    post_processing_order = 10
-
     def applies_before(self) -> bool:
         return True
 
