@@ -1,7 +1,5 @@
 Write unit tests for the following Python function:
 
-#test 1
-
 ```python
 def add_numbers(a, b):
     """
