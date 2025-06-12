@@ -19,9 +19,9 @@ def load_modules(module_names):
 
 
 def apply_before_modules(modules, prompt_data):
-    # Sort modules by order_before (default to 0 if not present)
+    # Sort modules by order_before (default to 10 if not present)
     modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_before", 10)
+        modules, key=lambda m: getattr(m, "pre_processing_order", 10)
     )
     for m in modules_sorted:
         if m.applies_before():
@@ -30,9 +30,9 @@ def apply_before_modules(modules, prompt_data):
 
 
 def apply_after_modules(modules, response_data, prompt_data):
-    # Sort modules by order_after (default to 0 if not present)
+    # Sort modules by order_after (default to 10 if not present)
     modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_after", 10)
+        modules, key=lambda m: getattr(m, "post_processing_order", 10)
     )
     for m in modules_sorted:
         if m.applies_after():

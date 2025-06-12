@@ -7,7 +7,10 @@ import ast
 
 
 class CalculateMcc(ModuleBase):
-    order_before = 5
+
+    pre_processing_order = 5
+    post_processing_order = 5
+
     order_after = 5
 
     def applies_before(self) -> bool:

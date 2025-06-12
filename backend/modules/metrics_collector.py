@@ -6,6 +6,10 @@ from schemas import PromptData, ResponseData
 
 
 class MetricsCollector(ModuleBase):
+
+    pre_processing_order = 10
+    post_processing_order = 10
+
     def __init__(self):
         self.loading_time = None
         self.generation_time = None
