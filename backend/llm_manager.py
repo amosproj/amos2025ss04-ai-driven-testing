@@ -200,9 +200,7 @@ class LLMManager:
         )
 
         return ResponseData(
-            model=prompt_data.model,
-            output=output,
-            timing=timing,
+            model=prompt_data.model, output=output, timing=timing,
         )
 
     def _pull_ollama_image(self):
