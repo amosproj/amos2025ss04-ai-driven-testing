@@ -140,7 +140,6 @@ class IncludeProject(ModuleBase):
         return db
 
     def calculate_chunk_ids(self, chunks):
-
         # This will create IDs like "data/monopoly.pdf:6:2"
         # Page Source : Page Number : Chunk Index
 

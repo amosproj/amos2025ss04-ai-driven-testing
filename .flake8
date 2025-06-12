@@ -17,6 +17,8 @@ exclude =
     frontend,
     ./venv,
     ./get-pip.py
+    backend/extracted
+    backend/outputs
 
 # Ignoring some common issues that might conflict with Black
 ignore =

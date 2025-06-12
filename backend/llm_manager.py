@@ -152,6 +152,7 @@ class LLMManager:
             "prompt": full_prompt,
             "system": system_message,
             "stream": True,
+            "think": False,  # TODO: add to PromptData
             "options": options,
         }
 

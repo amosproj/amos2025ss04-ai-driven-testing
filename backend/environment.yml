@@ -11,6 +11,7 @@ dependencies:
   - black=25.1.0
   - flake8=7.0.0
   - transformers=4.52.2
+  - mccabe =0.7.0
   - pip
   - pip:
       - fastapi==0.115.1
