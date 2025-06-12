@@ -17,8 +17,15 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--prompt_file",
         type=str,
-        default=os.path.join(SCRIPT_DIR, "prompt.txt"),
+        default=os.path.join(SCRIPT_DIR, "user_message.txt"),
     )
+
+    parser.add_argument(
+        "--source_code",
+        type=str,
+        default=os.path.join(SCRIPT_DIR, "source_code.txt"),
+    )
+
     parser.add_argument(
         "--output_file",
         type=str,

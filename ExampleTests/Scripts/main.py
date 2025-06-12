@@ -284,8 +284,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--prompt_file",
         type=str,
-        default=os.path.join(SCRIPT_DIR, "prompt.txt"),
-        help="Path to the input prompt file (default: prompt.txt in the same directory)",
+        default=os.path.join(SCRIPT_DIR, "user_message.txt"),
+        help="Path to the input prompt file (default: user_message.txt in the same directory)",
     )
     parser.add_argument(
         "--output_file",

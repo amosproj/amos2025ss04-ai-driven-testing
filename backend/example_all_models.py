@@ -11,7 +11,7 @@ REQUESTED_MODELS = [
     "qwen3:4b-q4_K_M",
 ]
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROMPT = "prompt.txt"
+PROMPT = "user_message.txt"
 
 if __name__ == "__main__":
     manager = LLMManager()
