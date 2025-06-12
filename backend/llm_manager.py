@@ -116,9 +116,7 @@ class LLMManager:
         container.stop()
         del self.active_models[model_id]
 
-    def send_prompt(
-        self, prompt_data: PromptData, output_file: str = None
-    ) -> ResponseData:
+    def send_prompt(self, prompt_data: PromptData) -> ResponseData:
         """
         Sends user prompt (including any source code) to the specified model and returns the LLM output.
         """

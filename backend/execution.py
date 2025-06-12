@@ -37,7 +37,7 @@ def execute_prompt(
         manager.start_model_container(prompt_data.model.id)
         print(f"\n--- Response from {prompt_data.model.name} ---")
 
-        response_data = manager.send_prompt(prompt_data, output_file)
+        response_data = manager.send_prompt(prompt_data)
 
         # Process with modules
         module_manager.apply_after_modules(
