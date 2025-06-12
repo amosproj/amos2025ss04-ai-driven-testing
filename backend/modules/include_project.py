@@ -75,20 +75,15 @@ class IncludeProject(ModuleBase):
             shutil.rmtree(CLONE_PATH)
         print(f"Cloning GitHub repo to {CLONE_PATH}...")
         subprocess.run(
-            ["git", "clone", GITHUB_REPO_URL, str(CLONE_PATH)],
-            check=True,
+            ["git", "clone", GITHUB_REPO_URL, str(CLONE_PATH)], check=True,
         )
         # Load from both local and cloned repo
         loaders = [
             DirectoryLoader(
-                str(LOCAL_PATH.absolute()),
-                glob="**/*",
-                loader_cls=TextLoader,
+                str(LOCAL_PATH.absolute()), glob="**/*", loader_cls=TextLoader,
             ),
             DirectoryLoader(
-                str(CLONE_PATH.absolute()),
-                glob="**/*",
-                loader_cls=TextLoader,
+                str(CLONE_PATH.absolute()), glob="**/*", loader_cls=TextLoader,
             ),
         ]
         documents = []

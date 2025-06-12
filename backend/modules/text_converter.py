@@ -9,6 +9,7 @@ from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
+
     order_before = 1
     order_after = 1
 

@@ -18,6 +18,17 @@ class InputOptions(BaseModel):
     # Add more Ollama generation settings here as needed
 
 
+# DEFINE ModuleConfig FIRST
+class ModuleConfig(BaseModel):
+    name: str = Field(
+        ..., description="The unique name of the module to apply."
+    )
+    active: bool = Field(
+        True,
+        description="Whether this module should be applied in this request.",
+    )
+
+
 class InputData(BaseModel):
     user_message: str = Field(
         ...,
@@ -31,6 +42,18 @@ class InputData(BaseModel):
         description="System-level instruction for the LLM",
     )
     options: InputOptions = Field(default_factory=InputOptions)
+    preprocessing_modules: Optional[List[ModuleConfig]] = (
+        Field(  # NOW ModuleConfig is known
+            default=None,  # It's good practice to use default=None instead of just None for Optional fields
+            description="Ordered list of pre-processing modules and their active status.",
+        )
+    )
+    postprocessing_modules: Optional[List[ModuleConfig]] = (
+        Field(  # NOW ModuleConfig is known
+            default=None,  # It's good practice to use default=None instead of just None for Optional fields
+            description="Ordered list of post-processing modules and their active status.",
+        )
+    )
 
 
 class PromptData(BaseModel):
