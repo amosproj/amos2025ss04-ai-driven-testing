@@ -11,6 +11,8 @@ if __name__ == "__main__":
     # Parse command-line arguments
     args = cli.parse_arguments()
 
+    promp_data = cli.build_prompt_data(args)
+
     # Get model information
     model = model_manager.load_models()[args.model]
     print("using model:")

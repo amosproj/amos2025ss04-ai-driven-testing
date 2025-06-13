@@ -29,6 +29,7 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
+    parser.add_argument("--timeout", type=int)
 
     return parser.parse_args()
 
@@ -56,4 +57,5 @@ def build_prompt_data(args: argparse.Namespace) -> PromptData:
             system_message="You are a helpful assistant. Always respond in Markdown.",
             options=InputOptions(seed=args.seed, num_ctx=args.num_ctx),
         ),
+        timeout=args.timeout,
     )

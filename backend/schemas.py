@@ -49,6 +49,10 @@ class PromptData(BaseModel):
     prompt_code_path: Optional[str] = Field(
         None, description="The original prompt code"
     )
+    timeout: Optional[int] = Field(
+        None,
+        description="Timeout in seconds for the LLM request",
+    )
 
 
 class OutputData(BaseModel):
@@ -90,3 +94,6 @@ class ResponseData(BaseModel):
     model: ModelMeta
     output: OutputData
     timing: TimingData
+    timeouted: Optional[bool] = Field(
+        None, description="Whether the request timed out"
+    )
