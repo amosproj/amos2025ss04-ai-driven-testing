@@ -10,32 +10,38 @@ import {
   InputLabel,
   Tooltip,
   IconButton,
-  Tooltip as MuiTooltip,
 } from '@mui/material';
 import { Model } from '../api';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import MenuIcon from '@mui/icons-material/Menu';
+import TuneIcon from '@mui/icons-material/Tune';
 
 interface TopBarProps {
   models: Model[];
   selectedModel: string;
   onChangeModel: (id: string) => void;
   onShutdownModel: () => void;
+  onOpenModules: () => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ models, selectedModel, onChangeModel, onShutdownModel }) => {
+const TopBar: React.FC<TopBarProps> = ({
+  models,
+  selectedModel,
+  onChangeModel,
+  onShutdownModel,
+  onOpenModules,
+}) => {
   const selected = models.find((m) => m.id === selectedModel);
 
   return (
     <AppBar position="static" sx={{ bgcolor: 'common.white' }} elevation={1}>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-        <MuiTooltip title="Alte Chat-Verläufe (Coming soon)" placement="bottom">
+        <Tooltip title="Module konfigurieren" placement="bottom">
           <span>
-            <IconButton color="default">
-              <MenuIcon />
+            <IconButton color="default" onClick={onOpenModules}>
+              <TuneIcon />
             </IconButton>
           </span>
-        </MuiTooltip>
+        </Tooltip>
 
         <Box sx={{ flexGrow: 1 }} />
 

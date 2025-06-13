@@ -3,6 +3,8 @@ from schemas import PromptData, ResponseData
 
 
 class ExampleLogger(ModuleBase):
+    """Einfaches Logging-Modul das Prompt-Eingaben und Antworten in der Konsole ausgibt."""
+
     def applies_before(self) -> bool:
         return True
 
