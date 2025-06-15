@@ -34,10 +34,8 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def build_prompt_data(args: argparse.Namespace) -> PromptData:
+def build_prompt_data(args: argparse.Namespace, model) -> PromptData:
     """Creates a PromptData object from CLI arguments."""
-    models = load_models()
-    model_info = models[args.model]
 
     # Load prompt text
     with open(args.prompt_file, "r", encoding="utf-8") as f:
@@ -45,12 +43,12 @@ def build_prompt_data(args: argparse.Namespace) -> PromptData:
 
     # Load optional source code
     source_code = ""
-    if args.source_code_file:
-        with open(args.source_code_file, "r", encoding="utf-8") as f:
+    if args.prompt_file:
+        with open(args.prompt_file, "r", encoding="utf-8") as f:
             source_code = f.read()
 
     return PromptData(
-        model=ModelMeta(id=model_info["id"], name=model_info["name"]),
+        model=ModelMeta(id=model["id"], name=model["name"]),
         input=InputData(
             user_message=user_message,
             source_code=source_code,
