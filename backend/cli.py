@@ -29,14 +29,13 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
+    parser.add_argument("--timeout", type=int)
 
     return parser.parse_args()
 
 
-def build_prompt_data(args: argparse.Namespace) -> PromptData:
+def build_prompt_data(args: argparse.Namespace, model) -> PromptData:
     """Creates a PromptData object from CLI arguments."""
-    models = load_models()
-    model_info = models[args.model]
 
     # Load prompt text
     with open(args.prompt_file, "r", encoding="utf-8") as f:
@@ -44,16 +43,17 @@ def build_prompt_data(args: argparse.Namespace) -> PromptData:
 
     # Load optional source code
     source_code = ""
-    if args.source_code_file:
-        with open(args.source_code_file, "r", encoding="utf-8") as f:
+    if args.prompt_file:
+        with open(args.prompt_file, "r", encoding="utf-8") as f:
             source_code = f.read()
 
     return PromptData(
-        model=ModelMeta(id=model_info["id"], name=model_info["name"]),
+        model=ModelMeta(id=model["id"], name=model["name"]),
         input=InputData(
             user_message=user_message,
             source_code=source_code,
             system_message="You are a helpful assistant. Always respond in Markdown.",
             options=InputOptions(seed=args.seed, num_ctx=args.num_ctx),
         ),
+        timeout=args.timeout,
     )

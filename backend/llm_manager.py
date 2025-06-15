@@ -1,3 +1,4 @@
+import warnings
 import docker
 import requests
 import time
@@ -159,8 +160,14 @@ class LLMManager:
         print(f"Sende Anfrage an Modell {model_id}...")
         collected_response = ""
         start_time = time.time()
+
+        # Get timeout value from options, default to 10 minutes (600 seconds) if not provided
+        request_timeout = prompt_data.timeout
+
         try:
-            with requests.post(url, json=payload, stream=True) as r:
+            with requests.post(
+                url, json=payload, stream=True, timeout=request_timeout
+            ) as r:
                 if not r.ok:
                     error_detail = r.text
                     try:
@@ -185,6 +192,16 @@ class LLMManager:
                         except json.JSONDecodeError:
                             continue
 
+        except requests.exceptions.Timeout:
+            warnings.warn(
+                f"Timeout erreicht nach {request_timeout} Sekunden. "
+            )
+            return ResponseData(
+                model=prompt_data.model,
+                output=OutputData(markdown=""),
+                timing=TimingData(loading_time=0, generation_time=0),
+                timeouted=True,
+            )
         except Exception as e:
             print(f"\nFehler beim Senden des Prompts: {str(e)}")
             raise
