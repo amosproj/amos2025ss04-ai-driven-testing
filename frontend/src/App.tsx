@@ -3,7 +3,8 @@ import ChatInput from './components/ChatInput';
 import TopBar from './components/TopBar';
 import InfoBar from './components/PrivacyNotice';
 import ChatHistory, { ChatMessage } from './components/ChatHistory';
-import { getModels, sendPrompt, shutdownModel, Model } from './api';
+import ModuleSidebar from './components/ModuleSidebar';
+import { getModels, sendPrompt, shutdownModel, getModules, Model, Module } from './api';
 import { Container, Box } from '@mui/material';
 
 const App: React.FC = () => {
@@ -11,32 +12,34 @@ const App: React.FC = () => {
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [modules, setModules] = useState<Module[]>([]);
+  const [selectedModules, setSelectedModules] = useState<string[]>([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    // Hole verfügbare Modelle beim Laden der Seite
-    getModels()
-      .then((data) => {
-        setModels(data);
-        if (data.length > 0) {
-          setSelectedModel(data[0]);
+    // Hole verfügbare Modelle und Module beim Laden der Seite
+    Promise.all([getModels(), getModules()])
+      .then(([modelsData, modulesData]) => {
+        setModels(modelsData);
+        setModules(modulesData);
+        if (modelsData.length > 0) {
+          setSelectedModel(modelsData[0]);
         }
       })
       .catch((err) => {
-        console.error('Fehler beim Laden der Modelle:', err);
+        console.error('Fehler beim Laden der Daten:', err);
       });
   }, []);
 
   const handleSendMessage = (message: string) => {
-    // füge User-Nachricht zum Verlauf hinzu
     setMessages((prev) => [...prev, { role: 'user', content: message }]);
 
     setLoading(true);
     console.log('Sende Nachricht:', message);
     if (!selectedModel) return;
-    sendPrompt(selectedModel, message, message)
+    sendPrompt(selectedModel, message, message, selectedModules)
       .then((res) => {
         console.log('Antwort erhalten:', res);
-        // füge Assistant-Antwort zum Verlauf hinzu
         setMessages((prev) => [
           ...prev,
           { role: 'assistant', content: res.response_markdown, responseTime: res.total_seconds },
@@ -52,7 +55,6 @@ const App: React.FC = () => {
         getModels()
           .then((data) => {
             setModels(data);
-            // falls aktuelles Modell nicht mehr existiert, erstes wählen
             if (!selectedModel || !data.some((m) => m.id === selectedModel.id)) {
               setSelectedModel(data[0]);
             }
@@ -65,12 +67,10 @@ const App: React.FC = () => {
     if (!selectedModel) return;
     shutdownModel(selectedModel.id)
       .then(() => {
-        // Nach dem Herunterfahren: Modelle neu laden
         return getModels();
       })
       .then((data) => {
         setModels(data);
-        // falls aktuelles Modell nicht mehr existiert, erstes wählen
         if (!selectedModel || !data.some((m) => m.id === selectedModel.id)) {
           if (data.length > 0) {
             setSelectedModel(data[0]);
@@ -80,19 +80,27 @@ const App: React.FC = () => {
       .catch((err) => console.error('Fehler beim Herunterfahren des Modells:', err));
   };
 
+  const handleModuleToggle = (moduleId: string) => {
+    setSelectedModules((prev) =>
+      prev.includes(moduleId)
+        ? prev.filter((id) => id !== moduleId)
+        : [...prev, moduleId]
+    );
+  };
+
   return (
     <Box display="flex" flexDirection="column" height="100vh" sx={{ bgcolor: 'grey.100' }}>
       <TopBar
         models={models}
         selectedModel={selectedModel?.id || ''}
         onChangeModel={(modelId) => {
-              const model = models.find((m) => m.id === modelId);
-              if (model) setSelectedModel(model);
-            }}
+          const model = models.find((m) => m.id === modelId);
+          if (model) setSelectedModel(model);
+        }}
         onShutdownModel={handleShutdownModel}
+        onOpenModules={() => setSidebarOpen(true)}
       />
 
-      {/* Scrollbarer Bereich (alles außer TopBar) */}
       <Box
         sx={{
           flexGrow: 1,
@@ -125,14 +133,22 @@ const App: React.FC = () => {
             }}
           >
             <InfoBar
-                licence={models.find((m) => m.id === selectedModel?.id)?.licence ?? '—'}
-                licenceLink={models.find((m) => m.id === selectedModel?.id)?.licence_link ?? 'https://choosealicense.com/licenses/'}
+              licence={models.find((m) => m.id === selectedModel?.id)?.licence ?? '—'}
+              licenceLink={models.find((m) => m.id === selectedModel?.id)?.licence_link ?? 'https://choosealicense.com/licenses/'}
             />
 
             <ChatInput onSend={handleSendMessage} />
           </Box>
         </Container>
       </Box>
+
+      <ModuleSidebar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        modules={modules}
+        selectedModules={selectedModules}
+        onModuleToggle={handleModuleToggle}
+      />
     </Box>
   );
 };

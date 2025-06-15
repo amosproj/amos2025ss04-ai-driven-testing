@@ -6,6 +6,8 @@ from schemas import PromptData, ResponseData
 
 
 class MetricsCollector(ModuleBase):
+    """Sammelt und speichert Performance-Metriken wie Generierungs- und Ladezeiten sowie Syntax-Validität."""
+
     def __init__(self):
         self.loading_time = None
         self.generation_time = None
