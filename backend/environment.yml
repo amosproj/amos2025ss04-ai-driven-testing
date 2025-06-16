@@ -16,6 +16,7 @@ dependencies:
   - pip:
       - fastapi==0.115.1
       - langchain
+      - langchain-community
       - langchain-ollama
       - langchain-chroma
       - langchain-text-splitters

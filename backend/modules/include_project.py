@@ -26,6 +26,8 @@ Answer the query based on the above context: {question}
 
 
 class IncludeProject(ModuleBase):
+    """RAG-Modul das ein GitHub-Repository klont und Projektkontext über Vektor-Suche in Prompts integriert."""
+
     def applies_before(self) -> bool:
         return True
 
