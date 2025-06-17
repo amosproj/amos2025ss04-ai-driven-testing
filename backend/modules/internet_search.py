@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from langchain.prompts import ChatPromptTemplate
 import random
+import cli
 
 PROMPT_TEMPLATE = """
 Answer the query based on the above context: {question}
@@ -25,18 +26,25 @@ class InternetSearch(ModuleBase):
     def process_prompt(self, prompt_data: PromptData) -> dict:
         print(prompt_data)
         prompt = prompt_data.input.user_message
+        args = cli.parse_arguments()
+        used_links = args.use_links
 
-        # Keyword extraction
-        kw_model = KeyBERT()
-        extracted_keywords = kw_model.extract_keywords(
-            prompt, keyphrase_ngram_range=(1, 2), top_n=5
-        )
-        keywords = [keyword[0] for keyword in extracted_keywords]
-        search_query = keywords if keywords else prompt
+        if used_links:
+            print("Using provided links:", used_links)
+            urls = used_links
+        else:
 
-        # Get URLs and scrape them
-        urls = get_duckduckgo_urls(search_query)
-        print(urls)
+            # Keyword extraction
+            kw_model = KeyBERT()
+            extracted_keywords = kw_model.extract_keywords(
+                prompt, keyphrase_ngram_range=(1, 2), top_n=5
+            )
+            keywords = [keyword[0] for keyword in extracted_keywords]
+            search_query = keywords if keywords else prompt
+
+            # Get URLs and scrape them
+            urls = get_duckduckgo_urls(search_query)
+            print("Using:", urls)
         all_text = ""
         for url in urls:
             print(f"Scraping {url}")
@@ -60,7 +68,8 @@ class InternetSearch(ModuleBase):
         return prompt_data
 
     def process_response(self, response_data: ResponseData, prompt_data: PromptData) -> ResponseData:
-        print("\n used sources:")
+        print("\n--- Response from Internet Search Module ---")
+        print("\n Used sources:")
 
         for rag_source in prompt_data.rag_sources:
             print(f"\n- {rag_source}")

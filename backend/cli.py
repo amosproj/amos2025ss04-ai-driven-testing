@@ -5,9 +5,14 @@ from schemas import PromptData, ModelMeta, InputData, InputOptions
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+_parsed_args = None  # Module-level cache
+
 
 def parse_arguments() -> argparse.Namespace:
-    """Parse CLI arguments."""
+    global _parsed_args
+    if _parsed_args is not None:
+        return _parsed_args
+
     models = load_models()
     parser = argparse.ArgumentParser(description="Run Ollama prompt pipeline")
 
@@ -19,13 +24,11 @@ def parse_arguments() -> argparse.Namespace:
         type=str,
         default=os.path.join(SCRIPT_DIR, "user_message.txt"),
     )
-
     parser.add_argument(
         "--source_code",
         type=str,
         default=os.path.join(SCRIPT_DIR, "source_code.txt"),
     )
-
     parser.add_argument(
         "--output_file",
         type=str,
@@ -36,8 +39,15 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
+    parser.add_argument(
+        "--use-links",
+        nargs="+",
+        type=str,
+        help="Provide one or more web links to include in the context"
+    )
 
-    return parser.parse_args()
+    _parsed_args = parser.parse_args()
+    return _parsed_args
 
 
 def build_prompt_data(args: argparse.Namespace) -> PromptData:
