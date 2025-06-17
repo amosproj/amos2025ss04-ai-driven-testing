@@ -191,7 +191,9 @@ class ContextSizeCalculator(ModuleBase):
 
         # Get the tokenizers directory relative to this module
         tokenizers_dir = os.path.join(
-            os.path.dirname(__file__), "context_size_calculator_lib", "tokenizers"
+            os.path.dirname(__file__),
+            "context_size_calculator_lib",
+            "tokenizers",
         )
 
         # Create a safe filename for the tokenizer directory
