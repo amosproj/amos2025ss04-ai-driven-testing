@@ -7,6 +7,8 @@ import warnings
 
 
 class ContextSizeCalculator(ModuleBase):
+    """Berechnet die Anzahl der Tokens in Prompts und prüft die Einhaltung der maximalen Kontextgröße."""
+
     def __init__(self):
         self.tokenizer = None
         self.tokenizer_model_id = None

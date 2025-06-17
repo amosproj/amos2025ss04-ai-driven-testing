@@ -10,6 +10,8 @@ from modules.base import ModuleBase
 
 class TextConverter(ModuleBase):
 
+    """Extrahiert und bereinigt Python-Code aus Markdown-Antworten und formatiert ihn mit Black."""
+
     order_before = 1
     order_after = 1
 
