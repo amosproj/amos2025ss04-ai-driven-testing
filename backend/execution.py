@@ -5,10 +5,8 @@ import json
 from pathlib import Path
 
 
-<<<<<<< HEAD
 def execute_prompt(active_modules, prompt_data, output_file):
     """Execute the prompt-response flow."""
->>>>>>> 6c4f6e546017a1815d70528f535ec4c8ff52d09d
     # Process with modules
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
