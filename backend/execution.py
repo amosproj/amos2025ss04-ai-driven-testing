@@ -5,9 +5,10 @@ import json
 from pathlib import Path
 
 
+<<<<<<< HEAD
 def execute_prompt(active_modules, prompt_data, output_file):
     """Execute the prompt-response flow."""
-
+>>>>>>> 6c4f6e546017a1815d70528f535ec4c8ff52d09d
     # Process with modules
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
@@ -19,7 +20,7 @@ def execute_prompt(active_modules, prompt_data, output_file):
         manager.start_model_container(prompt_data.model.id)
         print(f"\n--- Response from {prompt_data.model.name} ---")
 
-        response_data = manager.send_prompt(prompt_data, output_file)
+        response_data = manager.send_prompt(prompt_data)
 
         # Process with modules
         module_manager.apply_after_modules(
@@ -43,6 +44,8 @@ def execute_prompt(active_modules, prompt_data, output_file):
         ]:
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(response_json, f, indent=2)
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(response_data.output.markdown)
     finally:
         print("")
         manager.stop_model_container(prompt_data.model.id)

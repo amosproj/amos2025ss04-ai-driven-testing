@@ -6,9 +6,19 @@ export interface Model {
   licence_link: string;
 }
 
+export interface Module {
+  id: string;
+  name: string;
+  filename: string;
+  applies_before: boolean;
+  applies_after: boolean;
+  description: string;
+}
+
 export interface PromptResponse {
   response_markdown: string;
   total_seconds: number;
+  modules_used: string[];
 }
 
 const API_BASE_URL = "http://localhost:8000";
@@ -23,10 +33,19 @@ export async function getModels(): Promise<Model[]> {
   return data;
 }
 
+export async function getModules(): Promise<Module[]> {
+  const res = await fetch(`${API_BASE_URL}/modules`);
+  if (!res.ok) {
+    throw new Error(`GET /modules failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
 export async function sendPrompt(
   model: Model,
   user_message: string,
-  source_code: string
+  source_code: string,
+  modules: string[] = []
 ): Promise<PromptResponse> {
   const body = {
     model: {
@@ -45,6 +64,7 @@ export async function sendPrompt(
         top_p: 0.95,
       },
     },
+    modules: modules,
   };
 
   const res = await fetch(`${API_BASE_URL}/prompt`, {
@@ -62,6 +82,7 @@ export async function sendPrompt(
 
   return res.json();
 }
+
 export async function shutdownModel(model_id: string): Promise<void> {
   const res = await fetch(`${API_BASE_URL}/shutdown`, {
     method: "POST",
