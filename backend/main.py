@@ -16,19 +16,10 @@ if __name__ == "__main__":
     print("using model:")
     print(model)
 
+    prompt_data = cli.build_prompt_data(args, model)
+
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
 
-    # load prompt text
-    with open(args.prompt_file, "r", encoding="utf-8") as f:
-        prompt_text = f.read()
-    source_code = ""
-    if args.source_code is not None:
-
-        with open(args.source_code, "r", encoding="utf-8") as f:
-            source_code = f.read()
-
     # Execute the flow
-    execution.execute_prompt(
-        model, active_modules, prompt_text, source_code, args.output_file
-    )
+    execution.execute_prompt(active_modules, prompt_data, args.output_file)
