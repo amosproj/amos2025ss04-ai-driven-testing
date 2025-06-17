@@ -1,5 +1,5 @@
 from modules.base import ModuleBase
-from schemas import PromptData
+from schemas import PromptData, ResponseData
 from keybert import KeyBERT
 import requests
 from bs4 import BeautifulSoup
@@ -15,11 +15,12 @@ Answer the query based only on the following context:
 
 
 class InternetSearch(ModuleBase):
+    """Extrahiert Schlüsselwörter aus der Benutzeranfrage, führt eine DuckDuckGo-Suche durch und erweitert den ursprünglichen Prompt um relevante Inhalte."""
     def applies_before(self) -> bool:
         return True
 
     def applies_after(self) -> bool:
-        return False
+        return True
 
     def process_prompt(self, prompt_data: PromptData) -> dict:
         print(prompt_data)
@@ -35,6 +36,7 @@ class InternetSearch(ModuleBase):
 
         # Get URLs and scrape them
         urls = get_duckduckgo_urls(search_query)
+        print(urls)
         all_text = ""
         for url in urls:
             print(f"Scraping {url}")
@@ -52,13 +54,16 @@ class InternetSearch(ModuleBase):
         context = all_text.strip()
         prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
         final_prompt = prompt_template.format(context=context, question=prompt)
-
+        print(final_prompt)
         prompt_data.input.user_message = final_prompt
         prompt_data.rag_sources = urls
         return prompt_data
 
-    def process_response(self, response_data: dict, prompt_data: PromptData):
-        pass
+    def process_response(self, response_data: ResponseData, prompt_data: PromptData) -> ResponseData:
+        print("\n used sources:")
+
+        for rag_source in prompt_data.rag_sources:
+            print(f"\n- {rag_source}")
 
 
 def get_random_headers():
