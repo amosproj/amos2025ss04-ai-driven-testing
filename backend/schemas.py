@@ -59,6 +59,10 @@ class InputData(BaseModel):
 class PromptData(BaseModel):
     model: ModelMeta
     input: InputData
+    modules: Optional[List[str]] = Field(
+        default=[],
+        description="List of module names to activate for this request",
+    )
     token_count: Optional[int] = None
     token_count_estimated: Optional[bool] = None
     rag_prompt: Optional[str] = None
