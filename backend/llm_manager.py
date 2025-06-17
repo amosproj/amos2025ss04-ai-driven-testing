@@ -103,7 +103,7 @@ class LLMManager:
 
         # Track it
         self.active_models[model_id] = (container, port, container_name)
-        print(f"Modell {model_id} wurde erfolgreich geladen und ist bereit!")
+        print(f"Model {model_id} was started in container '{container_name}' ")
 
     def stop_model_container(self, model_id: str) -> None:
         """
@@ -157,7 +157,7 @@ class LLMManager:
             "options": options,
         }
 
-        print(f"Sende Anfrage an Modell {model_id}...")
+        print(f"Send request to model {model_id}...")
         collected_response = ""
         start_time = time.time()
 
@@ -178,7 +178,7 @@ class LLMManager:
                         print(e)
                         pass
                     raise RuntimeError(
-                        f"API-Fehler: {r.status_code} - {error_detail}"
+                        f"API-error: {r.status_code} - {error_detail}"
                     )
 
                 for chunk in r.iter_lines():
@@ -193,9 +193,7 @@ class LLMManager:
                             continue
 
         except requests.exceptions.Timeout:
-            warnings.warn(
-                f"Timeout erreicht nach {request_timeout} Sekunden. "
-            )
+            warnings.warn(f"Timeout reached after {request_timeout} seconds. ")
             return ResponseData(
                 model=prompt_data.model,
                 output=OutputData(markdown=""),
@@ -203,7 +201,7 @@ class LLMManager:
                 timeouted=True,
             )
         except Exception as e:
-            print(f"\nFehler beim Senden des Prompts: {str(e)}")
+            print(f"\nError while sending prompt: {str(e)}")
             raise
 
         end_loading = time.time()
@@ -304,12 +302,12 @@ class LLMManager:
         """
         start_time = time.time()
         url = f"{get_base_url(container_name)}:{port}/api/tags"
-        print(f"Warte auf Ollama API (url {url})...")
+        print(f"Wait for Ollama API (url {url})...")
         while time.time() - start_time < timeout:
             try:
                 r = requests.get(url)
                 if r.status_code == 200:
-                    print(f"Ollama API auf Port {port} ist bereit!")
+                    print(f"Ollama API is read on port {port}!")
                     # Zusätzliche Wartezeit für die vollständige Initialisierung
                     time.sleep(5)
                     return
@@ -318,7 +316,7 @@ class LLMManager:
                 pass
             time.sleep(2)
         raise TimeoutError(
-            f"Ollama API wurde nicht rechtzeitig verfügbar (Timeout nach {timeout}s)"
+            f"Timeout after {timeout}s trying to connect to Ollama API"
         )
 
     def _get_free_port(self) -> int:
