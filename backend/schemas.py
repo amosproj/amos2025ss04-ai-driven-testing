@@ -43,14 +43,14 @@ class InputData(BaseModel):
     )
     options: InputOptions = Field(default_factory=InputOptions)
     preprocessing_modules: Optional[List[ModuleConfig]] = (
-        Field(  # NOW ModuleConfig is known
-            default=None,  # It's good practice to use default=None instead of just None for Optional fields
+        Field(
+            default=None,
             description="Ordered list of pre-processing modules and their active status.",
         )
     )
     postprocessing_modules: Optional[List[ModuleConfig]] = (
-        Field(  # NOW ModuleConfig is known
-            default=None,  # It's good practice to use default=None instead of just None for Optional fields
+        Field(
+            default=None,
             description="Ordered list of post-processing modules and their active status.",
         )
     )
