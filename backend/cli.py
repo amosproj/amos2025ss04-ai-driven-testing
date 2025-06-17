@@ -43,7 +43,7 @@ def parse_arguments() -> argparse.Namespace:
         "--use-links",
         nargs="+",
         type=str,
-        help="Provide one or more web links to include in the context"
+        help="Provide one or more web links to include in the context",
     )
 
     _parsed_args = parser.parse_args()

@@ -17,6 +17,7 @@ Answer the query based only on the following context:
 
 class InternetSearch(ModuleBase):
     """Extrahiert Schlüsselwörter aus der Benutzeranfrage, führt eine DuckDuckGo-Suche durch und erweitert den ursprünglichen Prompt um relevante Inhalte."""
+
     def applies_before(self) -> bool:
         return True
 
@@ -67,7 +68,9 @@ class InternetSearch(ModuleBase):
         prompt_data.rag_sources = urls
         return prompt_data
 
-    def process_response(self, response_data: ResponseData, prompt_data: PromptData) -> ResponseData:
+    def process_response(
+        self, response_data: ResponseData, prompt_data: PromptData
+    ) -> ResponseData:
         print("\n--- Response from Internet Search Module ---")
         print("\n Used sources:")
 
