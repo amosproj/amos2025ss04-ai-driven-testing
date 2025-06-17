@@ -24,7 +24,6 @@ if __name__ == "__main__":
         prompt_text = f.read()
     source_code = ""
     if args.source_code is not None:
-
         with open(args.source_code, "r", encoding="utf-8") as f:
             source_code = f.read()
 

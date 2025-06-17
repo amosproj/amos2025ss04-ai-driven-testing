@@ -88,7 +88,6 @@ def discover_modules() -> List[Dict[str, str]]:
                         and hasattr(cls, "applies_before")
                         and hasattr(cls, "applies_after")
                     ):
-
                         try:
                             # Try to instantiate to check if it's valid
                             instance = cls()
