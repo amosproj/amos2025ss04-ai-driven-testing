@@ -325,6 +325,7 @@ def get_base_url(container_name: str):
     else:
         return "http://localhost"
 
+
 # This function retrieves the context size for a given model.
 # It sends a request to the Ollama API to fetch model information
 # and extracts the context size from the response.
@@ -345,6 +346,7 @@ def get_context_size(container_name: str, port: int, model_id: str) -> int:
     This is a placeholder function; actual implementation may vary.
     """
     return context_size
+
 
 # This function estimates the number of tokens in a given text.
 # It uses a simple heuristic based on the number of words.
