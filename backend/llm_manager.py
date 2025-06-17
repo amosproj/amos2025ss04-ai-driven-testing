@@ -325,7 +325,9 @@ def get_base_url(container_name: str):
     else:
         return "http://localhost"
 
-
+# This function retrieves the context size for a given model.
+# It sends a request to the Ollama API to fetch model information
+# and extracts the context size from the response.
 def get_context_size(container_name: str, port: int, model_id: str) -> int:
     url = f"{get_base_url(container_name)}:{port}/api/show"
 
@@ -344,13 +346,19 @@ def get_context_size(container_name: str, port: int, model_id: str) -> int:
     """
     return context_size
 
-
+# This function estimates the number of tokens in a given text.
+# It uses a simple heuristic based on the number of words.
+# It assumes an average of 1.3 tokens per word, which is a rough estimate for English text.
+# It returns the estimated token count as an integer.
 def estimate_tokens(text: str) -> int:
     words = text.split()
     avg_tokens_per_word = 1.3  # Rough average for English
     return int(len(words) * avg_tokens_per_word)
 
 
+# This function trims the prompt to fit within the model's context size.
+# It retrieves the context size for the specified model,
+# and if the prompt exceeds this size, it trims it down to fit.
 def trim_prompt(
     container_name: str, port: int, model_id: str, prompt: str
 ) -> str:
