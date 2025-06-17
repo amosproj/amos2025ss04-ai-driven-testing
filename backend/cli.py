@@ -55,13 +55,15 @@ def build_prompt_data(args: argparse.Namespace, model) -> PromptData:
     """Creates a PromptData object from CLI arguments."""
 
     # Load prompt text
-    with open(args.prompt_file, "r", encoding="utf-8") as f:
-        user_message = f.read()
+    user_message = ""
+    if args.prompt_file:
+        with open(args.prompt_file, "r", encoding="utf-8") as f:
+            user_message = f.read()
 
     # Load optional source code
     source_code = ""
-    if args.prompt_file:
-        with open(args.prompt_file, "r", encoding="utf-8") as f:
+    if args.source_code:
+        with open(args.source_code, "r", encoding="utf-8") as f:
             source_code = f.read()
 
     return PromptData(
