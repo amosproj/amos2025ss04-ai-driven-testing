@@ -40,7 +40,7 @@ class LmEvalRunner(ModuleBase):
             "--tasks",
             "humaneval",
             "--limit",
-            "1",  # <--- for now only passing 1 task, butdlete this for the whole set
+            "10",  # <--- for now only passing 1 task, butdlete this for the whole set
             "--batch_size",
             "1",
             "--output_path",
