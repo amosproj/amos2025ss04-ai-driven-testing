@@ -52,20 +52,14 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
-    parser.add_argument("--timeout", type=int)
-    parser.add_argument(
-        "--use-links",
-        nargs="+",
-        type=str,
-        help="Provide one or more web links to include in the context",
-    )
 
-    _parsed_args = parser.parse_args()
-    return _parsed_args
+    return parser.parse_args()
 
 
-def build_prompt_data(args: argparse.Namespace, model) -> PromptData:
+def build_prompt_data(args: argparse.Namespace) -> PromptData:
     """Creates a PromptData object from CLI arguments."""
+    models = load_models()
+    model_info = models[args.model]
 
     # Load prompt text
     user_message = ""
