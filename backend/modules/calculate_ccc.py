@@ -23,7 +23,6 @@ class CalculateCcc(ModuleBase):
         return True
 
     def process_prompt(self, prompt_data: dict) -> dict:
-
         source_code = prompt_data.input.source_code
         if not source_code:
             warnings.warn(
@@ -52,7 +51,6 @@ class CalculateCcc(ModuleBase):
         return prompt_data
 
     def process_response(self, response_data: dict, prompt_data: dict) -> dict:
-
         output_code = response_data.output.code
         if not output_code:
             warnings.warn(

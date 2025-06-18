@@ -383,7 +383,14 @@ def trim_prompt(
     Trims the prompt to fit within the model's context size.
     """
 
-    context_size = get_context_size(container_name, port, model_id) * 0.8
+    raw_ctx = get_context_size(container_name, port, model_id)
+    if raw_ctx is None:
+        print(
+            f"[Warning] Could not detect context size for model '{model_id}', using default=4096"
+        )
+        raw_ctx = 4096  # Or 8192 if your models are larger
+
+    context_size = raw_ctx * 0.8
 
     # llama models returns gibberish if the context size is completely filled
     if "llama" in model_id.lower():
