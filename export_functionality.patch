@@ -1,0 +1,1289 @@
+diff --git a/backend/EXPORT_DOCUMENTATION.md b/backend/EXPORT_DOCUMENTATION.md
+new file mode 100644
+index 0000000..6856f0b
+--- /dev/null
++++ b/backend/EXPORT_DOCUMENTATION.md
+@@ -0,0 +1,187 @@
++# Export Functionality Documentation
++
++## Overview
++
++The AI-Driven Testing project now supports exporting LLM responses in multiple formats to enable integration with different projects and workflows.
++
++## Supported Export Formats
++
++### 1. **JSON** (`.json`)
++- **Use Case**: API integration, data processing
++- **Contains**: Structured metadata, prompt, response with performance metrics
++- **Example**: 
++```json
++{
++  "metadata": {
++    "timestamp": "2025-06-18T08:24:04.957457",
++    "model": {"id": "mistral:7b-instruct", "name": "MISTRAL"},
++    "performance": {"loading_time": 3.2, "response_time": 7.8}
++  },
++  "prompt": {"text": "...", "length": 45},
++  "response": {"text": "...", "length": 348}
++}
++```
++
++### 2. **Markdown** (`.markdown`)
++- **Use Case**: Documentation, GitHub issues, wikis
++- **Contains**: Formatted text with headers, metadata, code blocks
++- **Features**: Human-readable, GitHub-compatible formatting
++
++### 3. **HTTP** (`.http`)
++- **Use Case**: API testing, HTTP client testing
++- **Contains**: HTTP response format with headers and JSON body
++- **Features**: Ready for use with HTTP testing tools
++
++### 4. **Plain Text** (`.txt`)
++- **Use Case**: Simple text processing, logging
++- **Contains**: Plain text format with clear sections
++- **Features**: Maximum compatibility, easy parsing
++
++### 5. **XML** (`.xml`)
++- **Use Case**: Enterprise systems, structured data exchange
++- **Contains**: Well-formed XML with CDATA sections
++- **Features**: Standards-compliant, schema-ready
++
++## Usage
++
++### Command Line Interface
++
++#### Export in specific format:
++```bash
++python main.py --export_format json
++python main.py --export_format xml
++python main.py --export_format markdown
++```
++
++#### Export in all formats:
++```bash
++python main.py --export_all
++```
++
++#### Combine with modules:
++```bash
++python main.py --export_format json --modules example_logger export_module
++```
++
++### API Usage
++
++#### Direct export endpoint:
++```bash
++POST /export
++{
++  "model_id": "mistral:7b-instruct",
++  "prompt": "Write unit tests...",
++  "response": "Here are unit tests...",
++  "loading_time": 3.2,
++  "total_time": 7.8,
++  "export_format": "json"
++}
++```
++
++#### Get supported formats:
++```bash
++GET /export/formats
++```
++
++### Programmatic Usage
++
++```python
++from export_manager import ExportManager
++
++export_manager = ExportManager()
++
++# Export single format
++exported_file = export_manager.export_output(
++    response_data, prompt_data, "output", "json"
++)
++
++# Export multiple formats
++exported_files = export_manager.export_multiple_formats(
++    response_data, prompt_data, "output", ["json", "xml", "markdown"]
++)
++```
++
++## Module Integration
++
++The export functionality integrates seamlessly with the modular plugin system:
++
++```python
++# modules/export_module.py
++class ExportModule(ModuleBase):
++    def applies_after(self) -> bool:
++        return True
++    
++    def process_response(self, response: str, prompt: str) -> str:
++        # Automatically export in multiple formats
++        # ...existing code...
++        return response
++```
++
++## File Naming Convention
++
++- **Single format**: `{base_name}.{format}`
++- **Multiple formats**: `{base_name}.{format}` for each format
++- **Default base name**: `output` (can be customized via `--output_file`)
++
++## Performance Considerations
++
++- **JSON**: Fastest, smallest file size
++- **XML**: Larger file size due to markup
++- **HTTP**: Medium size, includes headers
++- **Markdown**: Human-readable, medium size
++- **TXT**: Simple format, good for large responses
++
++## Integration Examples
++
++### CI/CD Pipeline
++```yaml
++- name: Generate Tests
++  run: python main.py --export_format json --output_file ci_output
++- name: Upload Artifacts
++  uses: actions/upload-artifact@v2
++  with:
++    name: generated-tests
++    path: ci_output.json
++```
++
++### External Tool Integration
++```python
++import json
++
++# Load exported JSON
++with open('output.json', 'r') as f:
++    test_data = json.load(f)
++    
++# Extract generated test code
++test_code = test_data['response']['text']
++
++# Process with external tools
++process_test_code(test_code)
++```
++
++## Error Handling
++
++- **Unsupported format**: Raises `ValueError` with supported formats list
++- **File write errors**: Graceful handling with error messages
++- **Invalid data**: Validation and sanitization of export data
++
++## Testing
++
++Run the test suite to validate export functionality:
++
++```bash
++python test_export_manager.py
++```
++
++Run the demo to see all formats in action:
++
++```bash
++python demo_export.py
++```
++
++## Backward Compatibility
++
++The export functionality is fully backward compatible:
++- Default behavior unchanged (still exports markdown)
++- Existing scripts continue to work
++- New functionality is opt-in via CLI flags
+diff --git a/backend/api.py b/backend/api.py
+index 4cedab8..55f1570 100644
+--- a/backend/api.py
++++ b/backend/api.py
+@@ -1,11 +1,14 @@
++"""FastAPI wrapper for AI-Driven Testing LLM management and export functionality."""
++
+ import os
+ import json
+-from typing import Dict, List
++from typing import Dict, List, Optional
+ from fastapi import FastAPI, HTTPException
+ from pydantic import BaseModel
+ from fastapi.concurrency import run_in_threadpool
+ 
+ from llm_manager import LLMManager
++from export_manager import ExportManager
+ 
+ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ ALLOWED_MODELS = "allowed_models.json"
+@@ -20,6 +23,7 @@ app = FastAPI(
+ )
+ 
+ manager = LLMManager()
++export_manager = ExportManager()
+ 
+ # --------------------------------------------------------------------------- #
+ # Helper – load config once
+@@ -35,17 +39,45 @@ AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
+ # Pydantic request / response models
+ # --------------------------------------------------------------------------- #
+ class PromptRequest(BaseModel):
++    """Request model for sending prompts to LLM with export options."""
++
+     model_id: str
+     prompt: str
++    export_format: Optional[str] = "markdown"
++    export_all: Optional[bool] = False
+ 
+ 
+ class PromptResponse(BaseModel):
++    """Response model for LLM prompt results with export information."""
++
+     response_markdown: str
+     loading_seconds: float
+     total_seconds: float
++    exported_files: Optional[Dict[str, str]] = None
++
++
++class ExportRequest(BaseModel):
++    """Request model for exporting LLM responses in specific formats."""
++
++    model_id: str
++    prompt: str
++    response: str
++    loading_time: float
++    total_time: float
++    export_format: str = "markdown"
++    output_path: Optional[str] = None
++
++
++class ExportResponse(BaseModel):
++    """Response model for export operations."""
++
++    exported_file: str
++    format: str
+ 
+ 
+ class ShutdownRequest(BaseModel):
++    """Request model for shutting down model containers."""
++
+     model_id: str
+ 
+ 
+@@ -54,9 +86,7 @@ class ShutdownRequest(BaseModel):
+ # --------------------------------------------------------------------------- #
+ @app.get("/models")
+ def list_models() -> List[Dict]:
+-    """
+-    Returns the list of allowed models and whether the container is currently running.
+-    """
++    """Return the list of allowed models and their current status."""
+     out = []
+     for m in AVAILABLE_MODELS:
+         m_id = m["id"]
+@@ -72,10 +102,10 @@ def list_models() -> List[Dict]:
+ 
+ @app.post("/prompt", response_model=PromptResponse)
+ async def prompt(req: PromptRequest):
+-    """
+-    1. Ensure the container for `model_id` is up (creates it if missing)
+-    2. Send the prompt
+-    3. Return result + some metrics
++    """Process prompt request with LLM and export results.
++
++    Ensures the container for model_id is up, sends the prompt,
++    and returns result with metrics and export functionality.
+     """
+     try:
+         # LLMManager is synchronous → run it in a thread so FastAPI stays async-friendly
+@@ -88,19 +118,93 @@ async def prompt(req: PromptRequest):
+             manager.send_prompt, req.model_id, req.prompt
+         )
+ 
++        # Prepare data for export
++        response_data = {
++            "response": response,
++            "loading_time": load_t,
++            "final_time": total_t,
++        }
++
++        prompt_data = {
++            "model": {"id": req.model_id, "name": req.model_id},
++            "prompt": req.prompt,
++        }
++
++        # Export functionality
++        exported_files = None
++        if req.export_all:
++            exported_files = await run_in_threadpool(
++                export_manager.export_multiple_formats,
++                response_data,
++                prompt_data,
++                f"api_output_{req.model_id}",
++            )
++        elif req.export_format != "markdown":
++            exported_file = await run_in_threadpool(
++                export_manager.export_output,
++                response_data,
++                prompt_data,
++                f"api_output_{req.model_id}",
++                req.export_format,
++            )
++            exported_files = {req.export_format: exported_file}
++
+         return PromptResponse(
+             response_markdown=response,
+             loading_seconds=load_t,
+             total_seconds=total_t,
++            exported_files=exported_files,
+         )
+     except Exception as exc:
+         raise HTTPException(status_code=400, detail=str(exc)) from exc
+ 
+ 
++@app.post("/export", response_model=ExportResponse)
++async def export_output(req: ExportRequest):
++    """Export LLM response in the specified format."""
++    try:
++        # Prepare data structures
++        response_data = {
++            "response": req.response,
++            "loading_time": req.loading_time,
++            "final_time": req.total_time,
++        }
++
++        prompt_data = {
++            "model": {"id": req.model_id, "name": req.model_id},
++            "prompt": req.prompt,
++        }
++
++        # Set default output path if not provided
++        output_path = req.output_path or f"export_output_{req.model_id}"
++
++        # Export the output
++        exported_file = await run_in_threadpool(
++            export_manager.export_output,
++            response_data,
++            prompt_data,
++            output_path,
++            req.export_format,
++        )
++
++        return ExportResponse(
++            exported_file=exported_file, format=req.export_format
++        )
++    except Exception as exc:
++        raise HTTPException(status_code=400, detail=str(exc)) from exc
++
++
++@app.get("/export/formats")
++def get_supported_formats():
++    """Return the list of supported export formats."""
++    return {
++        "supported_formats": export_manager.supported_formats,
++        "default_format": "markdown",
++    }
++
++
+ @app.post("/shutdown")
+ async def shutdown(req: ShutdownRequest):
+-    """
+-    Stop & remove a running model container.
+-    """
++    """Stop and remove a running model container."""
+     await run_in_threadpool(manager.stop_model_container, req.model_id)
+     return {"status": "stopped", "model_id": req.model_id}
+diff --git a/backend/cli.py b/backend/cli.py
+index 1c49a22..78dc698 100644
+--- a/backend/cli.py
++++ b/backend/cli.py
+@@ -1,3 +1,5 @@
++"""Command-line interface for AI-Driven Testing project."""
++
+ import os
+ import argparse
+ from model_manager import load_models
+@@ -32,4 +34,16 @@ def parse_arguments():
+         default=[],
+         help="List of modules to apply",
+     )
++    parser.add_argument(
++        "--export_format",
++        type=str,
++        choices=["json", "markdown", "http", "txt", "xml"],
++        default="markdown",
++        help="Export format for the output (default: markdown)",
++    )
++    parser.add_argument(
++        "--export_all",
++        action="store_true",
++        help="Export output in all supported formats",
++    )
+     return parser.parse_args()
+diff --git a/backend/demo_export.py b/backend/demo_export.py
+new file mode 100644
+index 0000000..00cba65
+--- /dev/null
++++ b/backend/demo_export.py
+@@ -0,0 +1,53 @@
++#!/usr/bin/env python3
++"""Demo script to showcase the export functionality."""
++
++from export_manager import ExportManager
++import os
++
++
++def main():
++    """Demonstrate the export functionality with sample data."""
++    sample_response = """Here are unit tests for the add_numbers function:
++
++```python
++import unittest
++
++class TestAddNumbers(unittest.TestCase):
++    def test_positive_numbers(self):
++        self.assertEqual(add_numbers(2, 3), 5)
++
++    def test_negative_numbers(self):
++        self.assertEqual(add_numbers(-1, 1), 0)
++if __name__ == '__main__':
++    unittest.main()
++```"""
++
++    response_data = {
++        "response": sample_response,
++        "loading_time": 3.2,
++        "final_time": 7.8,
++    }
++
++    prompt_data = {
++        "model": {"id": "mistral:7b-instruct", "name": "MISTRAL"},
++        "prompt": "Write unit tests for the add_numbers function",
++    }
++
++    export_manager = ExportManager()
++
++    print("🚀 AI-Driven Testing Export Demo")
++    print("=" * 50)
++
++    exported_files = export_manager.export_multiple_formats(
++        response_data, prompt_data, "demo_output"
++    )
++
++    print(f"\n✅ Successfully exported {len(exported_files)} files:")
++    for fmt, path in exported_files.items():
++        if path and os.path.exists(path):
++            file_size = os.path.getsize(path)
++            print(f"  - {fmt.upper()}: {path} ({file_size} bytes)")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/backend/demo_output.http b/backend/demo_output.http
+new file mode 100644
+index 0000000..c82217c
+--- /dev/null
++++ b/backend/demo_output.http
+@@ -0,0 +1,29 @@
++HTTP/1.1 200 OK
++Content-Type: application/json
++Content-Length: 652
++X-Model: mistral:7b-instruct
++X-Timestamp: 2025-06-18T08:34:56.245491
++X-Loading-Time: 3.2
++X-Response-Time: 7.8
++
++{
++  "metadata": {
++    "timestamp": "2025-06-18T08:34:56.245491",
++    "model": {
++      "id": "mistral:7b-instruct",
++      "name": "MISTRAL"
++    },
++    "performance": {
++      "loading_time": 3.2,
++      "response_time": 7.8
++    }
++  },
++  "prompt": {
++    "text": "Write unit tests for the add_numbers function",
++    "length": 45
++  },
++  "response": {
++    "text": "Here are unit tests for the add_numbers function:\n\n```python\nimport unittest\n\nclass TestAddNumbers(unittest.TestCase):\n    def test_positive_numbers(self):\n        self.assertEqual(add_numbers(2, 3), 5)\n\n    def test_negative_numbers(self):\n        self.assertEqual(add_numbers(-1, 1), 0)\nif __name__ == '__main__':\n    unittest.main()\n```",
++    "length": 339
++  }
++}
+diff --git a/backend/demo_output.json b/backend/demo_output.json
+new file mode 100644
+index 0000000..609518a
+--- /dev/null
++++ b/backend/demo_output.json
+@@ -0,0 +1,21 @@
++{
++  "metadata": {
++    "timestamp": "2025-06-18T08:34:56.245106",
++    "model": {
++      "id": "mistral:7b-instruct",
++      "name": "MISTRAL"
++    },
++    "performance": {
++      "loading_time": 3.2,
++      "response_time": 7.8
++    }
++  },
++  "prompt": {
++    "text": "Write unit tests for the add_numbers function",
++    "length": 45
++  },
++  "response": {
++    "text": "Here are unit tests for the add_numbers function:\n\n```python\nimport unittest\n\nclass TestAddNumbers(unittest.TestCase):\n    def test_positive_numbers(self):\n        self.assertEqual(add_numbers(2, 3), 5)\n\n    def test_negative_numbers(self):\n        self.assertEqual(add_numbers(-1, 1), 0)\nif __name__ == '__main__':\n    unittest.main()\n```",
++    "length": 339
++  }
++}
+\ No newline at end of file
+diff --git a/backend/demo_output.markdown b/backend/demo_output.markdown
+new file mode 100644
+index 0000000..6ad869d
+--- /dev/null
++++ b/backend/demo_output.markdown
+@@ -0,0 +1,35 @@
++# AI-Driven Testing Output
++
++## Metadata
++- **Timestamp**: 2025-06-18T08:34:56.245359
++- **Model**: MISTRAL (mistral:7b-instruct)
++- **Loading Time**: 3.20s
++- **Response Time**: 7.80s
++
++## Prompt
++**Length**: 45 characters
++
++```
++Write unit tests for the add_numbers function
++```
++
++## Response
++**Length**: 339 characters
++
++Here are unit tests for the add_numbers function:
++
++```python
++import unittest
++
++class TestAddNumbers(unittest.TestCase):
++    def test_positive_numbers(self):
++        self.assertEqual(add_numbers(2, 3), 5)
++
++    def test_negative_numbers(self):
++        self.assertEqual(add_numbers(-1, 1), 0)
++if __name__ == '__main__':
++    unittest.main()
++```
++
++---
++*Generated by AI-Driven Testing Project*
+diff --git a/backend/demo_output.txt b/backend/demo_output.txt
+new file mode 100644
+index 0000000..3cc6058
+--- /dev/null
++++ b/backend/demo_output.txt
+@@ -0,0 +1,30 @@
++AI-Driven Testing Output
++========================
++
++Timestamp: 2025-06-18T08:34:56.245656
++Model: MISTRAL (mistral:7b-instruct)
++Loading Time: 3.20s
++Response Time: 7.80s
++
++PROMPT (45 characters):
++--------------------------------------------------
++Write unit tests for the add_numbers function
++
++RESPONSE (339 characters):
++--------------------------------------------------
++Here are unit tests for the add_numbers function:
++
++```python
++import unittest
++
++class TestAddNumbers(unittest.TestCase):
++    def test_positive_numbers(self):
++        self.assertEqual(add_numbers(2, 3), 5)
++
++    def test_negative_numbers(self):
++        self.assertEqual(add_numbers(-1, 1), 0)
++if __name__ == '__main__':
++    unittest.main()
++```
++
++Generated by AI-Driven Testing Project
+diff --git a/backend/demo_output.xml b/backend/demo_output.xml
+new file mode 100644
+index 0000000..f7b3c6d
+--- /dev/null
++++ b/backend/demo_output.xml
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<ai_testing_output>
++    <metadata>
++        <timestamp>2025-06-18T08:34:56.245763</timestamp>
++        <model>
++            <name>MISTRAL</name>
++            <id>mistral:7b-instruct</id>
++        </model>
++        <performance>
++            <loading_time>3.2</loading_time>
++            <response_time>7.8</response_time>
++        </performance>
++    </metadata>
++    <prompt length="45">
++        <![CDATA[Write unit tests for the add_numbers function]]>
++    </prompt>
++    <response length="339">
++        <![CDATA[Here are unit tests for the add_numbers function:
++
++```python
++import unittest
++
++class TestAddNumbers(unittest.TestCase):
++    def test_positive_numbers(self):
++        self.assertEqual(add_numbers(2, 3), 5)
++
++    def test_negative_numbers(self):
++        self.assertEqual(add_numbers(-1, 1), 0)
++if __name__ == '__main__':
++    unittest.main()
++```]]>
++    </response>
++</ai_testing_output>
+diff --git a/backend/execution.py b/backend/execution.py
+index efa8193..3a67625 100644
+--- a/backend/execution.py
++++ b/backend/execution.py
+@@ -1,10 +1,19 @@
++"""Execution module for AI-Driven Testing prompt processing and export."""
++
+ import module_manager
+ from llm_manager import LLMManager
++from export_manager import ExportManager
+ 
+ 
+-def execute_prompt(model, active_modules, prompt_text, output_file):
++def execute_prompt(
++    model,
++    active_modules,
++    prompt_text,
++    output_file,
++    export_format="markdown",
++    export_all=False,
++):
+     """Execute the prompt-response flow."""
+-
+     # Read prompt
+ 
+     model_id = model["id"]
+@@ -46,6 +55,23 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
+         module_manager.apply_after_modules(
+             active_modules, response_data, prompt_data
+         )
++
++        # Export output in requested format(s)
++        export_manager = ExportManager()
++        if export_all:
++            exported_files = export_manager.export_multiple_formats(
++                response_data, prompt_data, output_file
++            )
++            print("\n📁 Exported in multiple formats:")
++            for fmt, path in exported_files.items():
++                if path:
++                    print(f"  - {fmt.upper()}: {path}")
++        else:
++            exported_file = export_manager.export_output(
++                response_data, prompt_data, output_file, export_format
++            )
++            print(f"\n📁 Exported as {export_format.upper()}: {exported_file}")
++
+         print("")
+     finally:
+         manager.stop_model_container(prompt_data["model"]["id"])
+diff --git a/backend/export_manager.py b/backend/export_manager.py
+new file mode 100644
+index 0000000..e3aef32
+--- /dev/null
++++ b/backend/export_manager.py
+@@ -0,0 +1,243 @@
++#!/usr/bin/env python3
++"""Export Manager for AI-Driven Testing Project.
++
++Handles exporting LLM output in different formats: JSON, HTTP, Markdown, etc.
++"""
++
++import json
++import os
++import datetime
++from typing import Dict, Any
++
++
++class ExportManager:
++    """Manages export functionality for LLM outputs in various formats."""
++
++    def __init__(self):
++        """Initialize the ExportManager with supported formats."""
++        self.supported_formats = ["json", "markdown", "http", "txt", "xml"]
++
++    def export_output(
++        self,
++        response_data: Dict[str, Any],
++        prompt_data: Dict[str, Any],
++        output_path: str,
++        export_format: str = "markdown",
++    ) -> str:
++        """
++        Export the LLM output in the specified format.
++
++        Args:
++            response_data: Dictionary containing response and metadata
++            prompt_data: Dictionary containing prompt and model information
++            output_path: Base path for output file
++            export_format: Format to export (json, markdown, http, txt, xml)
++
++        Returns:
++            str: Path to the exported file
++        """
++        if export_format.lower() not in self.supported_formats:
++            raise ValueError(
++                f"Unsupported format: {export_format}. Supported: {self.supported_formats}"
++            )
++
++        # Create export data structure
++        export_data = self._create_export_data(response_data, prompt_data)
++
++        # Generate filename with format extension
++        base_name = os.path.splitext(output_path)[0]
++        output_file = f"{base_name}.{export_format.lower()}"
++
++        # Export based on format
++        if export_format.lower() == "json":
++            return self._export_json(export_data, output_file)
++        elif export_format.lower() == "markdown":
++            return self._export_markdown(export_data, output_file)
++        elif export_format.lower() == "http":
++            return self._export_http(export_data, output_file)
++        elif export_format.lower() == "txt":
++            return self._export_txt(export_data, output_file)
++        elif export_format.lower() == "xml":
++            return self._export_xml(export_data, output_file)
++
++    def _create_export_data(
++        self, response_data: Dict[str, Any], prompt_data: Dict[str, Any]
++    ) -> Dict[str, Any]:
++        """Create a standardized data structure for export."""
++        return {
++            "metadata": {
++                "timestamp": datetime.datetime.now().isoformat(),
++                "model": prompt_data.get("model", {}),
++                "performance": {
++                    "loading_time": response_data.get("loading_time", 0),
++                    "response_time": response_data.get("final_time", 0),
++                },
++            },
++            "prompt": {
++                "text": prompt_data.get("prompt", ""),
++                "length": len(prompt_data.get("prompt", "")),
++            },
++            "response": {
++                "text": response_data.get("response", ""),
++                "length": len(response_data.get("response", "")),
++            },
++        }
++
++    def _export_json(
++        self, export_data: Dict[str, Any], output_file: str
++    ) -> str:
++        """Export data as JSON format."""
++        with open(output_file, "w", encoding="utf-8") as f:
++            json.dump(export_data, f, indent=2, ensure_ascii=False)
++        return output_file
++
++    def _export_markdown(
++        self, export_data: Dict[str, Any], output_file: str
++    ) -> str:
++        """Export data as Markdown format."""
++        content = f"""# AI-Driven Testing Output
++
++## Metadata
++- **Timestamp**: {export_data['metadata']['timestamp']}
++- **Model**: {export_data['metadata']['model'].get('name', 'Unknown')} ({export_data['metadata']['model'].get('id', 'Unknown')})
++- **Loading Time**: {export_data['metadata']['performance']['loading_time']:.2f}s
++- **Response Time**: {export_data['metadata']['performance']['response_time']:.2f}s
++
++## Prompt
++**Length**: {export_data['prompt']['length']} characters
++
++```
++{export_data['prompt']['text']}
++```
++
++## Response
++**Length**: {export_data['response']['length']} characters
++
++{export_data['response']['text']}
++
++---
++*Generated by AI-Driven Testing Project*
++"""
++        with open(output_file, "w", encoding="utf-8") as f:
++            f.write(content)
++        return output_file
++
++    def _export_http(
++        self, export_data: Dict[str, Any], output_file: str
++    ) -> str:
++        """Export data as HTTP request/response format."""
++        content = f"""HTTP/1.1 200 OK
++Content-Type: application/json
++Content-Length: {len(json.dumps(export_data))}
++X-Model: {export_data['metadata']['model'].get('id', 'unknown')}
++X-Timestamp: {export_data['metadata']['timestamp']}
++X-Loading-Time: {export_data['metadata']['performance']['loading_time']}
++X-Response-Time: {export_data['metadata']['performance']['response_time']}
++
++{json.dumps(export_data, indent=2)}
++"""
++        with open(output_file, "w", encoding="utf-8") as f:
++            f.write(content)
++        return output_file
++
++    def _export_txt(
++        self, export_data: Dict[str, Any], output_file: str
++    ) -> str:
++        """Export data as plain text format."""
++        content = f"""AI-Driven Testing Output
++========================
++
++Timestamp: {export_data['metadata']['timestamp']}
++Model: {export_data['metadata']['model'].get('name', 'Unknown')} ({export_data['metadata']['model'].get('id', 'Unknown')})
++Loading Time: {export_data['metadata']['performance']['loading_time']:.2f}s
++Response Time: {export_data['metadata']['performance']['response_time']:.2f}s
++
++PROMPT ({export_data['prompt']['length']} characters):
++{'-' * 50}
++{export_data['prompt']['text']}
++
++RESPONSE ({export_data['response']['length']} characters):
++{'-' * 50}
++{export_data['response']['text']}
++
++Generated by AI-Driven Testing Project
++"""
++        with open(output_file, "w", encoding="utf-8") as f:
++            f.write(content)
++        return output_file
++
++    def _export_xml(
++        self, export_data: Dict[str, Any], output_file: str
++    ) -> str:
++        """Export data as XML format."""
++
++        def escape_xml(text: str) -> str:
++            """Escape XML special characters."""
++            return (
++                text.replace("&", "&amp;")
++                .replace("<", "&lt;")
++                .replace(">", "&gt;")
++                .replace('"', "&quot;")
++                .replace("'", "&#39;")
++            )
++
++        content = f"""<?xml version="1.0" encoding="UTF-8"?>
++<ai_testing_output>
++    <metadata>
++        <timestamp>{export_data['metadata']['timestamp']}</timestamp>
++        <model>
++            <name>{escape_xml(export_data['metadata']['model'].get('name', 'Unknown'))}</name>
++            <id>{escape_xml(export_data['metadata']['model'].get('id', 'Unknown'))}</id>
++        </model>
++        <performance>
++            <loading_time>{export_data['metadata']['performance']['loading_time']}</loading_time>
++            <response_time>{export_data['metadata']['performance']['response_time']}</response_time>
++        </performance>
++    </metadata>
++    <prompt length="{export_data['prompt']['length']}">
++        <![CDATA[{export_data['prompt']['text']}]]>
++    </prompt>
++    <response length="{export_data['response']['length']}">
++        <![CDATA[{export_data['response']['text']}]]>
++    </response>
++</ai_testing_output>
++"""
++        with open(output_file, "w", encoding="utf-8") as f:
++            f.write(content)
++        return output_file
++
++    def export_multiple_formats(
++        self,
++        response_data: Dict[str, Any],
++        prompt_data: Dict[str, Any],
++        output_path: str,
++        formats: list = None,
++    ) -> Dict[str, str]:
++        """
++        Export the output in multiple formats.
++
++        Args:
++            response_data: Dictionary containing response and metadata
++            prompt_data: Dictionary containing prompt and model information
++            output_path: Base path for output files
++            formats: List of formats to export (defaults to all supported formats)
++
++        Returns:
++            Dict[str, str]: Mapping of format to exported file path
++        """
++        if formats is None:
++            formats = self.supported_formats
++
++        exported_files = {}
++        for fmt in formats:
++            try:
++                file_path = self.export_output(
++                    response_data, prompt_data, output_path, fmt
++                )
++                exported_files[fmt] = file_path
++                print(f"✅ Exported {fmt.upper()}: {file_path}")
++            except Exception as e:
++                print(f"❌ Failed to export {fmt.upper()}: {e}")
++                exported_files[fmt] = None
++
++        return exported_files
+diff --git a/backend/main.py b/backend/main.py
+index a43e7f3..0f870b3 100644
+--- a/backend/main.py
++++ b/backend/main.py
+@@ -1,4 +1,6 @@
+ #!/usr/bin/env python3
++"""Main entry point for AI-Driven Testing project."""
++
+ import os
+ import cli
+ import execution
+@@ -23,5 +25,10 @@ if __name__ == "__main__":
+ 
+     # Execute the flow
+     execution.execute_prompt(
+-        model, active_modules, prompt_text, args.output_file
++        model,
++        active_modules,
++        prompt_text,
++        args.output_file,
++        args.export_format,
++        args.export_all,
+     )
+diff --git a/backend/modules/export_module.py b/backend/modules/export_module.py
+new file mode 100644
+index 0000000..5a55f6a
+--- /dev/null
++++ b/backend/modules/export_module.py
+@@ -0,0 +1,65 @@
++"""Export module for automatic LLM response export functionality."""
++
++from modules.base import ModuleBase
++from export_manager import ExportManager
++import os
++
++
++class ExportModule(ModuleBase):
++    """Module that automatically exports LLM responses in multiple formats.
++
++    This module demonstrates the export functionality integration.
++    """
++
++    def __init__(self):
++        """Initialize the export module with ExportManager."""
++        self.export_manager = ExportManager()
++
++    def applies_before(self) -> bool:
++        """Return False as this module only works after getting the response."""
++        return False  # This module only works after getting the response
++
++    def applies_after(self) -> bool:
++        """Return True as this module processes responses."""
++        return True
++
++    def process_prompt(self, prompt: str) -> str:
++        """Pass through the prompt unchanged."""
++        return prompt
++
++    def process_response(self, response: str, prompt: str) -> str:
++        """Export the response in multiple formats automatically."""
++        print("[ExportModule] Auto-exporting response in multiple formats...")
++
++        # Create sample data structures
++        response_data = {
++            "response": response,
++            "loading_time": 0.0,  # Not available in module context
++            "final_time": 0.0,  # Not available in module context
++        }
++
++        prompt_data = {
++            "model": {"id": "module_export", "name": "MODULE_EXPORT"},
++            "prompt": prompt,
++        }
++
++        # Export in JSON and XML formats
++        try:
++            base_path = os.path.join(os.getcwd(), "module_export_output")
++
++            # Export as JSON
++            json_file = self.export_manager.export_output(
++                response_data, prompt_data, base_path, "json"
++            )
++            print(f"[ExportModule] ✅ Exported JSON: {json_file}")
++
++            # Export as XML
++            xml_file = self.export_manager.export_output(
++                response_data, prompt_data, base_path, "xml"
++            )
++            print(f"[ExportModule] ✅ Exported XML: {xml_file}")
++
++        except Exception as e:
++            print(f"[ExportModule] ❌ Export failed: {e}")
++
++        return response
+diff --git a/backend/test_export_manager.py b/backend/test_export_manager.py
+new file mode 100644
+index 0000000..d04516c
+--- /dev/null
++++ b/backend/test_export_manager.py
+@@ -0,0 +1,235 @@
++#!/usr/bin/env python3
++"""Test suite for the Export Manager functionality.
++
++Tests all export formats and validation of export features.
++"""
++
++import unittest
++import tempfile
++import os
++import json
++import xml.etree.ElementTree as ET
++from export_manager import ExportManager
++
++
++class TestExportManager(unittest.TestCase):
++    """Test cases for ExportManager class."""
++
++    def setUp(self):
++        """Set up test fixtures."""
++        self.export_manager = ExportManager()
++        self.temp_dir = tempfile.mkdtemp()
++
++        # Sample test data
++        self.sample_response_data = {
++            "response": "Here are unit tests for the add_numbers function:\n\n```python\nimport unittest\n\ndef test_add_numbers():\n    assert add_numbers(2, 3) == 5\n    assert add_numbers(-1, 1) == 0\n```",
++            "loading_time": 2.5,
++            "final_time": 5.0,
++        }
++
++        self.sample_prompt_data = {
++            "model": {"id": "mistral:7b", "name": "MISTRAL"},
++            "prompt": "Write unit tests for the add_numbers function:\n\ndef add_numbers(a, b):\n    return a + b",
++        }
++
++    def tearDown(self):
++        """Clean up test fixtures."""
++        # Clean up temporary files
++        for file in os.listdir(self.temp_dir):
++            os.remove(os.path.join(self.temp_dir, file))
++        os.rmdir(self.temp_dir)
++
++    def test_supported_formats(self):
++        """Test that all expected formats are supported."""
++        expected_formats = ["json", "markdown", "http", "txt", "xml"]
++        self.assertEqual(
++            self.export_manager.supported_formats, expected_formats
++        )
++
++    def test_json_export(self):
++        """Test JSON export functionality."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++        result_path = self.export_manager.export_output(
++            self.sample_response_data,
++            self.sample_prompt_data,
++            output_path,
++            "json",
++        )
++
++        # Verify file was created
++        self.assertTrue(os.path.exists(result_path))
++        self.assertTrue(result_path.endswith(".json"))
++
++        # Verify JSON content
++        with open(result_path, "r", encoding="utf-8") as f:
++            data = json.load(f)
++
++        self.assertIn("metadata", data)
++        self.assertIn("prompt", data)
++        self.assertIn("response", data)
++        self.assertEqual(data["metadata"]["model"]["id"], "mistral:7b")
++        self.assertEqual(
++            data["response"]["text"], self.sample_response_data["response"]
++        )
++
++    def test_markdown_export(self):
++        """Test Markdown export functionality."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++        result_path = self.export_manager.export_output(
++            self.sample_response_data,
++            self.sample_prompt_data,
++            output_path,
++            "markdown",
++        )
++
++        # Verify file was created
++        self.assertTrue(os.path.exists(result_path))
++        self.assertTrue(result_path.endswith(".markdown"))
++
++        # Verify Markdown content
++        with open(result_path, "r", encoding="utf-8") as f:
++            content = f.read()
++
++        self.assertIn("# AI-Driven Testing Output", content)
++        self.assertIn("## Metadata", content)
++        self.assertIn("## Prompt", content)
++        self.assertIn("## Response", content)
++        self.assertIn("MISTRAL", content)
++
++    def test_xml_export(self):
++        """Test XML export functionality."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++        result_path = self.export_manager.export_output(
++            self.sample_response_data,
++            self.sample_prompt_data,
++            output_path,
++            "xml",
++        )
++
++        # Verify file was created
++        self.assertTrue(os.path.exists(result_path))
++        self.assertTrue(result_path.endswith(".xml"))
++
++        # Verify XML is well-formed
++        tree = ET.parse(result_path)
++        root = tree.getroot()
++
++        self.assertEqual(root.tag, "ai_testing_output")
++        self.assertIsNotNone(root.find("metadata"))
++        self.assertIsNotNone(root.find("prompt"))
++        self.assertIsNotNone(root.find("response"))
++
++    def test_http_export(self):
++        """Test HTTP export functionality."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++        result_path = self.export_manager.export_output(
++            self.sample_response_data,
++            self.sample_prompt_data,
++            output_path,
++            "http",
++        )
++
++        # Verify file was created
++        self.assertTrue(os.path.exists(result_path))
++        self.assertTrue(result_path.endswith(".http"))
++
++        # Verify HTTP format
++        with open(result_path, "r", encoding="utf-8") as f:
++            content = f.read()
++
++        self.assertIn("HTTP/1.1 200 OK", content)
++        self.assertIn("Content-Type: application/json", content)
++        self.assertIn("X-Model: mistral:7b", content)
++
++    def test_txt_export(self):
++        """Test plain text export functionality."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++        result_path = self.export_manager.export_output(
++            self.sample_response_data,
++            self.sample_prompt_data,
++            output_path,
++            "txt",
++        )
++
++        # Verify file was created
++        self.assertTrue(os.path.exists(result_path))
++        self.assertTrue(result_path.endswith(".txt"))
++
++        # Verify text content
++        with open(result_path, "r", encoding="utf-8") as f:
++            content = f.read()
++
++        self.assertIn("AI-Driven Testing Output", content)
++        self.assertIn("MISTRAL", content)
++        self.assertIn("PROMPT", content)
++        self.assertIn("RESPONSE", content)
++
++    def test_multiple_formats_export(self):
++        """Test exporting to multiple formats simultaneously."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++        formats = ["json", "markdown", "xml"]
++
++        result = self.export_manager.export_multiple_formats(
++            self.sample_response_data,
++            self.sample_prompt_data,
++            output_path,
++            formats,
++        )
++
++        # Verify all formats were exported
++        self.assertEqual(len(result), 3)
++        for fmt in formats:
++            self.assertIn(fmt, result)
++            self.assertIsNotNone(result[fmt])
++            self.assertTrue(os.path.exists(result[fmt]))
++
++    def test_unsupported_format(self):
++        """Test handling of unsupported export format."""
++        output_path = os.path.join(self.temp_dir, "test_output")
++
++        with self.assertRaises(ValueError) as context:
++            self.export_manager.export_output(
++                self.sample_response_data,
++                self.sample_prompt_data,
++                output_path,
++                "pdf",
++            )
++
++        self.assertIn("Unsupported format: pdf", str(context.exception))
++
++    def test_create_export_data(self):
++        """Test internal data structure creation."""
++        export_data = self.export_manager._create_export_data(
++            self.sample_response_data, self.sample_prompt_data
++        )
++
++        # Verify structure
++        self.assertIn("metadata", export_data)
++        self.assertIn("prompt", export_data)
++        self.assertIn("response", export_data)
++
++        # Verify metadata
++        self.assertIn("timestamp", export_data["metadata"])
++        self.assertIn("model", export_data["metadata"])
++        self.assertIn("performance", export_data["metadata"])
++
++        # Verify performance data
++        self.assertEqual(
++            export_data["metadata"]["performance"]["loading_time"], 2.5
++        )
++        self.assertEqual(
++            export_data["metadata"]["performance"]["response_time"], 5.0
++        )
++
++        # Verify prompt and response data
++        self.assertEqual(
++            export_data["prompt"]["text"], self.sample_prompt_data["prompt"]
++        )
++        self.assertEqual(
++            export_data["response"]["text"],
++            self.sample_response_data["response"],
++        )
++
++
++if __name__ == "__main__":
++    unittest.main()

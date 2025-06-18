@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+"""Main entry point for the AI-Driven Testing project."""
+
+# !/usr/bin/env python3
 import os
 import cli
 import execution
@@ -25,5 +27,10 @@ if __name__ == "__main__":
 
     # Execute the flow
     execution.execute_prompt(
-        model, active_modules, prompt_text, args.output_file
+        model,
+        active_modules,
+        prompt_text,
+        args.output_file,
+        export_format=args.export_format,
+        export_all=args.export_all,
     )

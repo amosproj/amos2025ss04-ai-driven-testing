@@ -1,3 +1,4 @@
+"""API endpoints for the AI-Driven Testing project."""
 import os
 import json
 from typing import Dict, List
@@ -7,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from llm_manager import LLMManager
 from schemas import PromptData, ResponseData
+from export_manager import ExportManager
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
@@ -49,9 +51,7 @@ AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
 # --------------------------------------------------------------------------- #
 @app.get("/models")
 def list_models() -> List[Dict]:
-    """
-    Returns the list of allowed models and whether the container is currently running.
-    """
+    """Return the list of allowed models and container status."""
     out = []
     for m in AVAILABLE_MODELS:
         m_id = m["id"]
@@ -98,6 +98,7 @@ async def prompt(req: PromptData):
 
 @app.post("/prompt")
 async def prompt(req: PromptData):
+    """Process a prompt request and return the LLM response."""
     try:
         print("📥 Request received:")
         print(req)
@@ -125,11 +126,88 @@ async def prompt(req: PromptData):
 
 @app.post("/shutdown")
 async def shutdown(req: Dict[str, str]):
-    """
-    Shutdown a running model container.
-    """
+    """Shutdown a running model container."""
     model_id = req.get("model_id")
     if not model_id:
         raise HTTPException(status_code=400, detail="Missing 'model_id'")
     await run_in_threadpool(manager.stop_model_container, model_id)
     return {"status": "stopped", "model_id": model_id}
+
+
+# --------------------------------------------------------------------------- #
+# Export endpoints
+# --------------------------------------------------------------------------- #
+@app.get("/export/formats")
+async def get_export_formats():
+    """Return list of supported export formats."""
+    export_manager = ExportManager()
+    return {"formats": export_manager.get_supported_formats()}
+
+
+@app.post("/export")
+async def export_content(req: Dict):
+    """
+    Export content in specified format(s).
+
+    Expected request body:
+    {
+        "content": "Content to export",
+        "format": "json|markdown|http|txt|xml",
+        "filename": "optional_filename",
+        "export_all": false
+    }
+    """
+    try:
+        content = req.get("content")
+        export_format = req.get("format", "markdown")
+        filename = req.get("filename")
+        export_all = req.get("export_all", False)
+
+        if not content:
+            raise HTTPException(
+                status_code=400, detail="Missing 'content' field"
+            )
+
+        export_manager = ExportManager()
+
+        if export_all:
+            # Export in all formats
+            export_files = export_manager.export_all_formats(
+                content, base_filename=filename or "api_export"
+            )
+            return {
+                "status": "success",
+                "message": "Exported in all formats",
+                "files": export_files,
+            }
+        else:
+            # Export in specified format
+            if export_format not in export_manager.get_supported_formats():
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Unsupported format: {export_format}",
+                )
+
+            export_filename = filename or f"api_export.{export_format}"
+            if export_format == "json" and not export_filename.endswith(
+                "_formatted.json"
+            ):
+                export_filename = export_filename.replace(
+                    ".json", "_formatted.json"
+                )
+
+            export_path = export_manager.export_content(
+                content, export_format, export_filename
+            )
+
+            return {
+                "status": "success",
+                "message": f"Exported in {export_format} format",
+                "file": export_path,
+            }
+
+    except Exception as exc:
+        import traceback
+
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(exc)) from exc

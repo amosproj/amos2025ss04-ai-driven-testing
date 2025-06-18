@@ -1,3 +1,4 @@
+"""Command-line interface module for the AI-Driven Testing project."""
 import os
 import argparse
 from model_manager import load_models
@@ -27,6 +28,18 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--modules", nargs="*", default=[], help="List of module names to run"
     )
+    parser.add_argument(
+        "--export_format",
+        type=str,
+        choices=["json", "markdown", "http", "txt", "xml"],
+        default="markdown",
+        help="Export format for the output (default: markdown)",
+    )
+    parser.add_argument(
+        "--export_all",
+        action="store_true",
+        help="Export output in all supported formats",
+    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
 
@@ -34,7 +47,7 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def build_prompt_data(args: argparse.Namespace) -> PromptData:
-    """Creates a PromptData object from CLI arguments."""
+    """Create a PromptData object from CLI arguments."""
     models = load_models()
     model_info = models[args.model]
 
