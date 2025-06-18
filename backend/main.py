@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+"""Main entry point for the AI-Driven Testing project."""
+
+# !/usr/bin/env python3
 import os
 import cli
 import execution
