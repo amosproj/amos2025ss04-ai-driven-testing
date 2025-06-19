@@ -34,7 +34,6 @@ class InternetSearch(ModuleBase):
             print("Using provided links:", used_links)
             urls = used_links
         else:
-
             # Keyword extraction
             kw_model = KeyBERT()
             extracted_keywords = kw_model.extract_keywords(
