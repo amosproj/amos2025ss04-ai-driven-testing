@@ -1,0 +1,20 @@
+def bubble_sort(arr):
+    """Sort a list using the bubble sort algorithm.
+
+    This implementation includes an optimization that stops the algorithm
+    when no swaps are needed, indicating that the list is already sorted.
+
+    Args:
+        arr: The list to be sorted (modified in-place)
+
+    Returns:
+        None: The input list is modified in-place
+    """
+    for n in range(len(arr) - 1, 0, -1):
+        swapped = False
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
