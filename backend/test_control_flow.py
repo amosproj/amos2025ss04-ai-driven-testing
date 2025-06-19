@@ -11,16 +11,25 @@ import os
 
 # Sample Python code with various control structures
 SAMPLE_CODE = """
-def calculate_fibonacci(n):
-    if n <= 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+def get_hamiltonian_path(self, start) -> List[List[int]]:
+        self.visit(start)
 
-if __name__ == "__main__":
-    main()
+        all_paths = []
+
+        if self.all_nodes_are_visited():
+            all_paths.append([start])
+
+        for node in self.graph[start]:
+            if self.visited[node]:
+                continue
+            paths = self.get_hamiltonian_path(node)
+            for path in paths:
+                if path:
+                    path.append(start)
+                    all_paths.append(path)
+
+        self.un_visit(start)
+        return all_paths
 """
 
 
