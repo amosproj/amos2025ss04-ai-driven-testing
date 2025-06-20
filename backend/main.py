@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
+    module_manager.ORDER = args.order
 
     # load prompt text
     with open(args.prompt_file, "r", encoding="utf-8") as f:
@@ -25,5 +26,5 @@ if __name__ == "__main__":
 
     # Execute the flow
     execution.execute_prompt(
-        model, active_modules, prompt_text, args.output_file, args.order
+        model, active_modules, prompt_text, args.output_file
     )
