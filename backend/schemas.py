@@ -42,18 +42,6 @@ class InputData(BaseModel):
         description="System-level instruction for the LLM",
     )
     options: InputOptions = Field(default_factory=InputOptions)
-    preprocessing_modules: Optional[List[ModuleConfig]] = (
-        Field(
-            default=None,
-            description="Ordered list of pre-processing modules and their active status.",
-        )
-    )
-    postprocessing_modules: Optional[List[ModuleConfig]] = (
-        Field(
-            default=None,
-            description="Ordered list of post-processing modules and their active status.",
-        )
-    )
 
 
 class PromptData(BaseModel):

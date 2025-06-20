@@ -29,6 +29,12 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
+    parser.add_argument(
+        "--order",
+        dest="order",
+        action="store_true",  # Changed from store_false
+        help="Enable module ordering (default: True)",
+    )
 
     return parser.parse_args()
 

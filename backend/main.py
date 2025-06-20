@@ -25,5 +25,5 @@ if __name__ == "__main__":
 
     # Execute the flow
     execution.execute_prompt(
-        model, active_modules, prompt_text, args.output_file
+        model, active_modules, prompt_text, args.output_file, args.order
     )

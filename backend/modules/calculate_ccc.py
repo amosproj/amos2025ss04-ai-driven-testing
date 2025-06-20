@@ -11,13 +11,6 @@ from modules.calculate_ccc_lib.ccc_estimator_general import (
 
 
 class CalculateCcc(ModuleBase):
-<<<<<<< HEAD
-
-    pre_processing_order = 10
-    post_processing_order = 10
-=======
-    """Berechnet die Cognitive Code Complexity (CCC) für Quell- und Ausgabecode."""
->>>>>>> 413d6c0d83da2856cd15f8f9e21e4575d3b375f1
 
     def __init__(self):
         super().__init__()

@@ -6,7 +6,9 @@ import json
 from pathlib import Path
 
 
-def execute_prompt(model, active_modules, prompt_text, output_file):
+def execute_prompt(
+    model, active_modules, prompt_text, output_file, order=True
+):
     """Execute the prompt-response flow."""
 
     # Read prompt
@@ -24,9 +26,10 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
             options=InputOptions(num_ctx=4096),
         ),
     )
+
     # Process with modules
     prompt_data = module_manager.apply_before_modules(
-        active_modules, prompt_data
+        active_modules, prompt_data, order
     )
 
     # Initialize LLM manager
@@ -39,7 +42,7 @@ def execute_prompt(model, active_modules, prompt_text, output_file):
 
         # Process with modules
         module_manager.apply_after_modules(
-            active_modules, response_data, prompt_data
+            active_modules, response_data, prompt_data, order
         )
 
         # === Save output after all modules ===

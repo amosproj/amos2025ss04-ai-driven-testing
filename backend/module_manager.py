@@ -18,22 +18,32 @@ def load_modules(module_names):
     return modules
 
 
-def apply_before_modules(modules, prompt_data):
-    # Sort modules by order_before (default to 0 if not present)
-    modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_before", 10)
-    )
+def apply_before_modules(modules, prompt_data, order):
+    if order:
+        print("sorting")
+        modules_sorted = sorted(
+            modules, key=lambda m: getattr(m, "order_before", 10)
+        )
+    else:
+        print("not sorting")
+        modules_sorted = modules  # Keep original order
+
     for m in modules_sorted:
         if m.applies_before():
             prompt_data = m.process_prompt(prompt_data)
     return prompt_data
 
 
-def apply_after_modules(modules, response_data, prompt_data):
+def apply_after_modules(modules, response_data, prompt_data, order):
     # Sort modules by order_after (default to 0 if not present)
-    modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_after", 10)
-    )
+    if order:
+        print("sorting")
+        modules_sorted = sorted(
+            modules, key=lambda m: getattr(m, "order_before", 10)
+        )
+    else:
+        print("not sorting")
+        modules_sorted = modules  # Keep original order
     for m in modules_sorted:
         if m.applies_after():
             response_data = m.process_response(response_data, prompt_data)
