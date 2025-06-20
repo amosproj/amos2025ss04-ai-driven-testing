@@ -44,7 +44,8 @@ def parse_arguments() -> argparse.Namespace:
         "--not-order",
         dest="order",
         action="store_false",  # Changed from store_false
-        help="Set module ordering to false if this tag is used")
+        help="Set module ordering to false if this tag is used",
+    )
 
     parser.add_argument("--timeout", type=int)
     parser.add_argument(
