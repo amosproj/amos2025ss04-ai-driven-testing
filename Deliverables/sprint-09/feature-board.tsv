@@ -1,0 +1,58 @@
+Title	URL	Assignees	Status	Estimated size	Real size
+Onboard and Test new LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/171		Product Backlog	2	
+Enable Output to Reinput for LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/146		Product Backlog	5	
+Module: Check output for code coverage of the tests	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/172		Product Backlog		
+Module: Flaky Test Identifier: Detect and flag non-deterministic/generated tests	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/173		Product Backlog		
+Module: Code Complexity: Complexity Measurement Tool (CMT)	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/73		Product Backlog	3	
+Module: Detect redundant/duplicate test cases	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/108		Product Backlog	3	
+Refactor: clean repo	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/131		Product Backlog		
+Module: Code Complexity: CM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/76		Product Backlog		
+Module(LLM performance): look at generated "Equivalence partitioning" classes	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/109		Product Backlog		
+Module: Add security analyzer module for generated code	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/110		Product Backlog		
+Module: Spell checker	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/78		Product Backlog		
+Refactor: Json in Frontend	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/129		Product Backlog		
+Refactor: Json in API	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/130		Product Backlog		
+Refactor: add better logging or errors	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/132		Product Backlog		
+In regards to 74: are there other ways to encode and save a project in a database structure, other than just via an LLM?			Product Backlog		
+In regards to 74: can we switch away from "langchain" as embbeding-provider or does it not cause any problems?			Product Backlog		
+In regards to 74: How good are the embbedings			Product Backlog		
+Fixing lm_eval_runner Model Alignment	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/169		Product Backlog		
+Research: can we run the models in the CI	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/170		Product Backlog		
+Module: Show dependency hierarchy of code by logic flow	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/174		Product Backlog		
+Module: Detect Edgecase accuracy of LLM research	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/175		Product Backlog		
+(Module:) Output Exporter	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/164		Sprint Backlog	3	
+Set prerequisite for Modules	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/127	adititakale01, PeppermintCoding123	In Progress	3	
+Researchg: LLM testing of Code understandability, make LLM describe the code, let the same LLM (with no history) build the code from the description -> see if code passes the Unit tests.	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/162	Biranavan-Parameswaran	In Progress	3	
+Onboard and Test new LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/158	theidkamp	In Progress	2	
+Test current models for consistency (deterministic)	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/161	OlafVanHuusen	Awaiting Review	3	
+Research: Benefits of chaining methods	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/159	JonasBrue	Awaiting Review	3	
+Module: External research	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/69	Biranavan-Parameswaran	Awaiting Review	5	
+Initialize user, (technical) design, and build/deploy documentation	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/97	adititakale01	Awaiting Review	3	5
+Research: How to measure code coverage with tools	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/165	PeppermintCoding123	Awaiting Review	3	
+Frontend: make modules togglabe in UI	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/163	JonasBrue	Awaiting Review	5	
+Module: Add figurable Timeouts for LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/160	OlafVanHuusen	Awaiting Review	3	
+Onboard and Test new LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/107	OlafVanHuusen	Feature Archive	2	2
+Module: Code complexity: CCC	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/66	OlafVanHuusen	Feature Archive	5	5
+Refactoring: unify payload to json	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/106	theidkamp	Feature Archive	5	5
+Fix: keep models	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/152	JonasBrue	Feature Archive	2	2
+Bug-Fix: Update Extract Code from Input/Output #128	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/148	PeppermintCoding123, theidkamp	Feature Archive	1	1
+Unify build process	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/123	Biranavan-Parameswaran	Feature Archive	5	3
+Module: Evaluate LLM performance	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/101	theidkamp	Feature Archive	3	5
+Module: Code Complexity: MCC	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/67	OlafVanHuusen, PeppermintCoding123	Feature Archive	5	5
+Continue Bill of Material	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/116	OlafVanHuusen	Feature Archive	1	1
+Extract Code from Input/Output	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/128	PeppermintCoding123	Feature Archive	3	3
+SetUp Docker compose	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/114	Biranavan-Parameswaran, JonasBrue	Feature Archive	5	5
+Continue to Maintain the Architecture-Document	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/53	adititakale01	Feature Archive	3	3
+Research/Implement How to include whole project	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/74	PeppermintCoding123	Feature Archive	5	13
+Research: Spell checker	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/77	Biranavan-Parameswaran	Feature Archive	3	3
+Write .py script to start docker containers	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/8	Moaiadsu	Feature Archive	3	3
+Show POs how the Project works	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/94	Moaiadsu, OlafVanHuusen	Feature Archive	3	2
+Module: Analyze context size	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/68	OlafVanHuusen	Feature Archive	3	5
+Connect API to Frontend	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/95	JonasBrue	Feature Archive	3	3
+Onboard small LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/102	Biranavan-Parameswaran	Feature Archive	1	1
+Frontend Make User enter prompt and source code	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/96	JonasBrue	Feature Archive	5	8
+Continue to Maintain Bill of Materials	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/52	theidkamp	Feature Archive	1	1
+Build process video	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/84	Biranavan-Parameswaran, PeppermintCoding123	Feature Archive	3	3
+Test docker performance	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/25	OlafVanHuusen	Feature Archive	3	5
+Research Ollama	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/19	OlafVanHuusen	Feature Archive	5	3
+Initialize API	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/70	JonasBrue	Feature Archive	5	5
