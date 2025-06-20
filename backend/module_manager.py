@@ -21,10 +21,11 @@ def load_modules(module_names):
 
 
 def apply_before_modules(modules, prompt_data):
+    # Sort modules by preprocessing_order (default to 10 if not present)
     if ORDER:
         print("sorting")
         modules_sorted = sorted(
-            modules, key=lambda m: getattr(m, "order_before", 10)
+            modules, key=lambda m: getattr(m, "preprocessing_order", 10)
         )
     else:
         print("not sorting")
@@ -37,11 +38,11 @@ def apply_before_modules(modules, prompt_data):
 
 
 def apply_after_modules(modules, response_data, prompt_data):
-    # Sort modules by order_after (default to 0 if not present)
+    # Sort modules by postprocessing_order (default to 10 if not present)
     if ORDER:
         print("sorting")
         modules_sorted = sorted(
-            modules, key=lambda m: getattr(m, "order_before", 10)
+            modules, key=lambda m: getattr(m, "postprocessing_order", 10)
         )
     else:
         print("not sorting")
