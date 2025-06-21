@@ -14,12 +14,7 @@ def test1():
     """
 
     result = minimum_spanning_tree(
-        {
-            (1, 2): 10,
-            (2, 3): 15,
-            (3, 4): 10,
-            (1, 4): 10,
-        }
+        {(1, 2): 10, (2, 3): 15, (3, 4): 10, (1, 4): 10,}
     )
 
     assert result == {(1, 2), (3, 4), (1, 4)}
@@ -53,12 +48,6 @@ def test3():
     Output: (1, 2) (1, 3) (2, 4)
     """
 
-    result = minimum_spanning_tree(
-        {
-            (1, 2): 6,
-            (1, 3): 1,
-            (2, 4): 2,
-        }
-    )
+    result = minimum_spanning_tree({(1, 2): 6, (1, 3): 1, (2, 4): 2,})
 
     assert result == {(1, 2), (1, 3), (2, 4)}

@@ -77,9 +77,9 @@ class CCCCalculator(ast.NodeVisitor):
     def visit_FunctionDef(self, node):
         """Handle function definitions."""
         self.function_stack.append(node.name)
-        self.function_recursion_counts[node.name] = (
-            {}
-        )  # Reset recursion count for this function
+        self.function_recursion_counts[
+            node.name
+        ] = {}  # Reset recursion count for this function
         self.generic_visit(node)
         self.function_stack.pop()
 

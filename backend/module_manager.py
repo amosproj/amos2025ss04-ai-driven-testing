@@ -1,5 +1,7 @@
 import importlib
 
+ORDER = True
+
 
 def snake_to_camel(name: str) -> str:
     return "".join(word.capitalize() for word in name.split("_"))
@@ -19,10 +21,16 @@ def load_modules(module_names):
 
 
 def apply_before_modules(modules, prompt_data):
-    # Sort modules by order_before (default to 0 if not present)
-    modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_before", 10)
-    )
+    # Sort modules by preprocessing_order (default to 10 if not present)
+    if ORDER:
+        print("sorting")
+        modules_sorted = sorted(
+            modules, key=lambda m: getattr(m, "preprocessing_order", 10)
+        )
+    else:
+        print("not sorting")
+        modules_sorted = modules  # Keep original order
+
     for m in modules_sorted:
         if m.applies_before():
             prompt_data = m.process_prompt(prompt_data)
@@ -30,10 +38,15 @@ def apply_before_modules(modules, prompt_data):
 
 
 def apply_after_modules(modules, response_data, prompt_data):
-    # Sort modules by order_after (default to 0 if not present)
-    modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_after", 10)
-    )
+    # Sort modules by postprocessing_order (default to 10 if not present)
+    if ORDER:
+        print("sorting")
+        modules_sorted = sorted(
+            modules, key=lambda m: getattr(m, "postprocessing_order", 10)
+        )
+    else:
+        print("not sorting")
+        modules_sorted = modules  # Keep original order
     for m in modules_sorted:
         if m.applies_after():
             response_data = m.process_response(response_data, prompt_data)

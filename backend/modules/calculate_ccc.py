@@ -11,8 +11,6 @@ from modules.calculate_ccc_lib.ccc_estimator_general import (
 
 
 class CalculateCcc(ModuleBase):
-    """Berechnet die Cognitive Code Complexity (CCC) für Quell- und Ausgabecode."""
-
     def __init__(self):
         super().__init__()
 

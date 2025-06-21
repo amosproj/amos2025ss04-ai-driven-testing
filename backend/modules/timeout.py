@@ -3,7 +3,6 @@ from schemas import PromptData, ResponseData
 
 
 class Timeout(ModuleBase):
-
     def applies_before(self) -> bool:
         return True
 
