@@ -6,7 +6,7 @@ import black
 from schemas import PromptData, ResponseData
 
 from modules.base import ModuleBase
-
+from modules.example_logger import ExampleLogger
 
 class TextConverter(ModuleBase):
     """Extrahiert und bereinigt Python-Code aus Markdown-Antworten und formatiert ihn mit Black."""
@@ -19,6 +19,10 @@ class TextConverter(ModuleBase):
 
     def applies_after(self) -> bool:
         return True
+
+    def dependencies(self) -> list[type["ModuleBase"]]:
+
+        return [ExampleLogger]
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
         model_id = prompt_data.model.id

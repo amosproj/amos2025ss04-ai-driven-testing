@@ -1,5 +1,7 @@
 from modules.base import ModuleBase
 from schemas import PromptData, ResponseData
+from modules.timeout import Timeout
+from modules.calculate_ccc import CalculateCcc
 
 
 class ExampleLogger(ModuleBase):
@@ -11,6 +13,9 @@ class ExampleLogger(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
+
+    def dependencies(self) -> list[type["ModuleBase"]]:
+        return [Timeout, CalculateCcc]
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
         print("[Logger] Prompt being sent:")
         print(prompt_data.input)

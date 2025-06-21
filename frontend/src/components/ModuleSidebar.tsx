@@ -9,12 +9,10 @@ import {
   FormControlLabel,
   Tooltip,
   IconButton,
-  Divider,
   styled,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { Module } from '../api';
 
 interface ModuleSidebarProps {
@@ -58,15 +56,11 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
   onModuleToggle,
 }) => {
   return (
-    <Drawer
-      anchor="left"
-      open={open}
-      onClose={onClose}
-    >
+    <Drawer anchor="left" open={open} onClose={onClose}>
       <SidebarHeader>
         <LogoContainer>
-          <Logo 
-            src="https://avatars.githubusercontent.com/u/80108293?s=200&v=4" 
+          <Logo
+            src="https://avatars.githubusercontent.com/u/80108293?s=200&v=4"
             alt="AMOS Logo"
           />
           <Typography variant="h6">AI-Tester</Typography>
@@ -103,9 +97,7 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                       onChange={() => onModuleToggle(module.id)}
                     />
                   }
-                  label={
-                    <Typography variant="subtitle2">{module.name}</Typography>
-                  }
+                  label={<Typography variant="subtitle2">{module.name}</Typography>}
                 />
                 <Tooltip
                   title={
@@ -114,11 +106,22 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                         {module.description}
                       </Typography>
                       <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                        {module.applies_before ? '✅ Aktiv vor Prompt' : '❌ Inaktiv vor Prompt'}
+                        {module.applies_before
+                          ? '✅ Aktiv vor Prompt'
+                          : '❌ Inaktiv vor Prompt'}
                       </Typography>
                       <Typography variant="caption" display="block">
-                        {module.applies_after ? '✅ Aktiv nach Prompt' : '❌ Inaktiv nach Prompt'}
+                        {module.applies_after
+                          ? '✅ Aktiv nach Prompt'
+                          : '❌ Inaktiv nach Prompt'}
                       </Typography>
+
+                      {/* Show dependencies in tooltip */}
+                      {module.dependencies.length > 0 && (
+                        <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                          <strong>Dependencies:</strong> {module.dependencies.join(', ')}
+                        </Typography>
+                      )}
                     </Box>
                   }
                 >
@@ -127,6 +130,15 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
                   </IconButton>
                 </Tooltip>
               </Box>
+
+              {/* Optional: show dependencies below the switch */}
+              {module.dependencies.length > 0 && (
+                <Box sx={{ ml: 4, mt: 0.5 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    Abhängigkeit von: {module.dependencies.join(', ')}
+                  </Typography>
+                </Box>
+              )}
             </ListItem>
           ))}
         </List>
@@ -135,4 +147,4 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
   );
 };
 
-export default ModuleSidebar; 
+export default ModuleSidebar;
