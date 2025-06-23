@@ -17,13 +17,6 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run Ollama prompt pipeline")
 
     parser.add_argument(
-        "--iterations",
-        type=int,
-        default=1,
-        help="Number of times to run the generation, feeding the output back as input for refinement."
-    )
-    
-    parser.add_argument(
         "--model", type=int, choices=range(len(models)), default=0
     )
     parser.add_argument(
