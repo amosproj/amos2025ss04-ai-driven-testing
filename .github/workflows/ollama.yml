@@ -3,7 +3,7 @@ name: Run Ollama Python App (Branch Only)
 on:
   push:
     branches:
-      - feature/ollama-tests
+      - ollama-tests
   workflow_dispatch:
 
 jobs:
