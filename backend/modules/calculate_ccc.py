@@ -11,6 +11,7 @@ from modules.calculate_ccc_lib.ccc_estimator_general import (
 
 
 class CalculateCcc(ModuleBase):
+
     def __init__(self):
         super().__init__()
 

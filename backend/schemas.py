@@ -54,7 +54,8 @@ class PromptData(BaseModel):
         None, description="The original prompt code"
     )
     timeout: Optional[int] = Field(
-        None, description="Timeout in seconds for the LLM request",
+        None,
+        description="Timeout in seconds for the LLM request",
     )
 
 
