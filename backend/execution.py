@@ -4,6 +4,7 @@ This module orchestrates the prompt execution flow.
 It handles the logic for sending prompts to the LLM, managing
 iterative refinement passes, and saving the final results.
 """
+
 import json
 from datetime import datetime
 from pathlib import Path
@@ -34,7 +35,7 @@ def execute_prompt(active_modules, prompt_data, output_file, iterations=1):
 
             # 2. Send the prompt to the LLM
             print(
-                f"\n--- Response from {current_prompt_data.model.name} (Pass {i+1}) ---"
+                f"\n--- Response from {current_prompt_data.model.name} (Pass {i + 1}) ---"
             )
             response_data = manager.send_prompt(current_prompt_data)
 
