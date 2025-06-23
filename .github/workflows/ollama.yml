@@ -1,0 +1,51 @@
+name: Run Ollama Python App (Branch Only)
+
+on:
+  push:
+    branches:
+      - feature/ollama-tests  # change to your actual branch name
+
+  workflow_dispatch:
+
+jobs:
+  run-with-ollama:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker (already available on ubuntu-latest)
+      run: docker --version
+
+    - name: Start Ollama Docker container
+      run: |
+        docker run -d --name ollama-test -p 11434:11434 ollama/ollama
+        sleep 5  # give it a moment to start
+
+    - name: Wait until Ollama is ready
+      run: |
+        for i in {1..30}; do
+          if curl -s http://localhost:11434 > /dev/null; then
+            echo "Ollama is ready"
+            break
+          fi
+          echo "Waiting for Ollama..."
+          sleep 2
+        done
+
+    - name: Set up Conda env
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        miniforge-variant: Miniforge3
+        miniforge-version: latest
+        use-mamba: true
+        environment-file: backend/environment.yml
+        activate-environment: backend
+        channels: conda-forge,defaults
+        auto-activate-base: false
+
+    - name: Run Python script
+      shell: bash -l {0}  # required to use conda env in GitHub Actions
+      run: |
+        python3 backend/main.py --model 5
