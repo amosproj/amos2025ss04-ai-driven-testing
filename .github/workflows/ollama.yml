@@ -3,7 +3,7 @@ name: Run Ollama Python App (Branch Only)
 on:
   push:
     branches:
-      - feature/ollama-tests  # change to your actual branch name
+      - app-ci-cd
 
   workflow_dispatch:
 
