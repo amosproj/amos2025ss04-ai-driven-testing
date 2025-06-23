@@ -135,7 +135,7 @@ const ModuleSidebar: React.FC<ModuleSidebarProps> = ({
               {module.dependencies.length > 0 && (
                 <Box sx={{ ml: 4, mt: 0.5 }}>
                   <Typography variant="caption" color="text.secondary">
-                    Abhängigkeit von: {module.dependencies.join(', ')}
+                    Benötigt folgende Module: {module.dependencies.join(', ')}
                   </Typography>
                 </Box>
               )}
