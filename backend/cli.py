@@ -20,9 +20,9 @@ def parse_arguments() -> argparse.Namespace:
         "--iterations",
         type=int,
         default=1,
-        help="Number of times to run the generation, feeding the output back as input for refinement."
+        help="Number of times to run the generation, feeding the output back as input for refinement.",
     )
-    
+
     parser.add_argument(
         "--model", type=int, choices=range(len(models)), default=0
     )
