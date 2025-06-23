@@ -92,7 +92,6 @@ def discover_modules() -> List[Dict[str, str]]:
                             # Try to instantiate to check if it's valid
                             instance = cls()
 
-
                             available_modules.append(
                                 {
                                     "id": module_name,
@@ -110,7 +109,9 @@ def discover_modules() -> List[Dict[str, str]]:
                                     ),
                                     "description": cls.__doc__
                                     or f"Module: {class_name}",
-                                   "dependencies": (instance.dependencies_names() or [])
+                                    "dependencies": (
+                                        instance.dependencies_names() or []
+                                    ),
                                 }
                             )
                         except Exception as e:

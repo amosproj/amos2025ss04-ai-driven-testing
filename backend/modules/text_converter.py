@@ -8,6 +8,7 @@ from schemas import PromptData, ResponseData
 from modules.base import ModuleBase
 from modules.example_logger import ExampleLogger
 
+
 class TextConverter(ModuleBase):
     """Extrahiert und bereinigt Python-Code aus Markdown-Antworten und formatiert ihn mit Black."""
 
