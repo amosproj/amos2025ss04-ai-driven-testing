@@ -47,6 +47,12 @@
       "id": "openhermes:v2.5",
       "license": "Apache 2.0 License",
       "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "name": "smollm2",
+      "id": "smollm2:360m",
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     }
   ]
 }
