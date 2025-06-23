@@ -28,4 +28,4 @@ jobs:
     - name: Run Python app (spins up Docker itself)
       shell: bash -l {0}  # needed for Conda env
       run: |
-        python3 backend/main.py --model 5
+        python3 backend/main.py --model 5 --modules internet_search --use_links https://www.bbc.com/news/articles/cjrld3erq4eo
