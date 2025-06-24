@@ -1,1 +1,1 @@
-Give me a python unit test for the given code! :D
+create unit tests for the given code
