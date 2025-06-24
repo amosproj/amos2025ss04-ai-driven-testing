@@ -11,8 +11,8 @@ from modules.base import ModuleBase
 class TextConverter(ModuleBase):
     # Extracts and cleans Python code from prompts and responses
 
-    preprocessing_order = 5
-    postprocessing_order = 5
+    preprocessing_order = 1
+    postprocessing_order = 1
 
     def applies_before(self) -> bool:
         return True

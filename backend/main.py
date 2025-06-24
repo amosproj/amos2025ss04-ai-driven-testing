@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
     # Save type of ordering for modules
-    module_manager.ORDER = args.order
+    module_manager.COMMAND_ORDER = args.order
 
     print("active modules:")
     for module in active_modules:

@@ -41,10 +41,10 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--num_ctx", type=int, default=4096)
 
     parser.add_argument(
-        "--not-order",
+        "--command-order",
         dest="order",
-        action="store_false",  # Changed from store_false
-        help="Set module ordering to false if this tag is used",
+        action="store_true",  # Changed from store_false
+        help="Set module ordering to true if this tag is used",
     )
 
     parser.add_argument("--timeout", type=int)

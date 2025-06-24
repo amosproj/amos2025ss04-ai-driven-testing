@@ -12,6 +12,10 @@ from modules.text_converter import TextConverter
 
 
 class CalculateCcc(ModuleBase):
+    """Calculate the Cognitive Code Complexity (CCC) for both source and output code."""
+
+    preprocessing_order = 5
+    postprocessing_order = 5
 
     def __init__(self):
         super().__init__()
