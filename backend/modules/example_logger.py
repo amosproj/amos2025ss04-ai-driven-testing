@@ -11,6 +11,9 @@ class ExampleLogger(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
+    def dependencies(self) -> list[type["ModuleBase"]]:
+        return []
+
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
         print("[Logger] Prompt being sent:")
         print(prompt_data.input)

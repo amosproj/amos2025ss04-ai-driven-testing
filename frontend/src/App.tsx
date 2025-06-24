@@ -80,13 +80,49 @@ const App: React.FC = () => {
       .catch((err) => console.error('Fehler beim Herunterfahren des Modells:', err));
   };
 
-  const handleModuleToggle = (moduleId: string) => {
-    setSelectedModules((prev) =>
-      prev.includes(moduleId)
-        ? prev.filter((id) => id !== moduleId)
-        : [...prev, moduleId]
-    );
-  };
+// modules: Module[]
+// selectedModules: string[] (array of selected module IDs)
+
+const getAllDependencyIds = (module: Module, modules: Module[], visited = new Set<string>()): string[] => {
+  // Prevent infinite loops if cyclic dependencies exist
+  if (visited.has(module.id)) return [];
+  visited.add(module.id);
+
+  // Find dependencies by name
+  const directDeps = modules.filter(m => module.dependencies.includes(m.name));
+
+  // Collect dependencies' IDs recursively
+  const allDeps = directDeps.flatMap(dep => getAllDependencyIds(dep, modules, visited));
+
+  // Return unique list of direct dependencies + their dependencies
+  return [...directDeps.map(dep => dep.id), ...allDeps];
+};
+
+const handleModuleToggle = (moduleId: string) => {
+  const toggledModule = modules.find(m => m.id === moduleId);
+  if (!toggledModule) return;
+
+  const isSelected = selectedModules.includes(moduleId);
+
+  if (isSelected) {
+    // Toggle OFF: remove only the toggled module (optional: remove dependencies)
+    const newSelected = selectedModules.filter(id => id !== moduleId);
+    setSelectedModules(newSelected);
+  } else {
+    // Toggle ON: add toggled module + all dependencies recursively
+
+    const dependencyIds = getAllDependencyIds(toggledModule, modules);
+
+    const newSelected = Array.from(new Set([
+      ...selectedModules,
+      moduleId,
+      ...dependencyIds,
+    ]));
+
+    setSelectedModules(newSelected);
+  }
+};
+
 
   return (
     <Box display="flex" flexDirection="column" height="100vh" sx={{ bgcolor: 'grey.100' }}>
