@@ -23,7 +23,6 @@ if __name__ == "__main__":
     # Save type of ordering for modules
     module_manager.ORDER = args.order
 
-
     print("active modules:")
     for module in active_modules:
         print(f" - {module.__class__.__name__}")
