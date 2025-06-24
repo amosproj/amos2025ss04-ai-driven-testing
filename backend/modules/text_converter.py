@@ -45,6 +45,7 @@ class TextConverter(ModuleBase):
         # Update the prompt data path (used later for execution)
         prompt_data.prompt_code_path = str(main_output_path)
         return prompt_data
+
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:

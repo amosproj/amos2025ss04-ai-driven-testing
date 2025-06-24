@@ -1,5 +1,4 @@
 import subprocess
-import sys
 from pathlib import Path
 from typing import Union
 
@@ -21,11 +20,11 @@ class ExecuteTests(ModuleBase):
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-        if prompt_data.prompt_code_path == None:
+        if prompt_data.prompt_code_path is None:
             prompt_path = Path("extracted/prompt.py").resolve()
         else:
             prompt_path = Path(prompt_data.prompt_code_path)
-        if response_data.output.output_code_path == None:
+        if response_data.output.output_code_path is None:
             response_path = Path("extracted/response.py").resolve()
         else:
             response_path = Path(response_data.output.output_code_path)
@@ -44,10 +43,14 @@ class ExecuteTests(ModuleBase):
         container_path = f"/code/{path.name}"
 
         cmd = [
-            "docker", "run", "--rm",
-            "-v", f"{path.parent}:/code",  # mount local dir
+            "docker",
+            "run",
+            "--rm",
+            "-v",
+            f"{path.parent}:/code",  # mount local dir
             "python:3.11",  # Docker-Image
-            "python", container_path
+            "python",
+            container_path,
         ]
 
         try:
