@@ -1,20 +1,20 @@
-def add_numbers(a, b):
-    """
-    Adds two numbers together and returns the result.
+def get_hamiltonian_path(self, start) -> List[List[int]]:
+    self.visit(start)
 
-    Args:
-        a (int or float): The first number.
-        b (int or float): The second number.
+    all_paths = []
 
-    Returns:
-        int or float: The sum of a and b.
+    if self.all_nodes_are_visited():
+        all_paths.append([start])
 
-    Examples:
-        >>> add_numbers(2, 3)
-        5
-        >>> add_numbers(-1, 1)
-        0
-        >>> add_numbers(0.5, 0.5)
-        1.0
-    """
-    return a + b
+    for node in self.graph[start]:
+        if self.visited[node]:
+            continue
+        paths = self.get_hamiltonian_path(node)
+        for path in paths:
+            if path:
+                path.append(start)
+                all_paths.append(path)
+
+    self.un_visit(start)
+    return all_paths
+
