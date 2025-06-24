@@ -83,6 +83,9 @@ class OutputData(BaseModel):
     output_code_path: Optional[str] = Field(
         None, description="The original output code"
     )
+    test_execution_results: Optional[str] = Field(
+        None, description="Execution results for generated tests"
+    )
 
 
 class TimingData(BaseModel):

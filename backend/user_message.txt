@@ -1,1 +1,1 @@
-What is the latest news regarding trump?
+Create tests for the following code:
