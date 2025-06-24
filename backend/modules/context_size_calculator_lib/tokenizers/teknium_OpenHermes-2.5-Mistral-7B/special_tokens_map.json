@@ -7,14 +7,7 @@
     "single_word": false
   },
   "eos_token": {
-    "content": "</s>",
-    "lstrip": false,
-    "normalized": false,
-    "rstrip": false,
-    "single_word": false
-  },
-  "pad_token": {
-    "content": "</s>",
+    "content": "<|im_end|>",
     "lstrip": false,
     "normalized": false,
     "rstrip": false,

@@ -20,7 +20,13 @@ if __name__ == "__main__":
 
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
+    # Save type of ordering for modules
     module_manager.ORDER = args.order
+
+
+    print("active modules:")
+    for module in active_modules:
+        print(f" - {module.__class__.__name__}")
 
     # Execute the flow
     execution.execute_prompt(active_modules, prompt_data, args.output_file)
