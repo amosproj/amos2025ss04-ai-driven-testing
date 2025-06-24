@@ -13,6 +13,20 @@ class ModuleBase(ABC):
         """Return True if the module runs after response is received."""
         pass
 
+    def dependencies(self) -> list[type["ModuleBase"]]:
+        """
+        Return a list of other ModuleBase subclasses this module depends on.
+        Default is empty.
+        """
+        return []
+
+    def dependencies_names(self) -> list[str]:
+        """
+        Return a list of names of other ModuleBase subclasses this module depends on.
+        Default is empty.
+        """
+        return [dep.__name__ for dep in self.dependencies()]
+
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
         """Optionally modify the prompt."""
         return prompt_data
