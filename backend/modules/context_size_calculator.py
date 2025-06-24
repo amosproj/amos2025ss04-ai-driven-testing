@@ -154,6 +154,7 @@ class ContextSizeCalculator(ModuleBase):
             "tinyllama:1.1b": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
             "qwen3:4b-q4_K_M": "Qwen/Qwen3-4B",
             "openhermes:v2.5": "teknium/OpenHermes-2.5-Mistral-7B",
+            "smollm2:360m": "HuggingFaceTB/smollm2-360m",
         }
 
         # Try exact match first

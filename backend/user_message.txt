@@ -1,1 +1,2 @@
-Create tests for the following code:
+create unit tests for the given code
+

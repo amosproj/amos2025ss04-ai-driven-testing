@@ -57,6 +57,10 @@ class PromptData(BaseModel):
         None,
         description="Timeout in seconds for the LLM request",
     )
+    control_flow_image: Optional[str] = Field(
+        None,
+        description="Path to the control flow image generated from the provided source code",
+    )
 
 
 class OutputData(BaseModel):
@@ -85,6 +89,10 @@ class OutputData(BaseModel):
     )
     test_execution_results: Optional[str] = Field(
         None, description="Execution results for generated tests"
+    )  
+    control_flow_image: Optional[str] = Field(
+        None,
+        description="Path to the control flow image generated from the cleaned output code",
     )
 
 
