@@ -31,7 +31,12 @@ if __name__ == "__main__":
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
 
-    # Execute the flow, passing the new iterations argument
+    # Print active modules (from the development branch)
+    print("active modules:")
+    for module in active_modules:
+        print(f"- {module.__class__.__name__}")
+
+    # Execute the flow, passing the new iterations argument (from your branch)
     execution.execute_prompt(
         active_modules=active_modules,
         prompt_data=prompt_data,
