@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+"""Main script to run a single model test generation pipeline.
+
+This script serves as the primary entry point for the command-line interface.
+It orchestrates the entire process by:
+1. Parsing command-line arguments using the `cli` module.
+2. Loading the specified model and modules.
+3. Building the initial prompt data structure.
+4. Executing the prompt-response-refinement loop via the `execution` module.
+"""
+
 import os
 import cli
 import execution
@@ -21,5 +31,10 @@ if __name__ == "__main__":
     # Load modules
     active_modules = module_manager.load_modules(args.modules)
 
-    # Execute the flow
-    execution.execute_prompt(active_modules, prompt_data, args.output_file)
+    # Execute the flow, passing the new iterations argument
+    execution.execute_prompt(
+        active_modules=active_modules,
+        prompt_data=prompt_data,
+        output_file=args.output_file,
+        iterations=args.iterations,
+    )
