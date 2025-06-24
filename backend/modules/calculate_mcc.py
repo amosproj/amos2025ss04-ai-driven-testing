@@ -4,7 +4,6 @@ import os
 from schemas import PromptData, ResponseData
 import sys
 import ast
-from modules.text_converter import TextConverter
 
 
 class CalculateMcc(ModuleBase):
@@ -18,9 +17,6 @@ class CalculateMcc(ModuleBase):
 
     def applies_after(self) -> bool:
         return True
-
-    def dependencies(self) -> list[type["ModuleBase"]]:
-        return [TextConverter]
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
         prompt_path = prompt_data.prompt_code_path

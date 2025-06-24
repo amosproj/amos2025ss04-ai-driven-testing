@@ -109,9 +109,6 @@ def discover_modules() -> List[Dict[str, str]]:
                                     ),
                                     "description": cls.__doc__
                                     or f"Module: {class_name}",
-                                    "dependencies": (
-                                        instance.dependencies_names() or []
-                                    ),
                                 }
                             )
                         except Exception as e:
@@ -272,10 +269,7 @@ def list_modules() -> List[Dict]:
     Each module entry contains id, name, and metadata about when it applies.
     """
     try:
-        modules = discover_modules()
-        # Log the discovered modules
-        logger.info(f"Discovered {modules} modules:")
-        return modules
+        return discover_modules()
     except Exception as exc:
         raise HTTPException(
             status_code=500, detail=f"Failed to discover modules: {str(exc)}"
