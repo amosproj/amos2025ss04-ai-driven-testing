@@ -12,7 +12,7 @@ from modules.text_converter import TextConverter
 
 
 class CalculateCcc(ModuleBase):
-    """Calculate the Cognitive Code Complexity (CCC) for both source and output code."""
+    """Berechnet die Cognitive Code Complexity (CCC) für Quell- und Ausgabecode."""
 
     preprocessing_order = 5
     postprocessing_order = 5

@@ -8,7 +8,7 @@ from modules.text_converter import TextConverter
 
 
 class CalculateMcc(ModuleBase):
-    """Calculate the McCabe Complexity (MCC) for Python code using AST analysis."""
+    """Berechnet die McCabe Complexity (MCC) für Python-Code mittels AST-Analyse."""
 
     preprocessing_order = 5
     postprocessing_order = 5
