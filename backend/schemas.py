@@ -89,7 +89,7 @@ class OutputData(BaseModel):
     )
     test_execution_results: Optional[str] = Field(
         None, description="Execution results for generated tests"
-    )  
+    )
     control_flow_image: Optional[str] = Field(
         None,
         description="Path to the control flow image generated from the cleaned output code",
