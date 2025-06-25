@@ -17,3 +17,4 @@ def get_hamiltonian_path(self, start) -> List[List[int]]:
 
     self.un_visit(start)
     return all_paths
+
