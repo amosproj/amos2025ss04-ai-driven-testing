@@ -60,9 +60,9 @@ class ExecuteTests(ModuleBase):
                 "exit_code": completed.returncode,
                 "stdout": completed.stdout,
                 "stderr": completed.stderr,
-                "status": "success"
-                if completed.returncode == 0
-                else "failure",
+                "status": (
+                    "success" if completed.returncode == 0 else "failure"
+                ),
             }
 
             print("\n=== Test Execution Output ===")
