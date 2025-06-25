@@ -26,4 +26,4 @@ def calculate_result(a, b, op):
             raise ZeroDivisionError("Division by zero")
         return a / b
     else:
-        raise ValueError(f"Invalid operator: {op}"
+        raise ValueError(f"Invalid operator: {op})"

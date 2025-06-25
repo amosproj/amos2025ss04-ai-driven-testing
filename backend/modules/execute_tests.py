@@ -3,13 +3,13 @@ from pathlib import Path
 from typing import Union
 
 from modules.base import ModuleBase
-from schemas import PromptData, ResponseData
+from schemas import PromptData, ResponseData, TestExecutionResults
 
 
 class ExecuteTests(ModuleBase):
     """Executes the generated prompt and response code (typically unittests)."""
 
-    order_after = 99  # Run this late in the chain
+    postprocessing_order = 99  # Run this late in the chain
 
     def applies_before(self) -> bool:
         return False
@@ -20,19 +20,15 @@ class ExecuteTests(ModuleBase):
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-        if prompt_data.prompt_code_path is None:
-            prompt_path = Path("extracted/prompt.py").resolve()
-        else:
-            prompt_path = Path(prompt_data.prompt_code_path)
         if response_data.output.output_code_path is None:
             response_path = Path("extracted/response.py").resolve()
         else:
             response_path = Path(response_data.output.output_code_path)
 
-        self.run_python_file(prompt_path)
-
         result = self.run_python_file(response_path)
-        response_data.output.test_execution_results = result
+        response_data.output.test_execution_results = TestExecutionResults(
+            **result
+        )
         return response_data
 
     def run_python_file(self, path: Union[str, Path]) -> str:
@@ -58,29 +54,23 @@ class ExecuteTests(ModuleBase):
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=15,
+                timeout=60,
             )
-            result = (
-                f"[exit code: {completed.returncode}]\n"
-                f"--- STDOUT ---\n{completed.stdout}\n"
-                f"--- STDERR ---\n{completed.stderr}"
-            )
+            result = {
+                "exit_code": completed.returncode,
+                "stdout": completed.stdout,
+                "stderr": completed.stderr,
+                "status": "success"
+                if completed.returncode == 0
+                else "failure",
+            }
+
+            print("\n=== Test Execution Output ===")
             print(result)
-            if completed.returncode == 0:
-                return (
-                    "[exit code: 0]\n"
-                    "Tests ran successfully.\n"
-                    f"{completed.stdout}"
-                )
-            else:
-                return (
-                    f"[exit code: {completed.returncode}]\n"
-                    "Tests failed.\n"
-                    "--- STDOUT ---\n"
-                    f"{completed.stdout}\n"
-                    "--- STDERR ---\n"
-                    f"{completed.stderr}"
-                )
+            print("\n")
+
+            return result
+
         except subprocess.TimeoutExpired:
             return "Execution timed out."
         except Exception as e:

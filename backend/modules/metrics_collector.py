@@ -3,6 +3,7 @@ from pathlib import Path
 from datetime import datetime
 from modules.base import ModuleBase
 from schemas import PromptData, ResponseData
+from modules.text_converter import TextConverter
 
 
 class MetricsCollector(ModuleBase):
@@ -20,24 +21,20 @@ class MetricsCollector(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
+    def dependencies(self) -> list[type["ModuleBase"]]:
+        return [TextConverter]
+
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
         # Prepare folders
         model_name = prompt_data.model.name
-        cleaned = self.clean_response_text(
-            response_data.output.markdown or ""
-        )  # TODO replace with response_data.code as soon as we implemented output cleaning
+        output_code_path = Path(response_data.output.output_code_path)
 
+        # Skip re-saving and check directly
+        syntax_valid = self.check_syntax_validity(output_code_path)
         # Save cleaned code
         self.latest_dir, self.archive_dir = self.make_output_dirs(model_name)
-
-        self.write_to_outputs("generated_test.py", cleaned)
-
-        # Check syntax
-        syntax_valid = self.check_syntax_validity(
-            self.latest_dir / "generated_test.py"
-        )
         response_data.output.syntax_valid = syntax_valid
 
         metrics = {
