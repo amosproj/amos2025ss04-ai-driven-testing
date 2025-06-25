@@ -62,11 +62,13 @@ class PromptData(BaseModel):
         description="Path to the control flow image generated from the provided source code",
     )
 
+
 class TestExecutionResults(BaseModel):
     exit_code: int
     stdout: str
     stderr: str
     status: str
+
 
 class OutputData(BaseModel):
     markdown: str = Field(..., description="LLM response in Markdown")

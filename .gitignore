@@ -94,6 +94,8 @@ outputs
 /backend/chroma
 /backend/extracted/*
 !/backend/extracted/.gitkeep
+!/backend/extracted/prompt.py
+!/backend/extracted/response.py
 /backend/cloned_project
 /backend/run_include_project
 /backend/modules/include_project
