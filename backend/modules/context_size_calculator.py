@@ -94,7 +94,7 @@ class ContextSizeCalculator(ModuleBase):
         local_model_name = hf_model_id.replace("/", "_")
         local_path = os.path.join(
             os.path.dirname(__file__),
-            "context_size_calculator",
+            "context_size_calculator_lib",
             "tokenizers",
             local_model_name,
         )
@@ -154,6 +154,7 @@ class ContextSizeCalculator(ModuleBase):
             "tinyllama:1.1b": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
             "qwen3:4b-q4_K_M": "Qwen/Qwen3-4B",
             "openhermes:v2.5": "teknium/OpenHermes-2.5-Mistral-7B",
+            "smollm2:360m": "HuggingFaceTB/smollm2-360m",
         }
 
         # Try exact match first
@@ -192,7 +193,9 @@ class ContextSizeCalculator(ModuleBase):
 
         # Get the tokenizers directory relative to this module
         tokenizers_dir = os.path.join(
-            os.path.dirname(__file__), "context_size_calculator", "tokenizers"
+            os.path.dirname(__file__),
+            "context_size_calculator_lib",
+            "tokenizers",
         )
 
         # Create a safe filename for the tokenizer directory

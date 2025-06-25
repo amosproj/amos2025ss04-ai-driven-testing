@@ -1,21 +1,57 @@
 import importlib
 
+import re
+
 
 def snake_to_camel(name: str) -> str:
     return "".join(word.capitalize() for word in name.split("_"))
 
 
-def load_modules(module_names):
-    modules = []
+def camel_to_snake(name: str) -> str:
+    # Insert underscore before each uppercase letter (except at start), then lowercase all
+    s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    snake = re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
+    return snake
+
+
+def load_modules(module_names, loaded=None):
+    if loaded is None:
+        loaded = {}
+
     for name in module_names:
+        if name in loaded:
+            continue
+
         try:
             mod = importlib.import_module(f"modules.{name}")
             class_name = snake_to_camel(name)
             cls = getattr(mod, class_name)
-            modules.append(cls())
+            module = cls()
+            loaded[name] = module
+
+            # Recursively load dependencies
+            dependencies = (
+                module.dependencies()
+            )  # should return list of module class types
+            if dependencies:
+                dep_names = [
+                    camel_to_snake(dep.__name__) for dep in dependencies
+                ]
+                print(
+                    "loading dependencies for module:", name, "->", dep_names
+                )
+                load_modules(dep_names, loaded)
+
+        except ImportError as e:
+            print(
+                "There are circular dependencies in the modules, please check the module dependencies."
+            )
+            print(f"Module '{name}' could not be imported: {e}")
+            raise e
         except Exception as e:
             print(f"Failed to load module '{name}': {e}")
-    return modules
+
+    return list(loaded.values())
 
 
 def apply_before_modules(modules, prompt_data):

@@ -13,6 +13,7 @@ export interface Module {
   applies_before: boolean;
   applies_after: boolean;
   description: string;
+  dependencies: Array<String>;
 }
 
 export interface PromptResponse {
