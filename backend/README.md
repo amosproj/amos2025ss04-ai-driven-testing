@@ -243,6 +243,8 @@ Here’s what each CLI argument passed to lm_eval does:
 --batch_size 1:	Evaluation batch size
 --output_path:	Where to store the output .json file
 --confirm_run_unsafe_code:	Required for HumanEval; confirms you understand the code will be executed 🔐
+--command-order: If this flag is set, the modules are excecuted in the sequence they are given in the terminal. If this flag is not set, the modules are ececuted in the sequence given by their `preprocessing_order` and `postprocessing_order` or the default order.
+
 
 ## 🛑 Known Issues
 
