@@ -1,6 +1,9 @@
-name: Run app manually
+name: Run app manually or on push
 
 on:
+  push:
+    branches:
+      - ollama-tests
   workflow_dispatch:
     inputs:
       model:
@@ -34,6 +37,10 @@ jobs:
     - name: Run Python app
       shell: bash -l {0}
       run: |
+        MODEL="${{ github.event.inputs.model || '1' }}"
+        MODULES="${{ github.event.inputs.modules || 'internet_search' }}"
+
         python3 backend/main.py \
-          --model "${{ github.event.inputs.model }}" \
-          --modules "${{ github.event.inputs.modules }}" \
+          --model "$MODEL" \
+          --modules "$MODULES" \
+          --use-links https://www.bbc.com/news/articles/cjrld3erq4eo
