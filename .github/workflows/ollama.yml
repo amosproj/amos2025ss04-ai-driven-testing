@@ -1,10 +1,16 @@
-name: Run Ollama Python App (Branch Only)
+name: Run app manually
 
 on:
-  push:
-    branches:
-      - ollama-tests
   workflow_dispatch:
+    inputs:
+      model:
+        description: 'Model to use (e.g., 1 or llama3)'
+        required: true
+        default: '1'
+      modules:
+        description: 'Comma-separated list of modules (e.g., internet_search,web_reader)'
+        required: true
+        default: 'internet_search'
 
 jobs:
   run-with-conda:
@@ -25,7 +31,9 @@ jobs:
         channels: conda-forge,defaults
         auto-activate-base: false
 
-    - name: Run Python app (spins up Docker itself)
-      shell: bash -l {0}  # needed for Conda env
+    - name: Run Python app
+      shell: bash -l {0}
       run: |
-        python3 backend/main.py --model 1 --modules internet_search --use-links https://www.bbc.com/news/articles/cjrld3erq4eo
+        python3 backend/main.py \
+          --model "${{ github.event.inputs.model }}" \
+          --modules "${{ github.event.inputs.modules }}" \
