@@ -1,19 +1,9 @@
-name: Run app manually or on push
+name: Run Ollama Python App (Branch Only)
 
 on:
   push:
     branches:
       - ollama-tests
-  workflow_dispatch:
-    inputs:
-      model:
-        description: 'Model to use (e.g., 1 or llama3)'
-        required: true
-        default: '1'
-      modules:
-        description: 'Comma-separated list of modules (e.g., internet_search,web_reader)'
-        required: true
-        default: 'internet_search'
 
 jobs:
   run-with-conda:
@@ -37,10 +27,7 @@ jobs:
     - name: Run Python app
       shell: bash -l {0}
       run: |
-        MODEL="${{ github.event.inputs.model || '1' }}"
-        MODULES="${{ github.event.inputs.modules || 'internet_search' }}"
-
         python3 backend/main.py \
-          --model "$MODEL" \
-          --modules "$MODULES" \
-          --use-links https://www.bbc.com/news/articles/cjrld3erq4eo
+          --model 0 \
+          --source_code ./python-test-cases/test_case_three.py \
+          --modules calculate_mcc text_converter calculate_ccc context_size_calculator metrics_collector
