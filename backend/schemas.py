@@ -63,6 +63,13 @@ class PromptData(BaseModel):
     )
 
 
+class TestExecutionResults(BaseModel):
+    exit_code: int
+    stdout: str
+    stderr: str
+    status: str
+
+
 class OutputData(BaseModel):
     markdown: str = Field(..., description="LLM response in Markdown")
     code: Optional[str] = Field(
@@ -86,6 +93,9 @@ class OutputData(BaseModel):
     )
     output_code_path: Optional[str] = Field(
         None, description="The original output code"
+    )
+    test_execution_results: Optional[TestExecutionResults] = Field(
+        None, description="Execution results for generated tests"
     )
     control_flow_image: Optional[str] = Field(
         None,

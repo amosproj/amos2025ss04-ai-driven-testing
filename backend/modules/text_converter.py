@@ -23,20 +23,27 @@ class TextConverter(ModuleBase):
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
         model_id = prompt_data.model.id
         safe_model_id = model_id.replace(":", "_")
-        output_filename = f"prompt_{safe_model_id}.py"
+
+        # Prepare output directory
         output_dir = Path(__file__).parent.parent / "extracted"
         output_dir.mkdir(parents=True, exist_ok=True)
-        output_path = output_dir / output_filename
 
         # Filter and clean the prompt code
         raw_code = prompt_data.input.source_code or ""
         cleaned_code = clean_response_text(raw_code)
-        # Save cleaned prompt code
-        with open(output_path, "w", encoding="utf-8") as f:
+
+        # 1. Save to generic path (used by executor)
+        main_output_path = output_dir / "prompt.py"
+        with open(main_output_path, "w", encoding="utf-8") as f:
             f.write(cleaned_code)
-        prompt_data.prompt_code_path = str(
-            output_path
-        )  # Store path to cleaned prompt code
+
+        # 2. Save to versioned archive path
+        archive_output_path = output_dir / f"prompt_{safe_model_id}.py"
+        with open(archive_output_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_code)
+
+        # Update the prompt data path (used later for execution)
+        prompt_data.prompt_code_path = str(main_output_path)
         return prompt_data
 
     def process_response(
@@ -44,20 +51,35 @@ class TextConverter(ModuleBase):
     ) -> ResponseData:
         model_id = prompt_data.model.id
         safe_model_id = model_id.replace(":", "_")
-        output_filename = f"responce_{safe_model_id}.py"
+
+        # Base directory for all outputs
         output_dir = Path(__file__).parent.parent / "extracted"
         output_dir.mkdir(parents=True, exist_ok=True)
-        output_path = output_dir / output_filename
 
-        # get response from response_data
+        # Clean response code and prepend import line
         raw_markdown = response_data.output.markdown or ""
-        cleaned_code = clean_response_text(raw_markdown)
-        response_data.output.code = cleaned_code
-        with open(output_path, "w", encoding="utf-8") as f:
+        import_line = (
+            "import sys\n"
+            "from pathlib import Path\n"
+            "sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path\n"
+            "from prompt import *  # Import functions from prompt.py\n\n"
+        )
+        cleaned_code = import_line + clean_response_text(raw_markdown)
+
+        # 1. Save to generic path (used by executor)
+        main_output_path = output_dir / "response.py"
+        with open(main_output_path, "w", encoding="utf-8") as f:
             f.write(cleaned_code)
-        response_data.output.output_code_path = str(
-            output_path
-        )  # Store path to cleaned response code
+
+        # 2. Save to versioned archive path
+        archive_output_path = output_dir / f"response_{safe_model_id}.py"
+        with open(archive_output_path, "w", encoding="utf-8") as f:
+            f.write(cleaned_code)
+
+        # Update response_data with both paths
+        response_data.output.code = cleaned_code
+        response_data.output.output_code_path = str(main_output_path)
+
         return response_data
 
 
