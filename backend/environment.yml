@@ -25,4 +25,5 @@ dependencies:
       - beautifulsoup4
       - py2cfg
       - staticfg
+      - psutil
 
