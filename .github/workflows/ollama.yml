@@ -29,7 +29,7 @@ jobs:
       run: |
         python3 backend/main.py \
           --model 5 \
-          --source_code ./python-test-cases/test_case_three.py \
+          --source_code ./python-test-cases/test_case_four.py \
           --modules calculate_mcc text_converter calculate_ccc context_size_calculator metrics_collector
     
         cat outputs/latest/metrics.json
