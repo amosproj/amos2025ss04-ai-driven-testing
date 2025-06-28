@@ -27,12 +27,32 @@ jobs:
     - name: Run Python app and measure memory
       shell: bash -l {0}
       run: |
+        # Start docker stats in the background, outputting to a log
+        nohup bash -c '
+          while true; do
+            docker stats --no-stream --format "table {{.Name}}\t{{.MemUsage}}\t{{.CPUPerc}}"
+            sleep 5
+          done
+        ' > docker_mem_usage.log 2>&1 &
+    
+        # Capture PID of the monitoring loop
+        MONITOR_PID=$!
+    
+        # Run your main Python app with time measurement
         /usr/bin/time -v python3 backend/main.py \
           --model 0 \
           --source_code ./python-test-cases/test_case_four.py \
           --modules calculate_mcc calculate_ccc metrics_collector memory_usage
-
+    
+        # Stop the monitoring loop
+        kill $MONITOR_PID
+    
+        # Show collected metrics
         cat outputs/latest/metrics.json
+    
+        echo "Docker memory usage log:"
+        cat docker_mem_usage.log
+
 
 
         
