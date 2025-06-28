@@ -8,7 +8,7 @@ import json
 from typing import Dict
 from schemas import PromptData, ResponseData, OutputData, TimingData
 import socket
-
+from modules.memory_usage import MemoryUsage
 OLLAMA_IMAGE = "ollama/ollama"
 OLLAMA_MODELS_VOLUME = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "ollama-models"
@@ -31,7 +31,7 @@ class LLMManager:
         self.client = docker.from_env()
         # Map: model_name -> (container, port)
         self.active_models: Dict[
-            str, (docker.models.containers.Container, int, str)
+            str, (docker.models.containers.Container, int, str, MemoryUsage)
         ] = {}
 
     def _verify_model_id(self, model_id: str) -> None:
@@ -100,9 +100,16 @@ class LLMManager:
 
         # Pull the model inside the container
         self._pull_model(port, model_id, container_name)
-
+        # Start memory monitoring if active
+        if  MemoryUsage.is_initialized():
+            print("Starting memory usage monitoring...")
+            monitor = MemoryUsage(container, interval=0.5)
+            monitor.start()
+        else:
+            print("none")
+            monitor = None
         # Track it
-        self.active_models[model_id] = (container, port, container_name)
+        self.active_models[model_id] = (container, port, container_name, monitor)
         print(f"Model {model_id} was started in container '{container_name}' ")
 
     def stop_model_container(self, model_id: str) -> None:
@@ -112,8 +119,10 @@ class LLMManager:
         if model_id not in self.active_models:
             print(f"No active container found for '{model_id}'.")
             return
-        container, _, _ = self.active_models[model_id]
+        container, _, _, monitor = self.active_models[model_id]
         print(f"Stopping container for model {model_id}...")
+        if monitor is not None:
+            monitor.stop()
         container.stop()
         del self.active_models[model_id]
 
@@ -142,7 +151,7 @@ class LLMManager:
                 f"Model '{model_id}' is inactive. "
                 f"Start it first via start_model_container()."
             )
-        _, port, container_name = self.active_models[model_id]
+        _, port, container_name, _ = self.active_models[model_id]
         url = f"{get_base_url(container_name)}:{port}/api/generate"
         print(url)
 
