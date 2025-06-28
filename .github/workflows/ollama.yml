@@ -28,7 +28,7 @@ jobs:
       shell: bash -l {0}
       run: |
         python3 backend/main.py \
-          --model 2 \
+          --model 0 \
           --source_code ./python-test-cases/test_case_four.py \
           --modules calculate_mcc calculate_ccc metrics_collector memory_usage
     
