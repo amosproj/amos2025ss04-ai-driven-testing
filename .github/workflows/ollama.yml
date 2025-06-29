@@ -31,7 +31,6 @@ jobs:
         nohup bash -c '
           while true; do
             docker stats --no-stream --format "table {{.Name}}\t{{.MemUsage}}\t{{.CPUPerc}}"
-            sleep 0.5
           done
         ' > docker_mem_usage.log 2>&1 &
     
