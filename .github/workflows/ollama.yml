@@ -39,7 +39,7 @@ jobs:
     
         # Run your main Python app with time measurement
         /usr/bin/time -v python3 backend/main.py \
-          --model 5 \
+          --model 2 \
           --source_code ./python-test-cases/test_case_four.py \
           --modules calculate_mcc calculate_ccc metrics_collector memory_usage
     
