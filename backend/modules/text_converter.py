@@ -63,6 +63,7 @@ class TextConverter(ModuleBase):
             "from pathlib import Path\n"
             "sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path\n"
             "from prompt import *  # Import functions from prompt.py\n\n"
+            "import unittest\n\n"
         )
         cleaned_code = import_line + clean_response_text(raw_markdown)
 
