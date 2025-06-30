@@ -15,6 +15,7 @@ from pathlib import Path
 
 def execute_prompt(active_modules, prompt_data, output_file, iterations=1):
     """Execute the prompt-response flow, with optional iterations for refinement."""
+
     # Process with modules
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
