@@ -9,7 +9,7 @@ from schemas import PromptData, ResponseData, TestExecutionResults
 class ExecuteTests(ModuleBase):
     """Executes the generated prompt and response code (typically unittests)."""
 
-    postprocessing_order = 99  # Run this late in the chain
+    postprocessing_order = 90  # Run this late in the chain
 
     def applies_before(self) -> bool:
         return False
