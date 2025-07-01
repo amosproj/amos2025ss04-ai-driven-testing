@@ -1,28 +1,21 @@
-import re
 import subprocess
-import shutil
 import tempfile
 import os
 from pathlib import Path
-from typing import Dict, Any
 import warnings
-
-from modules.metrics_collector import MetricsCollector
+import json
 from modules.text_converter import TextConverter
 from modules.execute_tests import ExecuteTests
 from modules.base import ModuleBase
-from schemas import PromptData, ResponseData, TestExecutionResults
+from schemas import PromptData, ResponseData
 
 
 class CleanOutputCode(ModuleBase):
     """Module that ensures outputted test code runs without errors by fixing common issues and using LLM for complex fixes."""
 
     postprocessing_order = (
-        95  # Run after ExecuteTests (99) to use its execution results
+        95  # Run after ExecuteTests (90) to use its execution results
     )
-
-    def __init__(self):
-        self.max_fix_attempts = 3
 
     def applies_before(self) -> bool:
         return False
@@ -53,7 +46,9 @@ class CleanOutputCode(ModuleBase):
         )
 
         if not prompt_path or not response_path or not response_path.exists():
-            warnings.warn("[CleanOutputCode] Missing required file paths, skipping...")
+            warnings.warn(
+                "[CleanOutputCode] Missing required file paths, skipping..."
+            )
             return response_data
 
         # Check if there are errors that need fixing based on ExecuteTests results
@@ -90,112 +85,151 @@ class CleanOutputCode(ModuleBase):
     def _apply_manual_fixes_to_file(self, file_path: Path) -> None:
         # TODO!
         """Apply manual fixes directly to the file."""
-        with open(file_path, "r") as f:
-            content = f.read()
+        # with open(file_path, "r") as f:
+        #    content = f.read()
 
-        #fixed_content = self._apply_manual_fixes(content)
+        # fixed_content = self._apply_manual_fixes(content)
 
-        #with open(file_path, "w") as f:
+        # with open(file_path, "w") as f:
         #    f.write(fixed_content)
 
     def _restart_with_llm_fix(
         self,
         prompt_path: Path,
         response_path: Path,
-        response_data: ResponseData
+        response_data: ResponseData,
     ) -> bool:
-        """Restart the main.py process with LLM fix prompt."""
-        try:
-            # Read current files
-            with open(response_path, "r") as f:
-                test_code = f.read()
+        """Restart the main.py process with LLM fix prompt, with iterative fixing."""
+        max_llm_attempts = 5  # Maximum number of LLM fix attempts
+        response_data_path = (
+            Path(__file__).parent.parent
+            / "outputs"
+            / "latest"
+            / "response.json"
+        )
 
+        try:
+            # Read the original prompt code (this stays constant)
             with open(prompt_path, "r") as f:
                 prompt_code = f.read()
 
-            # Create fix prompt
-            fix_prompt = self._create_fixing_prompt(
-                prompt_code, test_code, response_data
-            )
+            # Start with the current test code
+            current_test_code = None
+            with open(response_path, "r") as f:
+                current_test_code = f.read()
 
-            # Create temporary files for the new run
-            with tempfile.NamedTemporaryFile(
-                mode="w", suffix=".txt", delete=False
-            ) as source_file:
-                source_file.write(fix_prompt)
-                temp_source_path = source_file.name
+            for attempt in range(1, max_llm_attempts + 1):
+                print(
+                    f"[CleanOutputCode] LLM fix attempt {attempt}/{max_llm_attempts}"
+                )
 
-            with tempfile.NamedTemporaryFile(
-                mode="w", suffix=".txt", delete=False
-            ) as user_msg_file:
-                user_msg_file.write("")  # Empty source code for fix prompt
-                temp_user_msg_path = user_msg_file.name
+                # Create fix prompt for current test code
+                fix_prompt = self._create_fixing_prompt(
+                    prompt_code, current_test_code, response_data
+                )
 
-            # Prepare command to restart main.py with qwen3 model
-            cmd = [
-                "python3",
-                str(Path(__file__).parent.parent / "main.py"),
-                "--model",
-                str(6),
-                "--prompt_file",
-                temp_user_msg_path,
-                "--source_code",
-                temp_source_path,
-                "--modules",
-                "text_converter",
-                "execute_tests",
-                "clean_output_code",
-            ]
+                # Create temporary files for this attempt
+                with tempfile.NamedTemporaryFile(
+                    mode="w", suffix=".txt", delete=False
+                ) as source_file:
+                    source_file.write(fix_prompt)
+                    temp_source_path = source_file.name
 
-            print(
-                f"[CleanOutputCode] Restarting main.py with command: {' '.join(cmd)}"
-            )
-            print("[CleanOutputCode] LLM fix subprocess output (streaming):")
-            print("=" * 60)
+                with tempfile.NamedTemporaryFile(
+                    mode="w", suffix=".txt", delete=False
+                ) as user_msg_file:
+                    user_msg_file.write(
+                        ""
+                    )  # Empty user message for fix prompt
+                    temp_user_msg_path = user_msg_file.name
 
-            # Run the subprocess with streaming output
-            process = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,  # Merge stderr into stdout for simpler streaming
-                text=True,
-                bufsize=1,  # Line buffered
-                universal_newlines=True,
-                cwd=Path(__file__).parent.parent,
-            )
+                # Create output file for this attempt
+                output_file = (
+                    response_path.parent / f"fixed_attempt_{attempt}.md"
+                )
 
-            # Stream output line by line
-            try:
-                for line in process.stdout:
+                # Prepare command WITHOUT clean_output_code module
+                cmd = [
+                    "python3",
+                    str(Path(__file__).parent.parent / "main.py"),
+                    "--model",
+                    str(6),  # Using model 6 (qwen3)
+                    "--prompt_file",
+                    temp_user_msg_path,
+                    "--source_code",
+                    temp_source_path,
+                    "--modules",
+                    "text_converter",
+                    "execute_tests",
+                    "--output_file",
+                    str(output_file),
+                ]
+
+                print(
+                    f"[CleanOutputCode] Running fix attempt {attempt}: {' '.join(cmd)}"
+                )
+                print("=" * 60)
+
+                # Run the subprocess with streaming output
+                process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    bufsize=1,
+                    universal_newlines=True,
+                    cwd=Path(__file__).parent.parent,
+                )
+
+                # Stream output line by line
+                try:
+                    for line in process.stdout:
+                        print(line.rstrip())
+
+                    # Wait for process to complete
+                    process.wait(timeout=100)
+
+                except subprocess.TimeoutExpired:
+                    process.kill()
                     print(
-                        line.rstrip()
-                    )  # Print each line as it comes, removing trailing newline
+                        f"[CleanOutputCode] Attempt {attempt} timed out after 5 minutes"
+                    )
 
-                # Wait for process to complete
-                return_code = process.wait(timeout=300)  # 5 minute timeout
+                print("=" * 60)
 
-            except subprocess.TimeoutExpired:
-                process.kill()
-                print("[CleanOutputCode] Process timed out after 5 minutes")
-                return_code = -1
+                # Clean up temporary files for this attempt
+                os.unlink(temp_user_msg_path)
+                os.unlink(temp_source_path)
 
-            print("=" * 60)
-            print(f"[CleanOutputCode] Process exit code: {return_code}")
+                # Load the JSON file and create ResponseData from the dictionary
+                try:
+                    with open(response_data_path, "r") as f:
+                        response_data_dict = json.load(f)
+                    response_data = ResponseData(**response_data_dict)
 
-            # Clean up temporary files
-            os.unlink(temp_user_msg_path)
-            os.unlink(temp_source_path)
+                    if (
+                        response_data.output.test_execution_results.exit_code
+                        == 0
+                    ):
+                        print(f"[CleanOutputCode] Attempt {attempt} succeeded")
+                        # If the fix was successful, we can stop here
+                        break
+                    else:
+                        print(
+                            f"[CleanOutputCode] Attempt {attempt} failed, retrying..."
+                        )
+                        response_path = Path(
+                            response_data.output.output_code_path
+                        )
+                        with open(response_path, "r") as f:
+                            current_test_code = f.read()
+                except Exception as e:
+                    raise RuntimeError(
+                        f"[CleanOutputCode] Failed to load response data: {e}"
+                    ) from e
 
-            if return_code == 0:
-                print(
-                    "[CleanOutputCode] LLM fix subprocess completed successfully"
-                )
-                return True
-            else:
-                print(
-                    f"[CleanOutputCode] LLM fix subprocess failed with exit code {return_code}"
-                )
-                return False
+            print(f"[CleanOutputCode] Completed {attempt} LLM fix attempts")
+            return True
 
         except Exception as e:
             print(f"[CleanOutputCode] Error during LLM fix restart: {e}")
@@ -257,6 +291,8 @@ class CleanOutputCode(ModuleBase):
             else:
                 return None
         else:
-            warnings.warn("test execution information not found in response_data.output.test_execution_results")
+            warnings.warn(
+                "test execution information not found in response_data.output.test_execution_results"
+            )
 
         return "\n".join(error_parts)

@@ -67,10 +67,13 @@ class TextConverter(ModuleBase):
         )
         cleaned_code = clean_response_text(raw_markdown)
         # Check if import block is already present (handle both escaped and unescaped quotes)
-        if not ("sys.path.insert(0," in cleaned_code and "code/extracted" in cleaned_code):
+        if not (
+            "sys.path.insert(0," in cleaned_code
+            and "code/extracted" in cleaned_code
+        ):
             cleaned_code = import_line + cleaned_code
 
-        if "if __name__ == \"__main__\":" not in cleaned_code:
+        if 'if __name__ == "__main__":' not in cleaned_code:
             cleaned_code += (
                 '\n\nif __name__ == "__main__":\n    unittest.main()\n'
             )
