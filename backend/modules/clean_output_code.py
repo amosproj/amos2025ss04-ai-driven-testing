@@ -82,17 +82,6 @@ class CleanOutputCode(ModuleBase):
 
         return response_data
 
-    def _apply_manual_fixes_to_file(self, file_path: Path) -> None:
-        # TODO!
-        """Apply manual fixes directly to the file."""
-        # with open(file_path, "r") as f:
-        #    content = f.read()
-
-        # fixed_content = self._apply_manual_fixes(content)
-
-        # with open(file_path, "w") as f:
-        #    f.write(fixed_content)
-
     def _restart_with_llm_fix(
         self,
         prompt_path: Path,
@@ -239,24 +228,24 @@ class CleanOutputCode(ModuleBase):
         self, prompt_code: str, test_code: str, response_data: ResponseData
     ) -> str:
         """Create a prompt for the LLM to fix the code."""
-        error_info = self._extract_error_info(response_data)
-
-        return f"""
-            I have a Python test file that's failing to execute. Please fix the errors and return the corrected code.
-
-            **Original code under test (prompt.py):**
-            ```python
-            {prompt_code}
-            ```
-
-            **Current test code that has errors:**
-            ```python
-            {test_code}
-            ```
-
-            **Error information:**
-            {error_info}
-
+        execution_error_info = self._extract_error_info_from_execution(response_data)
+        analysis_error_info = self.extract_analysis_error_info(response_data)
+        
+        # Start building the prompt
+        prompt = "I have a Python test file that's failing to execute. Please fix the errors and return the corrected code.\n\n"
+        prompt += "**Original code under test (prompt.py):**\n```python\n" + prompt_code + "\n```\n\n"
+        prompt += "**Current test code that has errors:**\n```python\n" + test_code + "\n```\n"
+        
+        # Only include execution error info if it exists
+        if execution_error_info is not None and execution_error_info.strip():
+            prompt += "\n**Error information that occured during execution:**\n" + execution_error_info + "\n"
+            
+        # Only include analysis error info if it exists
+        if analysis_error_info is not None and analysis_error_info.strip():
+            prompt += "\n**Analysis error information:**\n" + analysis_error_info + "\n"
+        
+        # Add instructions
+        prompt += """
             **Instructions:**
             1. Fix all syntax errors, import errors, and runtime errors
             2. Ensure the test code properly imports from prompt.py
@@ -267,11 +256,19 @@ class CleanOutputCode(ModuleBase):
 
             Return the fixed test code:
             """
+        
+        return prompt
 
+        
     def _check_if_needs_fixing(self, response_data: ResponseData) -> bool:
-        return self._extract_error_info(response_data) is not None
+        return self._extract_error_info_from_execution(response_data) is not None or response_data.output.test_execution_results is not None
+    
+    def extract_analysis_error_info(self, response_data: ResponseData) -> str:
+        """Extract simple error information from response_data
+        for use in UI."""
+        
 
-    def _extract_error_info(self, response_data: ResponseData) -> str:
+    def _extract_error_info_from_execution(self, response_data: ResponseData) -> str:
         """Extract error information from response_data."""
         error_parts = []
 
