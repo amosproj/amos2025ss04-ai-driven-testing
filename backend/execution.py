@@ -1,11 +1,18 @@
 """Execution module for processing prompts and managing LLM interactions."""
 import module_manager
 from llm_manager import LLMManager
-from export_manager import ExportManager
-from schemas import PromptData, ModelMeta, InputData, InputOptions
 from datetime import datetime
 import json
 from pathlib import Path
+
+# Import export functionality if available
+try:
+    from export_manager import ExportManager
+    from schemas import PromptData, ModelMeta, InputData, InputOptions
+
+    EXPORT_AVAILABLE = True
+except ImportError:
+    EXPORT_AVAILABLE = False
 
 
 def execute_prompt(
@@ -57,7 +64,7 @@ def execute_prompt(
             f.write(response_data.output.markdown)
 
         # === Export functionality ===
-        if export_format or export_all:
+        if EXPORT_AVAILABLE and (export_format or export_all):
             export_manager = ExportManager()
 
             # Get the content to export
