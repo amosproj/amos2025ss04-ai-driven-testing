@@ -16,21 +16,9 @@ class TestCodeCoverageAnalyzer:
     def test_analyzer_initialization(self):
         """Test that the analyzer initializes correctly."""
         assert self.analyzer is not None
-<<<<<<< HEAD
-<<<<<<< HEAD
         assert hasattr(self.analyzer, "analyze_coverage")
         assert hasattr(self.analyzer, "applies_before")
         assert hasattr(self.analyzer, "applies_after")
-=======
-        assert hasattr(self.analyzer, 'analyze_coverage')
-        assert hasattr(self.analyzer, 'applies_before')
-        assert hasattr(self.analyzer, 'applies_after')
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-        assert hasattr(self.analyzer, "analyze_coverage")
-        assert hasattr(self.analyzer, "applies_before")
-        assert hasattr(self.analyzer, "applies_after")
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 
     def test_applies_before(self):
         """Test applies_before method."""
@@ -77,75 +65,29 @@ if __name__ == '__main__':
 """
 
         result = self.analyzer.analyze_coverage(source_code, test_code)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         assert isinstance(result, dict)
         assert "coverage_percentage" in result
         assert "status" in result
         assert result["status"] == "success"
         assert isinstance(result["coverage_percentage"], (int, float))
-=======
-        
-        assert isinstance(result, dict)
-        assert 'coverage_percentage' in result
-        assert 'status' in result
-        assert result['status'] == 'success'
-        assert isinstance(result['coverage_percentage'], (int, float))
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-
-        assert isinstance(result, dict)
-        assert "coverage_percentage" in result
-        assert "status" in result
-        assert result["status"] == "success"
-        assert isinstance(result["coverage_percentage"], (int, float))
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 
     def test_analyze_coverage_with_invalid_test(self):
         """Test coverage analysis with invalid test code."""
         source_code = "def hello(): return 'world'"
         test_code = "this is not valid python code"
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         result = self.analyzer.analyze_coverage(source_code, test_code)
 
         assert isinstance(result, dict)
         assert "error" in result or "status" in result
-=======
-        
-=======
-
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
-        result = self.analyzer.analyze_coverage(source_code, test_code)
-
-        assert isinstance(result, dict)
-<<<<<<< HEAD
-        assert 'error' in result or 'status' in result
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-        assert "error" in result or "status" in result
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 
     def test_analyze_coverage_with_empty_code(self):
         """Test coverage analysis with empty code."""
         result = self.analyzer.analyze_coverage("", "")
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         assert isinstance(result, dict)
         assert "error" in result or "status" in result
-=======
-        
-        assert isinstance(result, dict)
-        assert 'error' in result or 'status' in result
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-
-        assert isinstance(result, dict)
-        assert "error" in result or "status" in result
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 
     def test_analyze_coverage_ast_fallback(self):
         """Test AST analysis fallback when coverage.py fails."""
@@ -169,27 +111,11 @@ def function_one():
 
 print("Test executed")
 """
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         result = self.analyzer.analyze_coverage(source_code, test_code)
 
         assert isinstance(result, dict)
         assert "status" in result
-=======
-        
-=======
-
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
-        result = self.analyzer.analyze_coverage(source_code, test_code)
-
-        assert isinstance(result, dict)
-<<<<<<< HEAD
-        assert 'status' in result
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-        assert "status" in result
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 
     def test_extract_functions_ast(self):
         """Test AST function extraction."""
@@ -207,15 +133,7 @@ class MyClass:
     def method2(self, x, y):
         return x + y
 """
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
         # This tests internal AST functionality
         functions = self.analyzer._extract_functions_ast(source_code)
         assert isinstance(functions, list)
@@ -225,15 +143,7 @@ class MyClass:
     def test_extract_functions_ast_invalid(self):
         """Test AST function extraction with invalid code."""
         invalid_code = "def invalid_syntax( this is not python"
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
-=======
-
->>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
         functions = self.analyzer._extract_functions_ast(invalid_code)
         assert isinstance(functions, list)
         assert len(functions) == 0  # Should return empty list for invalid code

@@ -1,5 +1,3 @@
-<<<<<<< SEARCH
-=======
 import unittest
 
 from correct_python_programs.shortest_pathsfromcorrect_python_programsfromcorrect_python_programs import \
@@ -51,14 +49,3 @@ class TestShortestPaths(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
->>>>>>> REPLACE
-```
-
-The test class includes:
-1. A test case for a simple linear graph
-2. A test case with multiple possible paths between nodes
-3. A test case where all edges have the same weight
-
-To run the tests, use:
-```bash
-python -m unittest test_shortestpaths.py

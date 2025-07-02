@@ -20,19 +20,6 @@ export interface PromptResponse {
   response_markdown: string;
   total_seconds: number;
 <<<<<<< HEAD
-  code_coverage?: {
-    coverage_percentage?: number;
-    lines_covered?: number;
-    lines_total?: number;
-    branch_coverage?: number;
-    uncovered_lines?: number[];
-    coverage_data?: any;
-    error?: string;
-    status?: string;
-  };
-=======
-<<<<<<< HEAD
->>>>>>> 87b2944 (Final commit: Complete code coverage integration)
   modules_used: string[];
 =======
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
@@ -72,16 +59,7 @@ export async function sendPrompt(
   model: Model,
   user_message: string,
   source_code: string,
-<<<<<<< HEAD
-  enableCodeCoverage: boolean = false,
-  modules: string[] = []
-=======
-<<<<<<< HEAD
-  modules: string[] = [],
-=======
->>>>>>> 36a5455 (Final commit: Complete code coverage integration)
   enableCodeCoverage: boolean = false
->>>>>>> 87b2944 (Final commit: Complete code coverage integration)
 ): Promise<PromptResponse> {
   const body = {
     model: {

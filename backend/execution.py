@@ -1,8 +1,6 @@
 """Execution module for processing prompts and managing LLM interactions."""
 import module_manager
 from llm_manager import LLMManager
-from export_manager import ExportManager
-from schemas import PromptData, ModelMeta, InputData, InputOptions
 from datetime import datetime
 import json
 from pathlib import Path
@@ -16,31 +14,25 @@ try:
 except ImportError:
     EXPORT_AVAILABLE = False
 
+# Import export functionality if available
+try:
+    from export_manager import ExportManager
+    from schemas import PromptData, ModelMeta, InputData, InputOptions
+
+    EXPORT_AVAILABLE = True
+except ImportError:
+    EXPORT_AVAILABLE = False
+
 
 def execute_prompt(
-    model,
     active_modules,
-    prompt_text,
+    prompt_data,
     output_file,
-    export_format="markdown",
+    export_format=None,
     export_all=False,
 ):
     """Execute the prompt-response flow."""
-    # Read prompt
 
-    model_id = model["id"]
-    model_name = model["name"]
-
-    prompt_data = PromptData(
-        model=ModelMeta(id=model_id, name=model_name),
-        input=InputData(
-            user_message="Was macht dieser Code?",
-            source_code=prompt_text,
-            system_message="You are a helpful assistant. Provide your answer always in Markdown.\n"
-            "Format code blocks appropriately, and do not include text outside valid Markdown.",
-            options=InputOptions(num_ctx=4096),
-        ),
-    )
     # Process with modules
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
@@ -78,7 +70,7 @@ def execute_prompt(
                 json.dump(response_json, f, indent=2)
 
         # === Export functionality ===
-        if export_format or export_all:
+        if EXPORT_AVAILABLE and (export_format or export_all):
             export_manager = ExportManager()
 
             # Get the content to export (assuming response_data has a 'content' or 'response' field)
@@ -130,10 +122,48 @@ def execute_prompt_with_model(
         export_format = None
         export_all = False
 
+    if not EXPORT_AVAILABLE:
+        # Fallback for missing dependencies
+        print("Export functionality not available - missing dependencies")
+        export_format = None
+        export_all = False
+
     # Create prompt_data from model and text
     model_id = model["id"]
     model_name = model["name"]
 
+    if EXPORT_AVAILABLE:
+        prompt_data = PromptData(
+            model=ModelMeta(id=model_id, name=model_name),
+            input=InputData(
+                user_message="Was macht dieser Code?",
+                source_code=prompt_text,
+                system_message="You are a helpful assistant. Provide your answer always in Markdown.\n"
+                "Format code blocks appropriately, and do not include text outside valid Markdown.",
+                options=InputOptions(num_ctx=4096),
+            ),
+        )
+    else:
+        # Create a minimal prompt_data structure
+        prompt_data = type(
+            "PromptData",
+            (),
+            {
+                "model": type(
+                    "Model", (), {"id": model_id, "name": model_name}
+                )(),
+                "input": type(
+                    "Input",
+                    (),
+                    {
+                        "user_message": "Was macht dieser Code?",
+                        "source_code": prompt_text,
+                        "system_message": "You are a helpful assistant. Provide your answer always in Markdown.\n"
+                        "Format code blocks appropriately, and do not include text outside valid Markdown.",
+                    },
+                )(),
+            },
+        )()
     if EXPORT_AVAILABLE:
         prompt_data = PromptData(
             model=ModelMeta(id=model_id, name=model_name),
@@ -211,10 +241,8 @@ def execute_prompt_new(active_modules, prompt_data, output_file):
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(response_json, f, indent=2)
 
-        # Write output file
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(response_data.output.markdown)
-
     finally:
         print("")
         manager.stop_model_container(prompt_data.model.id)
