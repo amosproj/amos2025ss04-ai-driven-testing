@@ -9,6 +9,16 @@ export interface Model {
 export interface PromptResponse {
   response_markdown: string;
   total_seconds: number;
+  code_coverage?: {
+    coverage_percentage?: number;
+    lines_covered?: number;
+    lines_total?: number;
+    branch_coverage?: number;
+    uncovered_lines?: number[];
+    coverage_data?: any;
+    error?: string;
+    status?: string;
+  };
 }
 
 const API_BASE_URL = "http://localhost:8000";
@@ -26,7 +36,8 @@ export async function getModels(): Promise<Model[]> {
 export async function sendPrompt(
   model: Model,
   user_message: string,
-  source_code: string
+  source_code: string,
+  enableCodeCoverage: boolean = false
 ): Promise<PromptResponse> {
   const body = {
     model: {
@@ -44,6 +55,7 @@ export async function sendPrompt(
         seed: 42,
         top_p: 0.95,
       },
+      enable_code_coverage: enableCodeCoverage,
     },
   };
 
@@ -73,4 +85,4 @@ export async function shutdownModel(model_id: string): Promise<void> {
   if (!res.ok) {
     throw new Error(`POST /shutdown failed: ${res.status} ${res.statusText}`);
   }
-} 
+}

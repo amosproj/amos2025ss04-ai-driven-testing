@@ -26,21 +26,30 @@ const App: React.FC = () => {
       });
   }, []);
 
-  const handleSendMessage = (message: string) => {
+  const handleSendMessage = (message: string, enableCodeCoverage: boolean = false) => {
     // füge User-Nachricht zum Verlauf hinzu
     setMessages((prev) => [...prev, { role: 'user', content: message }]);
 
     setLoading(true);
     console.log('Sende Nachricht:', message);
+    console.log('Code Coverage enabled:', enableCodeCoverage);
     if (!selectedModel) return;
-    sendPrompt(selectedModel, message, message)
+    sendPrompt(selectedModel, message, message, enableCodeCoverage)
       .then((res) => {
         console.log('Antwort erhalten:', res);
         // füge Assistant-Antwort zum Verlauf hinzu
-        setMessages((prev) => [
-          ...prev,
-          { role: 'assistant', content: res.response_markdown, responseTime: res.total_seconds },
-        ]);
+        const assistantMessage: ChatMessage = {
+          role: 'assistant',
+          content: res.response_markdown,
+          responseTime: res.total_seconds,
+        };
+        
+        // Add code coverage info if available
+        if (res.code_coverage) {
+          assistantMessage.codeCoverage = res.code_coverage;
+        }
+        
+        setMessages((prev) => [...prev, assistantMessage]);
       })
       .catch((err) => {
         console.error('Fehler beim Senden des Prompts:', err);

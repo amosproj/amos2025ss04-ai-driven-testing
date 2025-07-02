@@ -2,11 +2,22 @@ import React from 'react';
 import { Paper, Typography, Stack, CircularProgress, Box } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import CodeCoverageDisplay from './CodeCoverageDisplay';
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   responseTime?: number;
+  codeCoverage?: {
+    coverage_percentage?: number;
+    lines_covered?: number;
+    lines_total?: number;
+    branch_coverage?: number;
+    uncovered_lines?: number[];
+    coverage_data?: any;
+    error?: string;
+    status?: string;
+  };
 }
 
 interface ChatHistoryProps {
@@ -42,6 +53,9 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages, loading = false }) 
             )}
           </Box>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+          {msg.role === 'assistant' && msg.codeCoverage && (
+            <CodeCoverageDisplay coverage={msg.codeCoverage} />
+          )}
         </Paper>
       ))
     )}
