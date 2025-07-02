@@ -39,7 +39,7 @@ const App: React.FC = () => {
     console.log('Sende Nachricht:', message);
     console.log('Code Coverage enabled:', enableCodeCoverage);
     if (!selectedModel) return;
-    sendPrompt(selectedModel, message, message, enableCodeCoverage, selectedModules)
+    sendPrompt(selectedModel, message, message, selectedModules, enableCodeCoverage)
       .then((res) => {
         console.log('Antwort erhalten:', res);
         // füge Assistant-Antwort zum Verlauf hinzu

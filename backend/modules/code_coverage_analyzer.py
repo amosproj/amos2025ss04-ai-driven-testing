@@ -57,9 +57,13 @@ class CodeCoverageAnalyzer:
         """
         return True
 
+<<<<<<< HEAD
     def analyze_coverage(
         self, source_code: str, test_code: str
     ) -> Dict[str, Any]:
+=======
+    def analyze_coverage(self, source_code: str, test_code: str) -> Dict[str, Any]:
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
         """
         Analyze code coverage for the given source and test code.
 
@@ -82,7 +86,11 @@ class CodeCoverageAnalyzer:
             return {
                 "status": "error",
                 "error": "Source code and test code cannot be empty",
+<<<<<<< HEAD
                 "coverage_percentage": 0,
+=======
+                "coverage_percentage": 0
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
             }
 
         # Try coverage.py analysis first
@@ -98,12 +106,19 @@ class CodeCoverageAnalyzer:
                     "status": "error",
                     "error": f"Both coverage.py and AST analysis failed. Coverage.py: {str(e)}, AST: {str(ast_e)}",
                     "coverage_percentage": 0,
+<<<<<<< HEAD
                     "analysis_method": "failed",
                 }
 
     def _analyze_with_coverage_py(
         self, source_code: str, test_code: str
     ) -> Dict[str, Any]:
+=======
+                    "analysis_method": "failed"
+                }
+
+    def _analyze_with_coverage_py(self, source_code: str, test_code: str) -> Dict[str, Any]:
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
         """
         Analyze coverage using the coverage.py library.
 
@@ -117,21 +132,33 @@ class CodeCoverageAnalyzer:
         with tempfile.TemporaryDirectory() as temp_dir:
             # Create source file
             source_file = os.path.join(temp_dir, "source_code.py")
+<<<<<<< HEAD
             with open(source_file, "w", encoding="utf-8") as f:
+=======
+            with open(source_file, 'w', encoding='utf-8') as f:
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
                 f.write(source_code)
 
             # Create test file that imports and uses the source code
             test_file = os.path.join(temp_dir, "test_code.py")
             test_content = self._prepare_test_code(source_code, test_code)
+<<<<<<< HEAD
             with open(test_file, "w", encoding="utf-8") as f:
+=======
+            with open(test_file, 'w', encoding='utf-8') as f:
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
                 f.write(test_content)
 
             # Initialize coverage
             cov = coverage.Coverage(
                 source=[temp_dir],
+<<<<<<< HEAD
                 omit=[
                     test_file
                 ],  # Don't measure coverage of the test file itself
+=======
+                omit=[test_file]  # Don't measure coverage of the test file itself
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
             )
 
             try:
@@ -144,6 +171,7 @@ class CodeCoverageAnalyzer:
 
                 try:
                     # Import and run the test module
+<<<<<<< HEAD
                     spec = __import__("test_code")
 
                     # If it's a unittest module, run it
@@ -154,6 +182,15 @@ class CodeCoverageAnalyzer:
                             capture_output=True,
                             timeout=30,
                         )
+=======
+                    spec = __import__('test_code')
+
+                    # If it's a unittest module, run it
+                    if hasattr(spec, 'unittest') or 'unittest' in test_content:
+                        subprocess.run([
+                            sys.executable, test_file
+                        ], cwd=temp_dir, capture_output=True, timeout=30)
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
 
                 finally:
                     sys.path = old_path
@@ -171,6 +208,7 @@ class CodeCoverageAnalyzer:
                 try:
                     analysis = cov._analyze(source_file)
                     total_lines = len(analysis.statements)
+<<<<<<< HEAD
                     covered_lines = list(
                         analysis.statements - analysis.missing
                     )
@@ -181,6 +219,12 @@ class CodeCoverageAnalyzer:
                         if total_lines > 0
                         else 0
                     )
+=======
+                    covered_lines = list(analysis.statements - analysis.missing)
+                    missing_lines = list(analysis.missing)
+
+                    coverage_percentage = (len(covered_lines) / total_lines * 100) if total_lines > 0 else 0
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
 
                     return {
                         "status": "success",
@@ -189,7 +233,11 @@ class CodeCoverageAnalyzer:
                         "lines_total": total_lines,
                         "uncovered_lines": missing_lines,
                         "analysis_method": "coverage.py",
+<<<<<<< HEAD
                         "covered_lines": covered_lines,
+=======
+                        "covered_lines": covered_lines
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
                     }
 
                 except Exception as analysis_error:
@@ -198,7 +246,11 @@ class CodeCoverageAnalyzer:
                         "status": "partial_success",
                         "coverage_percentage": 0,
                         "error": f"Coverage analysis incomplete: {str(analysis_error)}",
+<<<<<<< HEAD
                         "analysis_method": "coverage.py",
+=======
+                        "analysis_method": "coverage.py"
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
                     }
 
             except Exception as exec_error:
@@ -226,9 +278,13 @@ class CodeCoverageAnalyzer:
 
         return prepared_code
 
+<<<<<<< HEAD
     def _analyze_with_ast(
         self, source_code: str, test_code: str
     ) -> Dict[str, Any]:
+=======
+    def _analyze_with_ast(self, source_code: str, test_code: str) -> Dict[str, Any]:
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
         """
         Analyze coverage using AST parsing as a fallback method.
 
@@ -251,7 +307,11 @@ class CodeCoverageAnalyzer:
                 "status": "error",
                 "error": "No functions found in source code",
                 "coverage_percentage": 0,
+<<<<<<< HEAD
                 "analysis_method": "ast",
+=======
+                "analysis_method": "ast"
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
             }
 
         # Count how many source functions are referenced in tests
@@ -260,11 +320,15 @@ class CodeCoverageAnalyzer:
             if self._function_referenced_in_test(source_func, test_code):
                 covered_functions.append(source_func)
 
+<<<<<<< HEAD
         coverage_percentage = (
             (len(covered_functions) / len(source_functions) * 100)
             if source_functions
             else 0
         )
+=======
+        coverage_percentage = (len(covered_functions) / len(source_functions) * 100) if source_functions else 0
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
 
         return {
             "status": "success",
@@ -273,11 +337,17 @@ class CodeCoverageAnalyzer:
             "functions_covered": len(covered_functions),
             "functions_in_tests": len(test_functions),
             "covered_functions": covered_functions,
+<<<<<<< HEAD
             "uncovered_functions": [
                 f for f in source_functions if f not in covered_functions
             ],
             "analysis_method": "ast",
             "note": "AST-based analysis provides function-level coverage estimation",
+=======
+            "uncovered_functions": [f for f in source_functions if f not in covered_functions],
+            "analysis_method": "ast",
+            "note": "AST-based analysis provides function-level coverage estimation"
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
         }
 
     def _extract_functions_ast(self, code: str) -> List[str]:
@@ -306,9 +376,13 @@ class CodeCoverageAnalyzer:
         except Exception:
             return []
 
+<<<<<<< HEAD
     def _function_referenced_in_test(
         self, function_name: str, test_code: str
     ) -> bool:
+=======
+    def _function_referenced_in_test(self, function_name: str, test_code: str) -> bool:
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
         """
         Check if a function is referenced in the test code.
 
@@ -321,10 +395,16 @@ class CodeCoverageAnalyzer:
         """
         # Simple text-based check for function references
         # This could be enhanced with more sophisticated AST analysis
+<<<<<<< HEAD
         return function_name in test_code and (
             f"{function_name}(" in test_code
             or f"self.{function_name}(" in test_code
         )
+=======
+        return (function_name in test_code
+                and (f"{function_name}(" in test_code
+                     or f"self.{function_name}(" in test_code))
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
 
     def get_module_info(self) -> Dict[str, Any]:
         """
@@ -344,8 +424,13 @@ class CodeCoverageAnalyzer:
                 "AST-based analysis",
                 "Function-level coverage",
                 "Line-level coverage",
+<<<<<<< HEAD
                 "Error handling",
             ],
+=======
+                "Error handling"
+            ]
+>>>>>>> 36a5455 (Final commit: Complete code coverage integration)
         }
 
 

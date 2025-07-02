@@ -13,6 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from llm_manager import LLMManager
 from schemas import PromptData, ResponseData
 from export_manager import ExportManager
+from module_manager import ModuleManager
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
@@ -258,9 +259,31 @@ async def prompt(req: PromptData):
             manager.send_prompt, req
         )
 
+        # Process code coverage if requested and source code is provided
+        if hasattr(req.input, 'enable_code_coverage') and req.input.enable_code_coverage:
+            if req.input.source_code and response_data.output.code:
+                try:
+                    # Run code coverage analysis on generated tests
+                    coverage_analyzer = module_manager.get_module("code_coverage")
+                    if coverage_analyzer:
+                        coverage_result = await run_in_threadpool(
+                            coverage_analyzer.analyze_coverage,
+                            req.input.source_code,
+                            response_data.output.code
+                        )
+                        response_data.output.code_coverage = coverage_result
+                except Exception as cov_exc:
+                    print(f"⚠️ Code coverage analysis failed: {cov_exc}")
+                    # Don't fail the entire request, just log the error
+                    response_data.output.code_coverage = {
+                        "error": str(cov_exc),
+                        "status": "failed"
+                    }
+
         return {
             "response_markdown": response_data.output.markdown,
             "total_seconds": response_data.timing.generation_time,
+            "code_coverage": response_data.output.code_coverage,
         }
 
     except Exception as exc:
