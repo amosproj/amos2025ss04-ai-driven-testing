@@ -46,7 +46,6 @@ class ShowControlFlow(ModuleBase):
         """Processes the extracted response code to generate a control flow image for the output code."""
         code = response_data.output.code
         if code:
-
             # Output path is timestamped with current time
             current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
             output_path = Path(

@@ -33,7 +33,7 @@ class InputData(BaseModel):
     options: InputOptions = Field(default_factory=InputOptions)
     enable_code_coverage: Optional[bool] = Field(
         default=False,
-        description="Enable code coverage analysis on generated tests"
+        description="Enable code coverage analysis on generated tests",
     )
 
 
