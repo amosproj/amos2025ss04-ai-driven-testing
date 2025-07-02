@@ -1,25 +1,41 @@
 import React, { useState } from 'react';
-import { Box, TextField, IconButton, Tooltip } from '@mui/material';
+import { Box, TextField, IconButton, Tooltip, FormControlLabel, Checkbox } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import CodeIcon from '@mui/icons-material/Code';
 
 type ChatInputProps = {
-  onSend: (message: string) => void;
+  onSend: (message: string, enableCodeCoverage: boolean) => void;
 };
 
 const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
   const [input, setInput] = useState('');
+  const [enableCodeCoverage, setEnableCodeCoverage] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!input.trim()) return;
 
-    onSend(input);
+    onSend(input, enableCodeCoverage);
     setInput('');
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box>
+      <Box sx={{ mb: 1 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={enableCodeCoverage}
+              onChange={(e) => setEnableCodeCoverage(e.target.checked)}
+              icon={<CodeIcon />}
+              checkedIcon={<CodeIcon />}
+            />
+          }
+          label="Enable Code Coverage Analysis"
+        />
+      </Box>
+      <Box component="form" onSubmit={handleSubmit}>
       <Box sx={{ position: 'relative' }}>
         <TextField
           label="Nachricht"
@@ -31,7 +47,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
               if (input.trim()) {
-                onSend(input);
+                onSend(input, enableCodeCoverage);
                 setInput('');
               }
             }
@@ -68,6 +84,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
           </span>
         </Tooltip>
       </Box>
+    </Box>
     </Box>
   );
 };

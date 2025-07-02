@@ -13,6 +13,7 @@ from llm_manager import LLMManager
 from schemas import PromptData, ResponseData
 import module_manager
 from export_manager import ExportManager
+from module_manager import ModuleManager
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -43,6 +44,7 @@ app.add_middleware(
 )
 
 manager = LLMManager()
+module_manager = ModuleManager()
 
 # --------------------------------------------------------------------------- #
 # Helper – load config once
