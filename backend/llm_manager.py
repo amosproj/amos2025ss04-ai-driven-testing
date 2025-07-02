@@ -12,17 +12,25 @@ import socket
 OLLAMA_IMAGE = "ollama/ollama"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 def running_in_docker():
     """Check if we're running inside a Docker container."""
     return os.getenv("IN_DOCKER") == "true"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 def get_ollama_models_path():
     """Get the correct path for ollama models volume based on runtime environment."""
     if running_in_docker():
@@ -31,13 +39,19 @@ def get_ollama_models_path():
     else:
         # When running locally, use the local path
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
         return os.path.join(
             os.path.dirname(os.path.abspath(__file__)), "ollama-models"
         )
 
+<<<<<<< HEAD
 =======
         return os.path.join(os.path.dirname(os.path.abspath(__file__)), "ollama-models")
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_MODELS = "allowed_models.json"
@@ -106,13 +120,19 @@ class LLMManager:
             "ports": {f"{port}/tcp": port},
             "volumes": {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
                 get_ollama_models_path(): {
                     "bind": "/root/.ollama",
                     "mode": "rw",
                 }
+<<<<<<< HEAD
 =======
                 get_ollama_models_path(): {"bind": "/root/.ollama", "mode": "rw"}
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
             },
             "environment": {"OLLAMA_HOST": f"0.0.0.0:{str(port)}"},
             "detach": True,

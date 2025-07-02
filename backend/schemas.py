@@ -34,10 +34,14 @@ class InputData(BaseModel):
     enable_code_coverage: Optional[bool] = Field(
         default=False,
 <<<<<<< HEAD
+<<<<<<< HEAD
         description="Enable code coverage analysis on generated tests",
 =======
         description="Enable code coverage analysis on generated tests"
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+        description="Enable code coverage analysis on generated tests",
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     )
 
 

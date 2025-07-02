@@ -260,16 +260,21 @@ async def prompt(req: PromptData):
         )
 
         # Process code coverage if requested and source code is provided
-        if hasattr(req.input, 'enable_code_coverage') and req.input.enable_code_coverage:
+        if (
+            hasattr(req.input, "enable_code_coverage")
+            and req.input.enable_code_coverage
+        ):
             if req.input.source_code and response_data.output.code:
                 try:
                     # Run code coverage analysis on generated tests
-                    coverage_analyzer = module_manager.get_module("code_coverage")
+                    coverage_analyzer = module_manager.get_module(
+                        "code_coverage"
+                    )
                     if coverage_analyzer:
                         coverage_result = await run_in_threadpool(
                             coverage_analyzer.analyze_coverage,
                             req.input.source_code,
-                            response_data.output.code
+                            response_data.output.code,
                         )
                         response_data.output.code_coverage = coverage_result
                 except Exception as cov_exc:
@@ -277,7 +282,7 @@ async def prompt(req: PromptData):
                     # Don't fail the entire request, just log the error
                     response_data.output.code_coverage = {
                         "error": str(cov_exc),
-                        "status": "failed"
+                        "status": "failed",
                     }
 
         return {

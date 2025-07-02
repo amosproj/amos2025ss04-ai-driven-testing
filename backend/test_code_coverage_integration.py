@@ -15,6 +15,7 @@ def test_module_manager_integration():
     """Test that the code coverage analyzer integrates with ModuleManager."""
     print("🔗 Testing ModuleManager integration...")
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     manager = ModuleManager()
 
@@ -30,23 +31,34 @@ def test_module_manager_integration():
 
 =======
     
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     manager = ModuleManager()
-    
+
     # Check if code coverage analyzer is loaded
     modules = manager.get_available_modules()
     print(f"Available modules: {modules}")
-    
+
     # Get the code coverage module
     coverage_module = manager.get_module("code_coverage")
+<<<<<<< HEAD
     assert coverage_module is not None, "Code coverage analyzer not found in module manager"
     
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+    assert (
+        coverage_module is not None
+    ), "Code coverage analyzer not found in module manager"
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     print("✅ Module manager integration: PASSED")
 
 
 def test_full_coverage_workflow():
     """Test the complete code coverage analysis workflow."""
     print("🧪 Testing full coverage workflow...")
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     analyzer = CodeCoverageAnalyzer()
@@ -56,6 +68,11 @@ def test_full_coverage_workflow():
     analyzer = CodeCoverageAnalyzer()
     
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+    analyzer = CodeCoverageAnalyzer()
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     # Example source code
     source_code = """
 def calculator_add(a, b):
@@ -142,6 +159,7 @@ if __name__ == '__main__':
     unittest.main()
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     # Run coverage analysis
     result = analyzer.analyze_coverage(source_code, test_code)
@@ -186,40 +204,62 @@ if __name__ == '__main__':
 
 =======
     
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     # Run coverage analysis
     result = analyzer.analyze_coverage(source_code, test_code)
-    
+
     print(f"Coverage result: {result}")
-    
+
     # Validate results
     assert isinstance(result, dict), "Result should be a dictionary"
-    assert 'status' in result, "Result should have a status field"
-    
-    if result['status'] == 'success':
-        assert 'coverage_percentage' in result, "Successful result should have coverage_percentage"
-        assert isinstance(result['coverage_percentage'], (int, float)), "Coverage percentage should be numeric"
-        assert 0 <= result['coverage_percentage'] <= 100, "Coverage percentage should be between 0 and 100"
-        
-        print(f"✅ Coverage analysis successful: {result['coverage_percentage']:.1f}%")
-        
+    assert "status" in result, "Result should have a status field"
+
+    if result["status"] == "success":
+        assert (
+            "coverage_percentage" in result
+        ), "Successful result should have coverage_percentage"
+        assert isinstance(
+            result["coverage_percentage"], (int, float)
+        ), "Coverage percentage should be numeric"
+        assert (
+            0 <= result["coverage_percentage"] <= 100
+        ), "Coverage percentage should be between 0 and 100"
+
+        print(
+            f"✅ Coverage analysis successful: {result['coverage_percentage']:.1f}%"
+        )
+
         # Check for additional metrics
-        if 'lines_covered' in result and 'lines_total' in result:
-            print(f"✅ Line coverage: {result['lines_covered']}/{result['lines_total']} lines")
-        
-        if 'uncovered_lines' in result:
-            print(f"✅ Uncovered lines: {len(result.get('uncovered_lines', []))} lines")
-    
+        if "lines_covered" in result and "lines_total" in result:
+            print(
+                f"✅ Line coverage: {result['lines_covered']}/{result['lines_total']} lines"
+            )
+
+        if "uncovered_lines" in result:
+            print(
+                f"✅ Uncovered lines: {len(result.get('uncovered_lines', []))} lines"
+            )
+
     else:
-        print(f"⚠️ Coverage analysis failed: {result.get('error', 'Unknown error')}")
+        print(
+            f"⚠️ Coverage analysis failed: {result.get('error', 'Unknown error')}"
+        )
         # This is still a valid test result, just not a successful coverage run
+<<<<<<< HEAD
     
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     print("✅ Full coverage workflow: PASSED")
 
 
 def test_ast_fallback():
     """Test AST analysis fallback functionality."""
     print("🔍 Testing AST fallback analysis...")
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     analyzer = CodeCoverageAnalyzer()
@@ -229,6 +269,11 @@ def test_ast_fallback():
     analyzer = CodeCoverageAnalyzer()
     
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+    analyzer = CodeCoverageAnalyzer()
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     source_code = """
 def example_function():
     return "Hello, World!"
@@ -247,10 +292,14 @@ class ExampleClass:
         return self.value
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     # Test code that might not be executable but is valid Python
     test_code = """
 # This is a simple test that doesn't follow unittest format
@@ -270,6 +319,7 @@ result2 = another_function(5)
 print("Tests completed")
 """
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     result = analyzer.analyze_coverage(source_code, test_code)
 
@@ -280,14 +330,22 @@ print("Tests completed")
 
 =======
     
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     result = analyzer.analyze_coverage(source_code, test_code)
-    
+
     print(f"AST fallback result: {result}")
-    
+
     assert isinstance(result, dict), "AST result should be a dictionary"
+<<<<<<< HEAD
     assert 'status' in result, "AST result should have a status field"
     
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+    assert "status" in result, "AST result should have a status field"
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     print("✅ AST fallback analysis: PASSED")
 
 
@@ -295,6 +353,7 @@ def main():
     """Run all integration tests."""
     print("🚀 Code Coverage Analyzer - Integration Tests")
     print("=" * 50)
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     try:
@@ -317,24 +376,31 @@ def main():
 
 =======
     
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
     try:
         test_module_manager_integration()
         print()
-        
+
         test_full_coverage_workflow()
         print()
-        
+
         test_ast_fallback()
         print()
-        
+
         print("🎉 ALL INTEGRATION TESTS PASSED!")
         print("=" * 50)
         print("✅ Code Coverage Analyzer is fully integrated and working!")
-        
+
     except Exception as e:
         print(f"❌ Integration test failed: {e}")
         import traceback
+<<<<<<< HEAD
 >>>>>>> 36a5455 (Final commit: Complete code coverage integration)
+=======
+
+>>>>>>> 4c7ef2c (Apply Black code formatting - Fix formatting issues identified by Black linter)
         traceback.print_exc()
         sys.exit(1)
 
