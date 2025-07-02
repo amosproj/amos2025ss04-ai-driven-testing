@@ -70,6 +70,7 @@ class ModuleManager:
     def get_available_modules(self) -> List[str]:
         """Get list of available module names."""
         return list(self.modules.keys())
+
     def apply_before_modules(self, modules_list: List[str], prompt_data):
         """Apply modules that run before test generation."""
         active_modules = [
