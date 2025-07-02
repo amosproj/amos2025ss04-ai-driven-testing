@@ -11,7 +11,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from llm_manager import LLMManager
 from schemas import PromptData, ResponseData
-import module_manager
 from export_manager import ExportManager
 from module_manager import ModuleManager
 
@@ -60,8 +59,8 @@ AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
 # Helper functions for modules
 # --------------------------------------------------------------------------- #
 def discover_modules() -> List[Dict[str, str]]:
-    """
-    Automatically discover all valid modules in the modules directory.
+    """Automatically discover all valid modules in the modules directory.
+
     Returns a list of module information dictionaries.
     """
     modules_dir = os.path.join(SCRIPT_DIR, "modules")
@@ -133,9 +132,7 @@ def discover_modules() -> List[Dict[str, str]]:
 
 
 async def process_prompt_request(req: PromptData) -> Dict:
-    """
-    Process a prompt request through the LLM pipeline with optional module processing.
-    """
+    """Process a prompt request through the LLM pipeline with optional module processing."""
     logger.debug(f"Request details: {req}")
 
     model_id = req.model.id
@@ -241,9 +238,7 @@ def list_models() -> List[Dict]:
 
 @app.post("/prompt")
 async def prompt(req: PromptData):
-    """
-    Process a prompt request through the LLM pipeline with optional module processing.
-    """
+    """Process a prompt request through the LLM pipeline with optional module processing."""
     try:
         return await process_prompt_request(req)
     except HTTPException:
@@ -263,23 +258,6 @@ async def shutdown(req: Dict[str, str]):
         raise HTTPException(status_code=400, detail="Missing 'model_id'")
     await run_in_threadpool(manager.stop_model_container, model_id)
     return {"status": "stopped", "model_id": model_id}
-
-
-@app.get("/modules")
-def list_modules() -> List[Dict]:
-    """
-    Returns the list of all available modules in the modules directory.
-    Each module entry contains id, name, and metadata about when it applies.
-    """
-    try:
-        modules = discover_modules()
-        # Log the discovered modules
-        logger.info(f"Discovered {modules} modules:")
-        return modules
-    except Exception as exc:
-        raise HTTPException(
-            status_code=500, detail=f"Failed to discover modules: {str(exc)}"
-        ) from exc
 
 
 # --------------------------------------------------------------------------- #
@@ -355,7 +333,27 @@ async def export_content(req: Dict):
             }
 
     except Exception as exc:
-        import traceback
-
-        traceback.print_exc()
+        logger.error(f"Error in export endpoint: {exc}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/modules")
+def list_modules() -> List[Dict]:
+    """Return the list of all available modules in the modules directory.
+
+    Each module entry contains id, name, and metadata about when it applies.
+    """
+    try:
+        modules = discover_modules()
+        # Log the discovered modules
+        logger.info(f"Discovered {modules} modules:")
+        return modules
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"Failed to discover modules: {str(exc)}"
+        ) from exc
+
+
+# --------------------------------------------------------------------------- #
+# Export endpoints
+# --------------------------------------------------------------------------- #

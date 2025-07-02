@@ -1,6 +1,7 @@
+"""Module manager for dynamic loading and management of processing modules."""
 import importlib
 import os
-from typing import Dict, List, Optional, Any
+from typing import List, Optional, Any
 import re
 
 
@@ -8,14 +9,8 @@ COMMAND_ORDER = False
 
 
 def snake_to_camel(name: str) -> str:
+    """Convert snake_case to CamelCase."""
     return "".join(word.capitalize() for word in name.split("_"))
-
-
-def camel_to_snake(name: str) -> str:
-    # Insert underscore before each uppercase letter (except at start), then lowercase all
-    s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-    snake = re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
-    return snake
 
 
 class ModuleManager:
@@ -80,16 +75,10 @@ class ModuleManager:
             self.modules[name] for name in modules_list if name in self.modules
         ]
 
-        if COMMAND_ORDER:
-            modules_sorted = active_modules  # Keep command order
-        else:
-            # Support both ordering systems: preprocessing_order (development) and order_before (feature)
-            modules_sorted = sorted(
-                active_modules,
-                key=lambda m: getattr(
-                    m, "preprocessing_order", getattr(m, "order_before", 10)
-                ),
-            )
+        # Sort modules by order_before (default to 10 if not present)
+        modules_sorted = sorted(
+            active_modules, key=lambda m: getattr(m, "order_before", 10)
+        )
 
         for m in modules_sorted:
             if hasattr(m, "applies_before") and m.applies_before():
@@ -106,16 +95,10 @@ class ModuleManager:
             self.modules[name] for name in modules_list if name in self.modules
         ]
 
-        if COMMAND_ORDER:
-            modules_sorted = active_modules  # Keep command order
-        else:
-            # Support both ordering systems: postprocessing_order (development) and order_after (feature)
-            modules_sorted = sorted(
-                active_modules,
-                key=lambda m: getattr(
-                    m, "postprocessing_order", getattr(m, "order_after", 10)
-                ),
-            )
+        # Sort modules by order_after (default to 10 if not present)
+        modules_sorted = sorted(
+            active_modules, key=lambda m: getattr(m, "order_after", 10)
+        )
 
         for m in modules_sorted:
             if hasattr(m, "applies_after") and m.applies_after():
@@ -125,6 +108,14 @@ class ModuleManager:
                     )
 
         return response_data
+
+
+def camel_to_snake(name: str) -> str:
+    """Convert CamelCase to snake_case."""
+    # Insert underscore before each uppercase letter (except at start), then lowercase all
+    s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    snake = re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
+    return snake
 
 
 # Legacy functions for backward compatibility

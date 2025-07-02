@@ -19,6 +19,16 @@ export interface Module {
 export interface PromptResponse {
   response_markdown: string;
   total_seconds: number;
+  code_coverage?: {
+    coverage_percentage?: number;
+    lines_covered?: number;
+    lines_total?: number;
+    branch_coverage?: number;
+    uncovered_lines?: number[];
+    coverage_data?: any;
+    error?: string;
+    status?: string;
+  };
   modules_used: string[];
   code_coverage?: {
     coverage_percentage?: number;
@@ -56,8 +66,8 @@ export async function sendPrompt(
   model: Model,
   user_message: string,
   source_code: string,
-  modules: string[] = [],
-  enableCodeCoverage: boolean = false
+  enableCodeCoverage: boolean = false,
+  modules: string[] = []
 ): Promise<PromptResponse> {
   const body = {
     model: {

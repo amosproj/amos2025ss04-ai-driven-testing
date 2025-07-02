@@ -26,4 +26,4 @@ if __name__ == "__main__":
     for module in active_modules:
         print(f" - {module.__class__.__name__}")
     # Execute the flow
-    execution.execute_prompt(active_modules, prompt_data, args.output_file)
+    execution.execute_prompt_new(active_modules, prompt_data, args.output_file)
