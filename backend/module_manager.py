@@ -4,6 +4,9 @@ from typing import Dict, List, Optional, Any
 import re
 
 
+COMMAND_ORDER = False
+
+
 def snake_to_camel(name: str) -> str:
     return "".join(word.capitalize() for word in name.split("_"))
 
@@ -77,10 +80,16 @@ class ModuleManager:
             self.modules[name] for name in modules_list if name in self.modules
         ]
 
-        # Sort modules by order_before (default to 10 if not present)
-        modules_sorted = sorted(
-            active_modules, key=lambda m: getattr(m, "order_before", 10)
-        )
+        if COMMAND_ORDER:
+            modules_sorted = active_modules  # Keep command order
+        else:
+            # Support both ordering systems: preprocessing_order (development) and order_before (feature)
+            modules_sorted = sorted(
+                active_modules,
+                key=lambda m: getattr(
+                    m, "preprocessing_order", getattr(m, "order_before", 10)
+                ),
+            )
 
         for m in modules_sorted:
             if hasattr(m, "applies_before") and m.applies_before():
@@ -97,10 +106,16 @@ class ModuleManager:
             self.modules[name] for name in modules_list if name in self.modules
         ]
 
-        # Sort modules by order_after (default to 10 if not present)
-        modules_sorted = sorted(
-            active_modules, key=lambda m: getattr(m, "order_after", 10)
-        )
+        if COMMAND_ORDER:
+            modules_sorted = active_modules  # Keep command order
+        else:
+            # Support both ordering systems: postprocessing_order (development) and order_after (feature)
+            modules_sorted = sorted(
+                active_modules,
+                key=lambda m: getattr(
+                    m, "postprocessing_order", getattr(m, "order_after", 10)
+                ),
+            )
 
         for m in modules_sorted:
             if hasattr(m, "applies_after") and m.applies_after():
@@ -113,23 +128,66 @@ class ModuleManager:
 
 
 # Legacy functions for backward compatibility
-def load_modules(module_names):
-    """Legacy function for loading modules."""
-    manager = ModuleManager()
-    modules = []
+def load_modules(module_names, loaded=None):
+    """Legacy function for loading modules with dependency support."""
+    if loaded is None:
+        loaded = {}
+
     for name in module_names:
-        module = manager.get_module(name)
-        if module:
-            modules.append(module)
-    return modules
+        if name in loaded:
+            continue
+
+        try:
+            mod = importlib.import_module(f"modules.{name}")
+            class_name = snake_to_camel(name)
+            cls = getattr(mod, class_name)
+            module = cls()
+            loaded[name] = module
+
+            # Recursively load dependencies
+            if hasattr(module, "dependencies"):
+                dependencies = (
+                    module.dependencies()
+                )  # should return list of module class types
+                if dependencies:
+                    dep_names = [
+                        camel_to_snake(dep.__name__) for dep in dependencies
+                    ]
+                    print(
+                        "loading dependencies for module:",
+                        name,
+                        "->",
+                        dep_names,
+                    )
+                    load_modules(dep_names, loaded)
+
+        except ImportError as e:
+            print(
+                "There are circular dependencies in the modules, please check the module dependencies."
+            )
+            print(f"Module '{name}' could not be imported: {e}")
+            raise e
+        except Exception as e:
+            print(f"Failed to load module '{name}': {e}")
+
+    return list(loaded.values())
 
 
 def apply_before_modules(modules, prompt_data):
-    """Legacy function for applying before modules."""
-    # Sort modules by order_before (default to 0 if not present)
-    modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_before", 10)
-    )
+    """Legacy function for applying before modules with flexible ordering."""
+    if COMMAND_ORDER:
+        print("command order")
+        modules_sorted = modules  # Keep command order
+    else:
+        print("sorting")
+        # Try preprocessing_order first (development), fall back to order_before (feature)
+        modules_sorted = sorted(
+            modules,
+            key=lambda m: getattr(
+                m, "preprocessing_order", getattr(m, "order_before", 10)
+            ),
+        )
+
     for m in modules_sorted:
         if hasattr(m, "applies_before") and m.applies_before():
             if hasattr(m, "process_prompt"):
@@ -138,11 +196,20 @@ def apply_before_modules(modules, prompt_data):
 
 
 def apply_after_modules(modules, response_data, prompt_data):
-    """Legacy function for applying after modules."""
-    # Sort modules by order_after (default to 0 if not present)
-    modules_sorted = sorted(
-        modules, key=lambda m: getattr(m, "order_after", 10)
-    )
+    """Legacy function for applying after modules with flexible ordering."""
+    if COMMAND_ORDER:
+        print("command order")
+        modules_sorted = modules  # Keep order from command
+    else:
+        print("sorting")
+        # Try postprocessing_order first (development), fall back to order_after (feature)
+        modules_sorted = sorted(
+            modules,
+            key=lambda m: getattr(
+                m, "postprocessing_order", getattr(m, "order_after", 10)
+            ),
+        )
+
     for m in modules_sorted:
         if hasattr(m, "applies_after") and m.applies_after():
             if hasattr(m, "process_response"):
