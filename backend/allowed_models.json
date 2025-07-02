@@ -3,44 +3,56 @@
     {
       "name": "Mistral",
       "id": "mistral:7b-instruct-v0.3-q3_K_M",
-      "licence": "Apache 2.0 License",
-      "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     },
     {
       "name": "DeepSeek",
       "id": "deepseek-coder:6.7b-instruct-q3_K_M",
-      "licence": "DeepSeek License",
-      "licence_link": "https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL"
+      "license": "DeepSeek License",
+      "license_link": "https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL"
     },
     {
       "name": "Qwen2.5-coder",
       "id": "qwen2.5-coder:3b-instruct-q8_0",
-      "licence": "Apache 2.0 License",
-      "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     },
     {
       "name": "Gemma",
       "id": "gemma3:4b-it-q4_K_M",
-      "licence": "Gemma License",
-      "licence_link": "https://ai.google.dev/gemma/terms"
+      "license": "Gemma License",
+      "license_link": "https://ai.google.dev/gemma/terms"
     },
     {
       "name": "Phi4",
       "id": "phi4-mini:3.8b-q4_K_M",
-      "licence": "MIT License",
-      "licence_link": "https://opensource.org/licenses/MIT"
+      "license": "MIT License",
+      "license_link": "https://opensource.org/licenses/MIT"
     },
     {
       "name": "TINYLLAMA",
       "id": "tinyllama:1.1b",
-      "licence": "Apache 2.0 License",
-      "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     },
     {
       "name": "Qwen3",
       "id": "qwen3:4b-q4_K_M",
-      "licence": "Apache 2.0 License",
-      "licence_link": "https://www.apache.org/licenses/LICENSE-2.0"
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "name": "OpenHermes 2.5",
+      "id": "openhermes:v2.5",
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "name": "smollm2",
+      "id": "smollm2:360m",
+      "license": "Apache 2.0 License",
+      "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     }
   ]
 }

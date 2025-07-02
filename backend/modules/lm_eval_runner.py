@@ -8,6 +8,8 @@ from schemas import PromptData, ResponseData
 
 
 class LmEvalRunner(ModuleBase):
+    """Führt HumanEval Code-Benchmarks mit dem lm_eval Framework aus und sammelt Leistungsmetriken."""
+
     def __init__(self):
         self.output_dir = Path("outputs/human_eval")
 

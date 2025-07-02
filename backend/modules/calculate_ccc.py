@@ -6,14 +6,16 @@ from modules.calculate_ccc_lib.ccc_calculator_python import (
 from modules.calculate_ccc_lib.ccc_estimator_general import (
     get_ccc_for_code as get_ccc_for_code_general,
 )
+from modules.text_converter import TextConverter
 
 # Error handling in this module is a mess, but it works 👍
 
 
 class CalculateCcc(ModuleBase):
+    """Berechnet die Cognitive Code Complexity (CCC) für Quell- und Ausgabecode."""
+
     def __init__(self):
         super().__init__()
-        print("CalculateCcc module initialized.")
 
     def applies_before(self) -> bool:
         return True
@@ -21,8 +23,10 @@ class CalculateCcc(ModuleBase):
     def applies_after(self) -> bool:
         return True
 
-    def process_prompt(self, prompt_data: dict) -> dict:
+    def dependencies(self) -> list[type["ModuleBase"]]:
+        return [TextConverter]
 
+    def process_prompt(self, prompt_data: dict) -> dict:
         source_code = prompt_data.input.source_code
         if not source_code:
             warnings.warn(
@@ -51,7 +55,6 @@ class CalculateCcc(ModuleBase):
         return prompt_data
 
     def process_response(self, response_data: dict, prompt_data: dict) -> dict:
-
         output_code = response_data.output.code
         if not output_code:
             warnings.warn(

@@ -40,6 +40,10 @@ class InputData(BaseModel):
 class PromptData(BaseModel):
     model: ModelMeta
     input: InputData
+    modules: Optional[List[str]] = Field(
+        default=[],
+        description="List of module names to activate for this request",
+    )
     token_count: Optional[int] = None
     token_count_estimated: Optional[bool] = None
     rag_prompt: Optional[str] = None
@@ -52,6 +56,14 @@ class PromptData(BaseModel):
     )
     prompt_code_path: Optional[str] = Field(
         None, description="The original prompt code"
+    )
+    timeout: Optional[int] = Field(
+        None,
+        description="Timeout in seconds for the LLM request",
+    )
+    control_flow_image: Optional[str] = Field(
+        None,
+        description="Path to the control flow image generated from the provided source code",
     )
 
 
@@ -81,6 +93,10 @@ class OutputData(BaseModel):
     output_code_path: Optional[str] = Field(
         None, description="The original output code"
     )
+    control_flow_image: Optional[str] = Field(
+        None,
+        description="Path to the control flow image generated from the cleaned output code",
+    )
 
 
 class TimingData(BaseModel):
@@ -96,3 +112,6 @@ class ResponseData(BaseModel):
     model: ModelMeta
     output: OutputData
     timing: TimingData
+    timeouted: Optional[bool] = Field(
+        None, description="Whether the request timed out"
+    )
