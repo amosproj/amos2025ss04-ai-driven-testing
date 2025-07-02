@@ -1,4 +1,3 @@
-"""Command-line interface module for the AI-Driven Testing project."""
 import os
 import argparse
 from model_manager import load_models
@@ -8,8 +7,14 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 _parsed_args = None  # Module-level cache
 
+_parsed_args = None  # Module-level cache
+
 
 def parse_arguments() -> argparse.Namespace:
+    global _parsed_args
+    if _parsed_args is not None:
+        return _parsed_args
+
     global _parsed_args
     if _parsed_args is not None:
         return _parsed_args
@@ -29,6 +34,12 @@ def parse_arguments() -> argparse.Namespace:
         "--source_code",
         type=str,
         default=os.path.join(SCRIPT_DIR, "source_code.txt"),
+        default=os.path.join(SCRIPT_DIR, "user_message.txt"),
+    )
+    parser.add_argument(
+        "--source_code",
+        type=str,
+        default=os.path.join(SCRIPT_DIR, "source_code.txt"),
     )
     parser.add_argument(
         "--output_file",
@@ -38,30 +49,28 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--modules", nargs="*", default=[], help="List of module names to run"
     )
-    parser.add_argument(
-        "--export_format",
-        type=str,
-        choices=["json", "markdown", "http", "txt", "xml"],
-        default="markdown",
-        help="Export format for the output (default: markdown)",
-    )
-    parser.add_argument(
-        "--export_all",
-        action="store_true",
-        help="Export output in all supported formats",
-    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
+    parser.add_argument("--timeout", type=int)
+    parser.add_argument(
+        "--use-links",
+        nargs="+",
+        type=str,
+        help="Provide one or more web links to include in the context",
+    )
 
-    return parser.parse_args()
+    _parsed_args = parser.parse_args()
+    return _parsed_args
 
 
-def build_prompt_data(args: argparse.Namespace) -> PromptData:
+def build_prompt_data(args: argparse.Namespace, model) -> PromptData:
     """Creates a PromptData object from CLI arguments."""
-    models = load_models()
-    model_info = models[args.model]
 
     # Load prompt text
+    user_message = ""
+    if args.prompt_file:
+        with open(args.prompt_file, "r", encoding="utf-8") as f:
+            user_message = f.read()
     user_message = ""
     if args.prompt_file:
         with open(args.prompt_file, "r", encoding="utf-8") as f:
@@ -71,9 +80,12 @@ def build_prompt_data(args: argparse.Namespace) -> PromptData:
     source_code = ""
     if args.source_code:
         with open(args.source_code, "r", encoding="utf-8") as f:
+    if args.source_code:
+        with open(args.source_code, "r", encoding="utf-8") as f:
             source_code = f.read()
 
     return PromptData(
+        model=ModelMeta(id=model["id"], name=model["name"]),
         model=ModelMeta(id=model["id"], name=model["name"]),
         input=InputData(
             user_message=user_message,
@@ -81,5 +93,6 @@ def build_prompt_data(args: argparse.Namespace) -> PromptData:
             system_message="You are a helpful assistant. Always respond in Markdown.",
             options=InputOptions(seed=args.seed, num_ctx=args.num_ctx),
         ),
+        timeout=args.timeout,
         timeout=args.timeout,
     )
