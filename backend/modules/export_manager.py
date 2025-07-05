@@ -247,5 +247,5 @@ Content Length: {len(content)} characters
 
 
 def get_module():
-    """Factory function to create module instance."""
+    """Create and return an ExportManager module instance."""
     return ExportManager()
