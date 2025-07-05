@@ -1,3 +1,5 @@
+"""Command-line interface for running the LLM pipeline."""
+
 import os
 import argparse
 from model_manager import load_models
@@ -9,6 +11,7 @@ _parsed_args = None  # Module-level cache
 
 
 def parse_arguments() -> argparse.Namespace:
+    """Parse command-line arguments for the pipeline."""
     global _parsed_args
     if _parsed_args is not None:
         return _parsed_args
@@ -37,6 +40,12 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--modules", nargs="*", default=[], help="List of module names to run"
     )
+    parser.add_argument(
+        "--iterations",
+        type=int,
+        default=1,
+        help="Number of times to run the generation, feeding the output back as input for refinement.",
+    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
 
@@ -60,8 +69,7 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def build_prompt_data(args: argparse.Namespace, model) -> PromptData:
-    """Creates a PromptData object from CLI arguments."""
-
+    """Create a PromptData object from CLI arguments."""
     # Load prompt text
     user_message = ""
     if args.prompt_file:
