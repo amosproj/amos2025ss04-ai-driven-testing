@@ -45,7 +45,7 @@ class PruneDuplicateTests(ModuleBase):
         test_functions = []
         for line in code.splitlines():
             line = line.strip()
-            if line.startswith("def dev test_"):
+            if line.startswith("def test_"):
                 test_functions.append(line)
 
         print(f"Original number of tests found: {len(test_functions)}")
@@ -69,7 +69,7 @@ class PruneDuplicateTests(ModuleBase):
         duplicate_asserts = set()
 
         original_assert_count = sum(
-            1 for line in lines if line.strip().startswith("assert ")
+            1 for line in lines if "assert" in line.strip()
         )
         print(
             f"\nOriginal number of assert statements: {original_assert_count}"
@@ -77,7 +77,7 @@ class PruneDuplicateTests(ModuleBase):
 
         for line in lines:
             stripped_line = line.strip()
-            if stripped_line.startswith("assert "):
+            if "assert" in stripped_line:
                 if stripped_line in seen_asserts:
                     duplicate_asserts.add(stripped_line)
                 seen_asserts.add(stripped_line)
