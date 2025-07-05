@@ -1,3 +1,4 @@
+"""Execution module for AI-Driven Testing LLM pipeline."""
 import module_manager
 from llm_manager import LLMManager
 from datetime import datetime
@@ -7,7 +8,6 @@ from pathlib import Path
 
 def execute_prompt(active_modules, prompt_data, output_file):
     """Execute the prompt-response flow."""
-
     # Process with modules
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
@@ -45,6 +45,9 @@ def execute_prompt(active_modules, prompt_data, output_file):
                 json.dump(response_json, f, indent=2)
         with open(output_file, "w", encoding="utf-8") as f:
             f.write(response_data.output.markdown)
+
+        # Return response content for potential export
+        return response_data.output.markdown
     finally:
         print("")
         manager.stop_model_container(prompt_data.model.id)

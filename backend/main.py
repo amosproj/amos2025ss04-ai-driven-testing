@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Main entry point for AI-Driven Testing CLI."""
 import os
 import cli
 import execution
@@ -10,6 +11,9 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if __name__ == "__main__":
     # Parse command-line arguments
     args = cli.parse_arguments()
+
+    # Validate export arguments
+    cli.validate_export_args(args)
 
     # Get model information
     model = model_manager.load_models()[args.model]
@@ -28,4 +32,10 @@ if __name__ == "__main__":
         print(f" - {module.__class__.__name__}")
 
     # Execute the flow
-    execution.execute_prompt(active_modules, prompt_data, args.output_file)
+    response_content = execution.execute_prompt(
+        active_modules, prompt_data, args.output_file
+    )
+
+    # Handle export if requested
+    if response_content and (args.export_format or args.export_all):
+        cli.handle_export(args, response_content, args.output_file)
