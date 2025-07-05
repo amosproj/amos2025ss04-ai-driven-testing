@@ -25,7 +25,7 @@ class PruneDuplicateTests(ModuleBase):
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-        print("========== Pruning duplicate tests and asserts ==========")
+        print("Pruning duplicate tests and asserts:")
 
         # Read the response code from extracted/response.py
         response_path = (
