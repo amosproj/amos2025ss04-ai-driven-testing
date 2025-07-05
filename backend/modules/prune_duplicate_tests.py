@@ -5,7 +5,6 @@ import black
 from modules.base import ModuleBase
 from schemas import PromptData, ResponseData
 from modules.text_converter import (
-    TextConverter,
     fix_indent,
     add_pass_to_empty_functions,
 )
