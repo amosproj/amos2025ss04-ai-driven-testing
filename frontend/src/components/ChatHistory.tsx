@@ -16,6 +16,7 @@ export interface ChatMessage {
   content: string;
   responseTime?: number;
   response?: response;
+  attachedFileNames?: string[];
 }
 
 
@@ -54,6 +55,23 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages, loading = false }) 
                 )}
               </Box>
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+              {msg.attachedFileNames && msg.attachedFileNames.length > 0 && (
+              <Box mt={1} sx={{ fontSize: '0.8rem', color: 'text.secondary' }}>
+                <Typography variant="caption" fontWeight="bold">
+                  Angehängte Dateien:
+                </Typography>
+                <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                  {msg.attachedFileNames.map((fileName, index) => (
+                    <li key={index}>
+                      <Typography variant="caption" color="text.secondary">
+                        {fileName}
+                      </Typography>
+                    </li>
+                  ))}
+                </ul>
+              </Box>
+            )}
+
 {msg.role === 'assistant' &&
   msg.response?.modules_used &&
   msg.response?.modules_used.length > 0 &&
@@ -107,9 +125,7 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages, loading = false }) 
 
       </AccordionDetails>
     </Accordion>
-)}
-
-            </Paper>
+)}</Paper>
 
         )
       })

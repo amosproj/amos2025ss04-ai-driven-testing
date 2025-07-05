@@ -15,6 +15,8 @@ const App: React.FC = () => {
   const [modules, setModules] = useState<Module[]>([]);
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [uploadedCode, setUploadedCode] = useState<string>('');
+  const [uploadedFileNames, setUploadedFileNames] = useState<string[]>([]);
 
   useEffect(() => {
     // Hole verfügbare Modelle und Module beim Laden der Seite
@@ -32,12 +34,12 @@ const App: React.FC = () => {
   }, []);
 
   const handleSendMessage = (message: string) => {
-    setMessages((prev) => [...prev, { role: 'user', content: message }]);
+    setMessages((prev) => [...prev, { role: 'user', content: message, attachedFileNames: uploadedFileNames }]);
 
     setLoading(true);
     console.log('Sende Nachricht:', message);
     if (!selectedModel) return;
-    sendPrompt(selectedModel, message, message, selectedModules)
+    sendPrompt(selectedModel, message, uploadedCode.trim(), selectedModules)
       .then((res) => {
         console.log('Antwort erhalten:', res);
         setMessages((prev) => [
@@ -50,6 +52,8 @@ const App: React.FC = () => {
       })
       .finally(() => {
         setLoading(false);
+        setUploadedCode('');
+        setUploadedFileNames([])
 
         // Modelle nach jeder Antwort aktualisieren
         getModels()
@@ -189,8 +193,27 @@ const handleModuleToggle = (moduleId: string) => {
               licence={models.find((m) => m.id === selectedModel?.id)?.licence ?? '—'}
               licenceLink={models.find((m) => m.id === selectedModel?.id)?.licence_link ?? 'https://choosealicense.com/licenses/'}
             />
+        <ChatInput
+          onSend={handleSendMessage}
+          onFileUpload={(files) => {
+              const fileNames = Array.from(files).map(file => file.name);
+              setUploadedFileNames(prev => [...prev, ...fileNames]);
+              const readers = Array.from(files).map(file => {
+                return new Promise<string>((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.onload = () => resolve(reader.result as string);
+                  reader.onerror = reject;
+                  reader.readAsText(file);
+                });
+              });
 
-            <ChatInput onSend={handleSendMessage} />
+              Promise.all(readers).then(contents => {
+                const combinedCode = contents.join('\n\n// --- Next File ---\n\n');
+                setUploadedCode(prev => prev + '\n' + combinedCode);
+              });
+            }}
+
+        />
           </Box>
         </Container>
       </Box>
