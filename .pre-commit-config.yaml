@@ -25,7 +25,7 @@ repos:
     hooks:
     -   id: pytest-check
         name: pytest-check
-        entry: pytest -q
+        entry: python3 -m pytest -q
         language: system
         pass_filenames: false
         always_run: true

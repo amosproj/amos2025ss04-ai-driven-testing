@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-07-05T12:24:16.193687",
+  "format": "json",
+  "content": "# Generated Test Case\n\n## Test Function: test_user_authentication\n\n```python\ndef test_user_authentication():\n    # Test valid user credentials\n    user = User(\"testuser\", \"password123\")\n    assert user.authenticate(\"testuser\", \"password123\") == True\n    \n    # Test invalid credentials\n    assert user.authenticate(\"testuser\", \"wrongpassword\") == False\n    assert user.authenticate(\"wronguser\", \"password123\") == False\n    \n    # Test empty credentials\n    assert user.authenticate(\"\", \"\") == False\n    assert user.authenticate(None, None) == False\n\ndef test_user_authorization():\n    # Test user role permissions\n    admin_user = User(\"admin\", \"adminpass\", role=\"admin\")\n    regular_user = User(\"user\", \"userpass\", role=\"user\")\n    \n    assert admin_user.has_permission(\"delete_user\") == True\n    assert regular_user.has_permission(\"delete_user\") == False\n    assert regular_user.has_permission(\"view_profile\") == True\n```\n\n## Test Coverage Analysis\n- **Authentication**: Covers valid/invalid credentials, edge cases\n- **Authorization**: Tests role-based permissions\n- **Edge Cases**: Empty and None inputs handled\n\n## Recommendations\n1. Add tests for password strength validation\n2. Include tests for account lockout after failed attempts\n3. Test session management and timeout scenarios\n",
+  "metadata": {
+    "exported_by": "AI-Driven Testing ExportManager",
+    "content_length": 1290
+  }
+}
