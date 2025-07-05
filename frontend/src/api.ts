@@ -22,6 +22,30 @@ export interface PromptResponse {
   modules_used: string[];
 }
 
+export interface response {
+  response_markdown: string;
+  total_seconds: number;
+  modules_used: string[];
+  output: {
+    code: string | null;
+    syntax_valid: boolean | null;
+    ccc_complexity: number | null;
+    mcc_complexity: number | null;
+    lm_eval: unknown | null;
+  };
+  timing: {
+    loading_time: number;
+    generation_time: number;
+  };
+  prompt_data: {
+    token_count: number | null;
+    token_count_estimated: number | null;
+    ccc_complexity: number | null;
+    mcc_complexity: number | null;
+    rag_sources: unknown | null;
+  };
+}
+
 const API_BASE_URL = "http://localhost:8000";
 
 export async function getModels(): Promise<Model[]> {

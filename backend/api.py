@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from llm_manager import LLMManager
 from schemas import PromptData, ResponseData
 import module_manager
-
+import time
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -60,6 +60,7 @@ def discover_modules() -> List[Dict[str, str]]:
     Automatically discover all valid modules in the modules directory.
     Returns a list of module information dictionaries.
     """
+    start = time.time()
     modules_dir = os.path.join(SCRIPT_DIR, "modules")
     available_modules = []
 
@@ -124,7 +125,7 @@ def discover_modules() -> List[Dict[str, str]]:
                 # Skip modules that can't be imported or instantiated
                 print(f"Warning: Could not load module {module_name}: {e}")
                 continue
-
+    logger.info("Discovered modules in %.2f seconds", time.time() - start)
     return available_modules
 
 
@@ -162,7 +163,7 @@ async def process_prompt_request(req: PromptData) -> Dict:
         processed_prompt_data = await run_in_threadpool(
             module_manager.apply_before_modules, active_modules, req
         )
-
+    logger.info(req, processed_prompt_data)
     # Send prompt to model
     response_data: ResponseData = await run_in_threadpool(
         manager.send_prompt, processed_prompt_data
@@ -273,8 +274,7 @@ def list_modules() -> List[Dict]:
     """
     try:
         modules = discover_modules()
-        # Log the discovered modules
-        logger.info(f"Discovered {modules} modules:")
+
         return modules
     except Exception as exc:
         raise HTTPException(

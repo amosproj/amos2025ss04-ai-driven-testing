@@ -1,3 +1,4 @@
+create unit tests for the given code add a main call
 """Performs basic arithmetic operations."""
 
 def calculate_result(a, b, op):
