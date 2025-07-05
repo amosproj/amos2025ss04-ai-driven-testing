@@ -1,6 +1,4 @@
-import subprocess
 from pathlib import Path
-from typing import Union
 import black
 from modules.base import ModuleBase
 from schemas import PromptData, ResponseData
