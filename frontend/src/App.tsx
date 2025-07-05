@@ -4,7 +4,7 @@ import TopBar from './components/TopBar';
 import InfoBar from './components/PrivacyNotice';
 import ChatHistory, { ChatMessage } from './components/ChatHistory';
 import ModuleSidebar from './components/ModuleSidebar';
-import { getModels, sendPrompt, shutdownModel, getModules, Model, Module } from './api';
+import {getModels, sendPrompt, shutdownModel, getModules, Model, Module, response} from './api';
 import { Container, Box } from '@mui/material';
 
 const App: React.FC = () => {
@@ -15,6 +15,8 @@ const App: React.FC = () => {
   const [modules, setModules] = useState<Module[]>([]);
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [uploadedCode, setUploadedCode] = useState<string>('');
+  const [uploadedFileNames, setUploadedFileNames] = useState<string[]>([]);
 
   useEffect(() => {
     // Hole verfügbare Modelle und Module beim Laden der Seite
@@ -32,17 +34,17 @@ const App: React.FC = () => {
   }, []);
 
   const handleSendMessage = (message: string) => {
-    setMessages((prev) => [...prev, { role: 'user', content: message }]);
+    setMessages((prev) => [...prev, { role: 'user', content: message, attachedFileNames: uploadedFileNames }]);
 
     setLoading(true);
     console.log('Sende Nachricht:', message);
     if (!selectedModel) return;
-    sendPrompt(selectedModel, message, message, selectedModules)
+    sendPrompt(selectedModel, message, uploadedCode.trim(), selectedModules)
       .then((res) => {
         console.log('Antwort erhalten:', res);
         setMessages((prev) => [
           ...prev,
-          { role: 'assistant', content: res.response_markdown, responseTime: res.total_seconds },
+          { role: 'assistant', content: res.response_markdown, responseTime: res.total_seconds , response: (res as any) as response },
         ]);
       })
       .catch((err) => {
@@ -50,6 +52,8 @@ const App: React.FC = () => {
       })
       .finally(() => {
         setLoading(false);
+        setUploadedCode('');
+        setUploadedFileNames([])
 
         // Modelle nach jeder Antwort aktualisieren
         getModels()
@@ -84,18 +88,34 @@ const App: React.FC = () => {
 // selectedModules: string[] (array of selected module IDs)
 
 const getAllDependencyIds = (module: Module, modules: Module[], visited = new Set<string>()): string[] => {
-  // Prevent infinite loops if cyclic dependencies exist
   if (visited.has(module.id)) return [];
   visited.add(module.id);
 
-  // Find dependencies by name
   const directDeps = modules.filter(m => module.dependencies.includes(m.name));
 
-  // Collect dependencies' IDs recursively
   const allDeps = directDeps.flatMap(dep => getAllDependencyIds(dep, modules, visited));
 
-  // Return unique list of direct dependencies + their dependencies
   return [...directDeps.map(dep => dep.id), ...allDeps];
+};
+
+const getAllDependentIds = (
+  moduleId: string,
+  modules: Module[],
+  visited = new Set<string>()
+): string[] => {
+  if (visited.has(moduleId)) return [];
+  visited.add(moduleId);
+
+  // Find modules that depend on this module
+  const directDependents = modules.filter(m => m.dependencies.includes(
+    modules.find(mod => mod.id === moduleId)?.name || ''
+  ));
+
+  const indirectDependents = directDependents.flatMap(dep =>
+    getAllDependentIds(dep.id, modules, visited)
+  );
+
+  return [...directDependents.map(m => m.id), ...indirectDependents];
 };
 
 const handleModuleToggle = (moduleId: string) => {
@@ -105,12 +125,14 @@ const handleModuleToggle = (moduleId: string) => {
   const isSelected = selectedModules.includes(moduleId);
 
   if (isSelected) {
-    // Toggle OFF: remove only the toggled module (optional: remove dependencies)
-    const newSelected = selectedModules.filter(id => id !== moduleId);
+    const dependentIds = getAllDependentIds(moduleId, modules);
+
+    const newSelected = selectedModules.filter(
+      id => id !== moduleId && !dependentIds.includes(id)
+    );
+
     setSelectedModules(newSelected);
   } else {
-    // Toggle ON: add toggled module + all dependencies recursively
-
     const dependencyIds = getAllDependencyIds(toggledModule, modules);
 
     const newSelected = Array.from(new Set([
@@ -122,7 +144,6 @@ const handleModuleToggle = (moduleId: string) => {
     setSelectedModules(newSelected);
   }
 };
-
 
   return (
     <Box display="flex" flexDirection="column" height="100vh" sx={{ bgcolor: 'grey.100' }}>
@@ -172,8 +193,27 @@ const handleModuleToggle = (moduleId: string) => {
               licence={models.find((m) => m.id === selectedModel?.id)?.licence ?? '—'}
               licenceLink={models.find((m) => m.id === selectedModel?.id)?.licence_link ?? 'https://choosealicense.com/licenses/'}
             />
+        <ChatInput
+          onSend={handleSendMessage}
+          onFileUpload={(files) => {
+              const fileNames = Array.from(files).map(file => file.name);
+              setUploadedFileNames(prev => [...prev, ...fileNames]);
+              const readers = Array.from(files).map(file => {
+                return new Promise<string>((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.onload = () => resolve(reader.result as string);
+                  reader.onerror = reject;
+                  reader.readAsText(file);
+                });
+              });
 
-            <ChatInput onSend={handleSendMessage} />
+              Promise.all(readers).then(contents => {
+                const combinedCode = contents.join('\n\n// --- Next File ---\n\n');
+                setUploadedCode(prev => prev + '\n' + combinedCode);
+              });
+            }}
+
+        />
           </Box>
         </Container>
       </Box>

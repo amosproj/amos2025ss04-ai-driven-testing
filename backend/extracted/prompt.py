@@ -1,31 +1,42 @@
-"""Performs basic arithmetic operations."""
+"""Simple command-line calculator application.
 
-def calculate_result(a, b, op):
-    pass
+This module provides a calculator function that interactively prompts the user
+for input values and an operator, then performs the requested arithmetic
+operation and displays the result.
+"""
 
-    """Returns the result of an arithmetic operation.
 
-    Args:
-        a (float): First number.
-        b (float): Second number.
-        op (str): Operator: '+', '-', '*', or '/'.
+def calculator():
+    """Run an interactive command-line calculator.
+
+    Prompts the user to input two numbers and an operation (+, -, *, /)
+    then computes and displays the result. Handles special cases such as
+    division by zero and invalid operators.
 
     Returns:
-        float: Result of the operation.
-
-    Raises:
-        ZeroDivisionError: If dividing by zero.
-        ValueError: If operator is invalid.
+        None
     """
+    print("Simple Calculator")
+    a = float(input("Enter first number: "))
+    op = input("Enter operator (+, -, *, /): ")
+    b = float(input("Enter second number: "))
+
     if op == "+":
-        return a + b
+        result = a + b
     elif op == "-":
-        return a - b
+        result = a - b
     elif op == "*":
-        return a * b
+        result = a * b
     elif op == "/":
         if b == 0:
-            raise ZeroDivisionError("Division by zero")
-        return a / b
+            print("Error: Division by zero")
+            return
+        result = a / b
     else:
-        raise ValueError(f"Invalid operator: {op}")
+        print("Invalid operator")
+        return
+
+    print("Result:", result)
+
+
+calculator()
