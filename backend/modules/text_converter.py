@@ -63,8 +63,20 @@ class TextConverter(ModuleBase):
             "from pathlib import Path\n"
             "sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path\n"
             "from prompt import *  # Import functions from prompt.py\n\n"
+            "import unittest\n\n"
         )
-        cleaned_code = import_line + clean_response_text(raw_markdown)
+        cleaned_code = clean_response_text(raw_markdown)
+        # Check if import block is already present (handle both escaped and unescaped quotes)
+        if not (
+            "sys.path.insert(0," in cleaned_code
+            and "code/extracted" in cleaned_code
+        ):
+            cleaned_code = import_line + cleaned_code
+
+        if 'if __name__ == "__main__":' not in cleaned_code:
+            cleaned_code += (
+                '\n\nif __name__ == "__main__":\n    unittest.main()\n'
+            )
 
         # 1. Save to generic path (used by executor)
         main_output_path = output_dir / "response.py"

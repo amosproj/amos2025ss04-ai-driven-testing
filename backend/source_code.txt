@@ -1,29 +1,20 @@
-"""Performs basic arithmetic operations."""
+def bubble_sort(arr):
+    """Sort a list using the bubble sort algorithm.
 
-def calculate_result(a, b, op):
-    """Returns the result of an arithmetic operation.
+    This implementation includes an optimization that stops the algorithm
+    when no swaps are needed, indicating that the list is already sorted.
 
     Args:
-        a (float): First number.
-        b (float): Second number.
-        op (str): Operator: '+', '-', '*', or '/'.
+        arr: The list to be sorted (modified in-place)
 
     Returns:
-        float: Result of the operation.
-
-    Raises:
-        ZeroDivisionError: If dividing by zero.
-        ValueError: If operator is invalid.
+        None: The input list is modified in-place
     """
-    if op == "+":
-        return a + b
-    elif op == "-":
-        return a - b
-    elif op == "*":
-        return a * b
-    elif op == "/":
-        if b == 0:
-            raise ZeroDivisionError("Division by zero")
-        return a / b
-    else:
-        raise ValueError(f"Invalid operator: {op}")
+    for n in range(len(arr) - 1, 0, -1):
+        swapped = False
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
