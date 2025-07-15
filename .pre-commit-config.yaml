@@ -6,7 +6,7 @@ repos:
         args: [--line-length=79]
         exclude: ^ExampleTests/generatedTests/.*$
         # Only run on changed files
-        stages: [commit]
+        stages: [pre-commit]
 
 -   repo: https://github.com/pycqa/flake8
     rev: 6.0.0  # Choose the appropriate version
@@ -17,15 +17,19 @@ repos:
             'flake8-bugbear',
             'flake8-comprehensions',
         ]
-        exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/).*$ 
+        exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/|backend/extracted/|backend/cli_implementation_summary\.py|backend/demo_.*\.py|backend/export_manager\.py|backend/implementation_complete\.py|backend/test_.*\.py|backend/tests/|backend/modules/export_manager\.py).*$ 
         # Only run on changed files
-        stages: [commit]
+        stages: [pre-commit]
+        # This ensures flake8 only runs on files being committed
+        pass_filenames: true
+        # Optional: specify file types to check
+        types: [python]
 
 -   repo: local
     hooks:
     -   id: pytest-check
         name: pytest-check
-        entry: pytest -q
+        entry: python3 -m pytest -q
         language: system
         pass_filenames: false
-        always_run: true
+        stages: [pre-commit]

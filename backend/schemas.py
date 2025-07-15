@@ -1,8 +1,12 @@
+"""Schema definitions for the AI-driven testing backend."""
+
 from pydantic import BaseModel, Field
 from typing import Optional, List
 
 
 class ModelMeta(BaseModel):
+    """Model metadata containing ID and human-readable name."""
+
     id: str = Field(
         ...,
         description="The model ID, e.g., 'mistral:7b-instruct-v0.3-q3_K_M'",
@@ -11,6 +15,8 @@ class ModelMeta(BaseModel):
 
 
 class InputOptions(BaseModel):
+    """Input options for model generation parameters."""
+
     temperature: Optional[float] = 0.7
     num_ctx: Optional[int] = 4096
     seed: Optional[int] = 42
@@ -19,6 +25,8 @@ class InputOptions(BaseModel):
 
 
 class InputData(BaseModel):
+    """Input data containing user message and source code."""
+
     user_message: str = Field(
         ...,
         description="Instruction or natural language question from the user",
@@ -34,6 +42,8 @@ class InputData(BaseModel):
 
 
 class PromptData(BaseModel):
+    """Complete prompt data including model, input, and module configuration."""
+
     model: ModelMeta
     input: InputData
     modules: Optional[List[str]] = Field(
@@ -64,6 +74,8 @@ class PromptData(BaseModel):
 
 
 class TestExecutionResults(BaseModel):
+    """Results from executing test code."""
+
     exit_code: int
     stdout: str
     stderr: str
@@ -71,6 +83,8 @@ class TestExecutionResults(BaseModel):
 
 
 class OutputData(BaseModel):
+    """Output data containing LLM response and additional metadata."""
+
     markdown: str = Field(..., description="LLM response in Markdown")
     code: Optional[str] = Field(
         None, description="Cleaned code extracted from the response, if any"
@@ -101,9 +115,14 @@ class OutputData(BaseModel):
         None,
         description="Path to the control flow image generated from the cleaned output code",
     )
+    coverage_data: Optional[dict] = Field(
+        None, description="Code coverage analysis results"
+    )
 
 
 class TimingData(BaseModel):
+    """Timing information for model operations."""
+
     loading_time: float = Field(
         ..., description="Time to load/start model container"
     )
@@ -113,6 +132,8 @@ class TimingData(BaseModel):
 
 
 class ResponseData(BaseModel):
+    """Complete response data including model info, output, and timing."""
+
     model: ModelMeta
     output: OutputData
     timing: TimingData

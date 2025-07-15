@@ -20,6 +20,15 @@ export interface PromptResponse {
   response_markdown: string;
   total_seconds: number;
   modules_used: string[];
+  coverage_data?: {
+    overall_coverage: number;
+    line_coverage: number;
+    branch_coverage: number;
+    covered_lines: number;
+    total_lines: number;
+    uncovered_lines: number[];
+    details: string;
+  };
 }
 
 export interface response {

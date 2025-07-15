@@ -1,3 +1,5 @@
+"""API module for the AI-driven testing backend."""
+
 import os
 import json
 import importlib
@@ -58,6 +60,7 @@ AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
 def discover_modules() -> List[Dict[str, str]]:
     """
     Automatically discover all valid modules in the modules directory.
+
     Returns a list of module information dictionaries.
     """
     modules_dir = os.path.join(SCRIPT_DIR, "modules")
@@ -129,9 +132,7 @@ def discover_modules() -> List[Dict[str, str]]:
 
 
 async def process_prompt_request(req: PromptData) -> Dict:
-    """
-    Process a prompt request through the LLM pipeline with optional module processing.
-    """
+    """Process a prompt request through the LLM pipeline with optional module processing."""
     logger.debug(f"Request details: {req}")
 
     model_id = req.model.id
@@ -199,6 +200,7 @@ def format_prompt_response(
             "ccc_complexity_output": response_data.output.ccc_complexity,
             "mcc_complexity_output": response_data.output.mcc_complexity,
             "lm_eval": response_data.output.lm_eval,
+            "coverage_data": response_data.output.coverage_data,
         },
         "timing": {
             "loading_time": response_data.timing.loading_time,
@@ -219,9 +221,7 @@ def format_prompt_response(
 # --------------------------------------------------------------------------- #
 @app.get("/models")
 def list_models() -> List[Dict]:
-    """
-    Returns the list of allowed models and whether the container is currently running.
-    """
+    """Return the list of allowed models and whether the container is currently running."""
     out = []
     for m in AVAILABLE_MODELS:
         m_id = m["id"]
@@ -239,9 +239,7 @@ def list_models() -> List[Dict]:
 
 @app.post("/prompt")
 async def prompt(req: PromptData):
-    """
-    Process a prompt request through the LLM pipeline with optional module processing.
-    """
+    """Process a prompt request through the LLM pipeline with optional module processing."""
     try:
         return await process_prompt_request(req)
     except HTTPException:
@@ -255,9 +253,7 @@ async def prompt(req: PromptData):
 
 @app.post("/shutdown")
 async def shutdown(req: Dict[str, str]):
-    """
-    Shutdown a running model container.
-    """
+    """Shutdown a running model container."""
     model_id = req.get("model_id")
     if not model_id:
         raise HTTPException(status_code=400, detail="Missing 'model_id'")
@@ -268,7 +264,8 @@ async def shutdown(req: Dict[str, str]):
 @app.get("/modules")
 def list_modules() -> List[Dict]:
     """
-    Returns the list of all available modules in the modules directory.
+    Return the list of all available modules in the modules directory.
+
     Each module entry contains id, name, and metadata about when it applies.
     """
     try:

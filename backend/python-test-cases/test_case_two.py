@@ -39,4 +39,5 @@ def calculator():
     print("Result:", result)
 
 
-calculator()
+if __name__ == "__main__":
+    calculator()

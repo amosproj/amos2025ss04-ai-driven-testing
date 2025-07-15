@@ -44,7 +44,13 @@ const App: React.FC = () => {
         console.log('Antwort erhalten:', res);
         setMessages((prev) => [
           ...prev,
-          { role: 'assistant', content: res.response_markdown, responseTime: res.total_seconds , response: (res as any) as response },
+          { 
+            role: 'assistant', 
+            content: res.response_markdown, 
+            responseTime: res.total_seconds,
+            coverage_data: res.coverage_data,
+            response: (res as any) as response 
+          },
         ]);
       })
       .catch((err) => {
