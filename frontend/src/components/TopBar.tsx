@@ -14,6 +14,7 @@ import {
 import { Model } from '../api';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import TuneIcon from '@mui/icons-material/Tune';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 interface TopBarProps {
   models: Model[];
@@ -21,6 +22,7 @@ interface TopBarProps {
   onChangeModel: (id: string) => void;
   onShutdownModel: () => void;
   onOpenModules: () => void;
+  onOpenExport: () => void;
 }
 
 const TopBar: React.FC<TopBarProps> = ({
@@ -29,6 +31,7 @@ const TopBar: React.FC<TopBarProps> = ({
   onChangeModel,
   onShutdownModel,
   onOpenModules,
+  onOpenExport,
 }) => {
   const selected = models.find((m) => m.id === selectedModel);
 
@@ -39,6 +42,14 @@ const TopBar: React.FC<TopBarProps> = ({
           <span>
             <IconButton color="default" onClick={onOpenModules}>
               <TuneIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
+
+        <Tooltip title="Chat exportieren" placement="bottom">
+          <span>
+            <IconButton color="default" onClick={onOpenExport}>
+              <FileDownloadIcon />
             </IconButton>
           </span>
         </Tooltip>

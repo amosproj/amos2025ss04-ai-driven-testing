@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<export>
+  <metadata>
+    <timestamp>2025-07-08T22:15:57.793933</timestamp>
+    <format>xml</format>
+    <exported_by>AI-Driven Testing ExportManager</exported_by>
+    <content_length>222</content_length>
+  </metadata>
+  <content># Sample LLM Response
+
+This is a test response from an LLM containing:
+
+## Code Example
+```python
+def hello_world():
+    return "Hello, World!"
+```
+
+## Test Cases
+- Test valid input
+- Test edge cases
+- Test error handling
+</content>
+</export>

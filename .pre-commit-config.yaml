@@ -1,15 +1,15 @@
 repos:
 -   repo: https://github.com/psf/black
-    rev: 23.3.0  # Use the specific version you want
+    rev: 25.1.0  # Match the locally installed version
     hooks:
     -   id: black
-        args: [--line-length=79]
+        # Remove args since we use pyproject.toml for configuration
         exclude: ^ExampleTests/generatedTests/.*$
         # Only run on changed files
-        stages: [commit]
+        stages: [pre-commit]
 
 -   repo: https://github.com/pycqa/flake8
-    rev: 6.0.0  # Choose the appropriate version
+    rev: 7.0.0  # Choose the appropriate version
     hooks:
     -   id: flake8
         additional_dependencies: [
@@ -19,13 +19,17 @@ repos:
         ]
         exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/).*$ 
         # Only run on changed files
-        stages: [commit]
+        stages: [pre-commit]
+        # This ensures flake8 only runs on files being committed
+        pass_filenames: true
+        # Optional: specify file types to check
+        types: [python]
 
 -   repo: local
     hooks:
     -   id: pytest-check
         name: pytest-check
-        entry: pytest -q
+        entry: python3 -m pytest -q --ignore=backend/python-test-cases
         language: system
         pass_filenames: false
-        always_run: true
+        stages: [pre-commit]

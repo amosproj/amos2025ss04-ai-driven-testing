@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-07-09T10:05:01.677209",
+  "format": "json",
+  "content": "# Test Content\n\nThis is a test for the API export.",
+  "metadata": {
+    "exported_by": "AI-Driven Testing ExportManager",
+    "content_length": 50
+  }
+}

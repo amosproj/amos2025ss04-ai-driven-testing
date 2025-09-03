@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Content-Length: 46
+Date: Sat, 05 Jul 2025 12:38:30 GMT
+Server: AI-Driven Testing ExportManager
+X-Export-Format: http
+
+# Sample LLM Response
+This is a test response.

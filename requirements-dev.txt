@@ -1,0 +1,15 @@
+# Development dependencies for consistent tooling
+# Keep versions in sync with backend/environment.yml
+
+# Code formatting and linting
+black==25.1.0
+flake8==7.0.0
+flake8-docstrings
+flake8-bugbear
+flake8-comprehensions
+
+# Testing
+pytest==8.3.1
+
+# Pre-commit hooks
+pre-commit

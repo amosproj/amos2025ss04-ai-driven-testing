@@ -1,3 +1,5 @@
+"""FastAPI application for AI-Driven Testing backend with export functionality."""
+
 import os
 import json
 import importlib
@@ -9,8 +11,9 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 
 from llm_manager import LLMManager
-from schemas import PromptData, ResponseData
+from schemas import PromptData, ResponseData, ExportRequest
 import module_manager
+from export_manager import ExportManager
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -56,8 +59,8 @@ AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
 # Helper functions for modules
 # --------------------------------------------------------------------------- #
 def discover_modules() -> List[Dict[str, str]]:
-    """
-    Automatically discover all valid modules in the modules directory.
+    """Automatically discover all valid modules in the modules directory.
+
     Returns a list of module information dictionaries.
     """
     modules_dir = os.path.join(SCRIPT_DIR, "modules")
@@ -129,9 +132,7 @@ def discover_modules() -> List[Dict[str, str]]:
 
 
 async def process_prompt_request(req: PromptData) -> Dict:
-    """
-    Process a prompt request through the LLM pipeline with optional module processing.
-    """
+    """Process a prompt request through the LLM pipeline with optional module processing."""
     logger.debug(f"Request details: {req}")
 
     model_id = req.model.id
@@ -219,9 +220,7 @@ def format_prompt_response(
 # --------------------------------------------------------------------------- #
 @app.get("/models")
 def list_models() -> List[Dict]:
-    """
-    Returns the list of allowed models and whether the container is currently running.
-    """
+    """Return the list of allowed models and whether the container is currently running."""
     out = []
     for m in AVAILABLE_MODELS:
         m_id = m["id"]
@@ -239,9 +238,7 @@ def list_models() -> List[Dict]:
 
 @app.post("/prompt")
 async def prompt(req: PromptData):
-    """
-    Process a prompt request through the LLM pipeline with optional module processing.
-    """
+    """Process a prompt request through the LLM pipeline with optional module processing."""
     try:
         return await process_prompt_request(req)
     except HTTPException:
@@ -255,9 +252,7 @@ async def prompt(req: PromptData):
 
 @app.post("/shutdown")
 async def shutdown(req: Dict[str, str]):
-    """
-    Shutdown a running model container.
-    """
+    """Shutdown a running model container."""
     model_id = req.get("model_id")
     if not model_id:
         raise HTTPException(status_code=400, detail="Missing 'model_id'")
@@ -267,8 +262,8 @@ async def shutdown(req: Dict[str, str]):
 
 @app.get("/modules")
 def list_modules() -> List[Dict]:
-    """
-    Returns the list of all available modules in the modules directory.
+    """Return the list of all available modules in the modules directory.
+
     Each module entry contains id, name, and metadata about when it applies.
     """
     try:
@@ -279,4 +274,42 @@ def list_modules() -> List[Dict]:
     except Exception as exc:
         raise HTTPException(
             status_code=500, detail=f"Failed to discover modules: {str(exc)}"
+        ) from exc
+
+
+# --------------------------------------------------------------------------- #
+# Export endpoints
+# --------------------------------------------------------------------------- #
+@app.get("/export/formats")
+def get_export_formats():
+    """Get supported export formats."""
+    try:
+        export_manager = ExportManager()
+        return {"formats": export_manager.get_supported_formats()}
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"Failed to get export formats: {str(exc)}"
+        ) from exc
+
+
+@app.post("/export")
+def export_content(request: ExportRequest):
+    """Export content in specified format."""
+    try:
+        export_manager = ExportManager()
+        filepath = export_manager.export_content(
+            request.content, request.format, request.filename
+        )
+
+        return {
+            "success": True,
+            "format": request.format,
+            "filepath": filepath,
+            "message": f"Content exported successfully as {request.format}",
+        }
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve)) from ve
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"Export failed: {str(exc)}"
         ) from exc

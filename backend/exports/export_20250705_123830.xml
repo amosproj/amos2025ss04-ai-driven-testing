@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<export>
+  <metadata>
+    <timestamp>2025-07-05T12:38:30.369476</timestamp>
+    <format>xml</format>
+    <exported_by>AI-Driven Testing ExportManager</exported_by>
+    <content_length>46</content_length>
+  </metadata>
+  <content># Sample LLM Response
+This is a test response.</content>
+</export>

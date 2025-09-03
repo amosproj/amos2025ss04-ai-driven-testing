@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Content-Length: 222
+Date: Tue, 08 Jul 2025 22:16:57 GMT
+Server: AI-Driven Testing ExportManager
+X-Export-Format: http
+
+# Sample LLM Response
+
+This is a test response from an LLM containing:
+
+## Code Example
+```python
+def hello_world():
+    return "Hello, World!"
+```
+
+## Test Cases
+- Test valid input
+- Test edge cases
+- Test error handling
+

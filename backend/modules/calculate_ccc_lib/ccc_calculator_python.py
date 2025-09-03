@@ -1,16 +1,26 @@
+"""
+CCC (Cognitive Code Complexity) Calculator for Python code.
+
+This module provides functionality to calculate the cognitive complexity
+of Python code by analyzing the Abstract Syntax Tree (AST) and applying
+complexity rules.
+"""
+
 import ast
 import warnings
 
 
 class CCCCalculator(ast.NodeVisitor):
     """
-    Calculates the CCC (Cognitive Code Complexity) for a given Python file.
+    Calculate the CCC (Cognitive Code Complexity) for a given Python file.
 
     The calculation is performed by traversing the Abstract Syntax Tree (AST)
-    of the Python code and calculating the complexity based on the rules provided at https://github.com/amosproj/amos2025ss04-ai-driven-testing/wiki/Code-Complexity
+    of the Python code and calculating the complexity based on the rules
+    provided at the project wiki.
     """
 
     def __init__(self):
+        """Initialize the CCC calculator with default values."""
         self.total_ccc = 0
         self.current_nesting_level = 0
         self.class_nesting_level = 0
@@ -44,9 +54,10 @@ class CCCCalculator(ast.NodeVisitor):
         }
 
     def _get_sk_value(self, node):
-        """
-        Approximates S_k (size of executable statement) by counting significant
-        nodes within the given AST node.
+        """Approximate S_k by counting significant nodes within the given AST node.
+
+        This method counts significant nodes within an Abstract Syntax Tree node
+        to approximate the size of executable statement.
         """
         count = 0
         for child_node in ast.walk(node):
@@ -61,9 +72,7 @@ class CCCCalculator(ast.NodeVisitor):
         return max(1, count)  # Ensure S_k is at least 1
 
     def _calculate_statement_ccc(self, node, Wc_val=0):
-        """
-        Calculates the CCC for a single statement based on its context.
-        """
+        """Calculate the CCC for a single statement based on its context."""
         Sk = self._get_sk_value(node)
         Wc = Wc_val  # Type of Control Structures
         Wi = self.class_nesting_level  # Inheritance Level
@@ -246,14 +255,12 @@ class CCCCalculator(ast.NodeVisitor):
         self.generic_visit(node)
 
     def _handle_array_declaration(self, node, size_ad):
-        """Helper for W_ad calculation."""
+        """Handle array declaration for W_ad calculation."""
         Wa = 1  # Weight of array (default constant)
         self.total_ccc += Wa * size_ad
 
     def calculate_ccc(self, code_string):
-        """
-        Parses the code string and calculates its CCC.
-        """
+        """Parse the code string and calculate its CCC."""
         self.total_ccc = 0
         self.current_nesting_level = 0
         self.class_nesting_level = 0
@@ -270,22 +277,18 @@ class CCCCalculator(ast.NodeVisitor):
 
 
 def get_ccc_for_file(filepath):
-    """
-    Reads a Python file and calculates its CCC.
-    """
+    """Read a Python file and calculate its CCC."""
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             code_string = f.read()
         return get_ccc_for_code(code_string)
     except FileNotFoundError:
-        warnings.warn(f"File not found: {filepath}")
+        warnings.warn(f"File not found: {filepath}", stacklevel=2)
         return None
 
 
 def get_ccc_for_code(code_string):
-    """
-    Calculates CCC directly from a code string.
-    """
+    """Calculate CCC directly from a code string."""
     calculator = CCCCalculator()
     ccc_score = calculator.calculate_ccc(code_string)
     return ccc_score

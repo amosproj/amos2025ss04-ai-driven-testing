@@ -4,7 +4,8 @@ import TopBar from './components/TopBar';
 import InfoBar from './components/PrivacyNotice';
 import ChatHistory, { ChatMessage } from './components/ChatHistory';
 import ModuleSidebar from './components/ModuleSidebar';
-import {getModels, sendPrompt, shutdownModel, getModules, Model, Module, response} from './api';
+import ExportDialog from './components/ExportDialog';
+import { getModels, sendPrompt, shutdownModel, getModules, Model, Module, response } from './api';
 import { Container, Box } from '@mui/material';
 
 const App: React.FC = () => {
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   const [modules, setModules] = useState<Module[]>([]);
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const [uploadedCode, setUploadedCode] = useState<string>('');
   const [uploadedFileNames, setUploadedFileNames] = useState<string[]>([]);
 
@@ -156,6 +158,7 @@ const handleModuleToggle = (moduleId: string) => {
         }}
         onShutdownModel={handleShutdownModel}
         onOpenModules={() => setSidebarOpen(true)}
+        onOpenExport={() => setExportDialogOpen(true)}
       />
 
       <Box
@@ -225,8 +228,44 @@ const handleModuleToggle = (moduleId: string) => {
         selectedModules={selectedModules}
         onModuleToggle={handleModuleToggle}
       />
+
+      <ExportDialog
+        open={exportDialogOpen}
+        onClose={() => setExportDialogOpen(false)}
+        content={prepareChatContentForExport()}
+        title="Export Chat Conversation"
+      />
     </Box>
   );
+
+  function prepareChatContentForExport(): string {
+    if (messages.length === 0) {
+      return '# Chat Conversation\n\nNo messages yet.';
+    }
+
+    const chatMarkdown = messages.map((message, index) => {
+      const role = message.role === 'user' ? 'User' : 'Assistant';
+      const timestamp = new Date().toLocaleString();
+      let content = `## ${role} (${timestamp})\n\n${message.content}`;
+      
+      if (message.responseTime) {
+        content += `\n\n*Response time: ${message.responseTime.toFixed(2)}s*`;
+      }
+      
+      return content;
+    }).join('\n\n---\n\n');
+
+    const modelInfo = selectedModel ? `\n\n**Model:** ${selectedModel.name} (${selectedModel.id})` : '';
+    const moduleInfo = selectedModules.length > 0 ? `\n**Active Modules:** ${selectedModules.join(', ')}` : '';
+    
+    return `# Chat Conversation Export
+    
+**Exported:** ${new Date().toLocaleString()}${modelInfo}${moduleInfo}
+
+---
+
+${chatMarkdown}`;
+  }
 };
 
 export default App;

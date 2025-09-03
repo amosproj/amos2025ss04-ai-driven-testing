@@ -16,13 +16,34 @@ jobs:
           use-mamba: true
           environment-file: backend/environment.yml
           activate-environment: backend
-          channels: conda-forge,defaults  # solver sees conda-forge first
-          auto-activate-base: false # we rely on the named env only
+          auto-activate-base: false
+          python-version: '3.11'  # Explicit Python version
+        
+      # Fallback: install missing packages if env creation had issues
+      - name: Install additional packages if needed
+        shell: bash -l {0}
+        run: |
+          # Ensure Black is available with correct version
+          if ! black --version | grep -q "25.1.0"; then
+            echo "Installing/upgrading Black to 25.1.0"
+            pip install black==25.1.0
+          fi
+        
+      - name: Debug environment
+        shell: bash -l {0}
+        run: |
+          echo "Python version: $(python --version)"
+          echo "Conda info:"
+          conda info
+          echo "Installed packages:"
+          conda list | grep -E "(black|flake8|pytest)"
 
       # Run quality gates & tests inside that env
-      - name: Check formatting
+      - name: Check formatting with Black
         shell: bash -l {0}
-        run: black --check .
+        run: |
+          echo "Black version: $(black --version)"
+          black --check --diff --config pyproject.toml .
 
       - name: Lint
         shell: bash -l {0}

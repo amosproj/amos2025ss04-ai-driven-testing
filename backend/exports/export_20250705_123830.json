@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-07-05T12:38:30.368791",
+  "format": "json",
+  "content": "# Sample LLM Response\nThis is a test response.",
+  "metadata": {
+    "exported_by": "AI-Driven Testing ExportManager",
+    "content_length": 46
+  }
+}

@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
-"""Main script to run a single model test generation pipeline.
+"""
+Main entry point for the AI-driven testing framework.
 
-This script serves as the primary entry point for the command-line interface.
-It orchestrates the entire process by:
-1. Parsing command-line arguments using the `cli` module.
-2. Loading the specified model and modules.
-3. Building the initial prompt data structure.
-4. Executing the prompt-response-refinement loop via the `execution` module.
+This module orchestrates the entire testing workflow by parsing command-line
+arguments, loading selected models and modules, and executing the test
+generation process through the configured pipeline.
 """
 import os
 import cli
@@ -19,6 +17,9 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if __name__ == "__main__":
     # Parse command-line arguments
     args = cli.parse_arguments()
+
+    # Validate export arguments
+    cli.validate_export_args(args)
 
     # Get model information
     model = model_manager.load_models()[args.model]
@@ -37,9 +38,4 @@ if __name__ == "__main__":
         print(f" - {module.__class__.__name__}")
 
     # Execute the flow
-    execution.execute_prompt(
-        active_modules=active_modules,
-        prompt_data=prompt_data,
-        output_file=args.output_file,
-        iterations=args.iterations,
-    )
+    execution.execute_prompt(active_modules, prompt_data, args.output_file)

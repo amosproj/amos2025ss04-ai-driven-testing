@@ -1,3 +1,11 @@
+"""
+Module for cleaning and processing output code from LLM responses.
+
+This module provides functionality to extract, clean, and format code
+from LLM-generated text outputs, including handling various code blocks
+and removing unwanted formatting.
+"""
+
 import subprocess
 import tempfile
 import os
@@ -26,21 +34,25 @@ class CleanOutputCode(ModuleBase):
     )
 
     def applies_before(self) -> bool:
+        """Return False as this module runs after other modules."""
         return False
 
     def applies_after(self) -> bool:
+        """Return True as this module runs in post-processing."""
         return True
 
     def dependencies(self) -> list[type["ModuleBase"]]:
+        """Return list of required module dependencies."""
         return [TextConverter, ExecuteTests]
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
+        """Process prompt data (no changes needed for this module)."""
         return prompt_data
 
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-
+        """Process response data to clean and fix generated code."""
         # Get paths for prompt and response files
         prompt_path = Path(prompt_data.prompt_code_path)
         response_path = Path(response_data.output.output_code_path)
@@ -288,8 +300,11 @@ class CleanOutputCode(ModuleBase):
     def extract_analysis_error_info(
         self, prompt_data: PromptData, response_data: ResponseData
     ) -> str:
-        """Extract simple error information from response_data
-        for use in UI and LLM fixing."""
+        """Extract simple error information from response_data for use in UI and LLM fixing.
+
+        This method analyzes the response data and extracts error information
+        that can be used for fixing issues in the generated code.
+        """
         try:
             # Get the original prompt code
             prompt_path = Path(prompt_data.prompt_code_path)
@@ -355,7 +370,8 @@ class CleanOutputCode(ModuleBase):
 
         except Exception as e:
             warnings.warn(
-                f"[CleanOutputCode] Error in extract_analysis_error_info: {e}"
+                f"[CleanOutputCode] Error in extract_analysis_error_info: {e}",
+                stacklevel=2,
             )
             return None
 
@@ -382,7 +398,8 @@ class CleanOutputCode(ModuleBase):
                 return None
         else:
             warnings.warn(
-                "test execution information not found in response_data.output.test_execution_results"
+                "test execution information not found in response_data.output.test_execution_results",
+                stacklevel=2,
             )
 
         return "\n".join(error_parts)
@@ -401,12 +418,12 @@ class CleanOutputCode(ModuleBase):
             True if content is similar to reference beyond the threshold
         """
         # Simple similarity check: If more than threshold % of lines match
-        content_lines = set(
+        content_lines = {
             line.strip() for line in content.split("\n") if line.strip()
-        )
-        reference_lines = set(
+        }
+        reference_lines = {
             line.strip() for line in reference.split("\n") if line.strip()
-        )
+        }
 
         if not content_lines or not reference_lines:
             return False
